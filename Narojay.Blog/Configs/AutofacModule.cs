@@ -14,7 +14,9 @@ namespace Narojay.Blog.Config
         protected override void Load(ContainerBuilder builder)
         {
          
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).AsImplementedInterfaces().Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") || t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute")).PropertiesAutowired().AsSelf();
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") || t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
+                .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
 
         }
     }

@@ -16,6 +16,7 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Narojay.Blog.Config;
+using Narojay.Blog.Configs;
 
 namespace Narojay.Blog
 {
@@ -24,6 +25,7 @@ namespace Narojay.Blog
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppConfig.Redis = configuration[nameof(AppConfig.Redis)];
         }
 
         public IConfiguration Configuration { get; }
