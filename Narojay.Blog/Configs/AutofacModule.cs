@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using Autofac;
-using Autofac.Core;
-using Microsoft.AspNetCore.Mvc;
-using Narojay.Blog.Infrastructure;
 
-namespace Narojay.Blog.Config
+namespace Narojay.Blog.Configs
 {
     public class AutofacModule : Autofac.Module
     {

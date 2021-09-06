@@ -17,7 +17,6 @@ using CSRedis;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Narojay.Blog.Config;
 using Narojay.Blog.Configs;
 using Narojay.Blog.Infrastructure;
 using Newtonsoft.Json;

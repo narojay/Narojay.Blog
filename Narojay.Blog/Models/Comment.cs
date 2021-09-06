@@ -12,6 +12,6 @@ namespace Narojay.Blog.Models
         public int UserCommentId { get; set; }
 
         [ForeignKey(nameof(UserCommentId))]
-        public virtual  BlogUser BlogUser { get; set; }
+        public virtual BlogUser BlogUser { get; set; }
     }
 }

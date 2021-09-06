@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Narojay.Blog.Infrastructure;
 using Narojay.Blog.Models;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace Narojay.Blog.Controllers
 {
@@ -35,13 +33,13 @@ namespace Narojay.Blog.Controllers
         [HttpGet]
         public async Task<List<Comment>> GetBlog()
         {
-           var result = await _context.Comments.Where(x => x.UserCommentId == 5).ToListAsync();
+            var result = await _context.Comments.Where(x => x.UserCommentId == 5).ToListAsync();
 
-           result.ForEach(x => x.BlogUser.Age = 2);
-            
-             await _context.SaveChangesAsync();
+            result.ForEach(x => x.BlogUser.Age = 2);
 
-           return null;
+            await _context.SaveChangesAsync();
+
+            return null;
         }
     }
 }
