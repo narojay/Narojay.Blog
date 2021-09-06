@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Narojay.Blog.Infrastructure;
+using Narojay.Blog.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
-using Narojay.Blog.Config;
+using Microsoft.EntityFrameworkCore;
 
 namespace Narojay.Blog.Controllers
 {
@@ -19,26 +22,26 @@ namespace Narojay.Blog.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly DataContext _context;
 
         public ITestService TestService { get; set; }
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, DataContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public async Task<List<Comment>> GetBlog()
         {
-            TestService.Show();
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+           var result = await _context.Comments.Where(x => x.UserCommentId == 5).ToListAsync();
+
+           result.ForEach(x => x.BlogUser.Age = 2);
+            
+             await _context.SaveChangesAsync();
+
+           return null;
         }
     }
 }

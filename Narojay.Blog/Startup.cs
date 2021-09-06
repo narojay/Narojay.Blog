@@ -13,10 +13,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CSRedis;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Narojay.Blog.Config;
 using Narojay.Blog.Configs;
+using Narojay.Blog.Infrastructure;
+using Newtonsoft.Json;
 
 namespace Narojay.Blog
 {
@@ -26,6 +30,7 @@ namespace Narojay.Blog
         {
             Configuration = configuration;
             AppConfig.Redis = configuration[nameof(AppConfig.Redis)];
+            AppConfig.ConnString = configuration[nameof(AppConfig.ConnString)];
         }
 
         public IConfiguration Configuration { get; }
@@ -33,7 +38,15 @@ namespace Narojay.Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddControllersAsServices();
+            RedisHelper.Initialization(new CSRedisClient(AppConfig.Redis));
+            services.AddControllers().AddControllersAsServices().AddNewtonsoftJson(option =>
+                //ºöÂÔÑ­»·ÒýÓÃ
+                option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            );
+            services.AddDbContext<DataContext>((serviceProvider, opt) =>
+            {
+                opt.UseSqlServer(AppConfig.ConnString);
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Narojay.Blog", Version = "v1" });

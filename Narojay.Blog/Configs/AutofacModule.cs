@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Core;
 using Microsoft.AspNetCore.Mvc;
+using Narojay.Blog.Infrastructure;
 
 namespace Narojay.Blog.Config
 {
@@ -17,6 +18,10 @@ namespace Narojay.Blog.Config
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") || t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
                 .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
+
+            //builder.RegisterType<DataContext>().AsSelf()
+            //    .InstancePerLifetimeScope();
+
 
         }
     }
