@@ -1,20 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Narojay.Blog.Models
+namespace Narojay.Blog.Models.Entity
 {
-    [Table("BlogUser")]
-    public class BlogUser
+    [Table("User")]
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
-
         public string UserName { get; set; }
 
+        public string NickName { get; set; }
+        
         public int Age { get; set; }
 
         public string Remarks { get; set; }
-
-        public virtual ICollection<Comment> Comments { get; set; }
     }
+
 }

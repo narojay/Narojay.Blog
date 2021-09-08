@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Narojay.Blog.Models
+namespace Narojay.Blog.Models.Entity
 {
     [Table("Comment")]
     public class Comment
@@ -11,7 +11,5 @@ namespace Narojay.Blog.Models
 
         public int UserCommentId { get; set; }
 
-        [ForeignKey(nameof(UserCommentId))]
-        public virtual BlogUser BlogUser { get; set; }
     }
 }
