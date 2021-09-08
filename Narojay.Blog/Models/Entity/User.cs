@@ -12,6 +12,8 @@ namespace Narojay.Blog.Models.Entity
         
         public int Age { get; set; }
 
+        public string Email { get; set; }
+
         public string Remarks { get; set; }
     }
 
