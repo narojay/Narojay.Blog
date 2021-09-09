@@ -7,11 +7,6 @@ namespace Narojay.Blog.Models.Entity
     [Table("Post")]
     public class Post :BaseEntity
     {
-
-        public Post()
-        {
-            Comments = new HashSet<Comment>();
-        }
         public string Title { get; set; }
 
         public string Content { get; set; }
@@ -22,6 +17,8 @@ namespace Narojay.Blog.Models.Entity
 
         public DateTime ModifyTime { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        public int UserId { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

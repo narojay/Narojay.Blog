@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Narojay.Blog.Models.Enum;
 
 namespace Narojay.Blog.Models.Entity
 {
@@ -8,6 +9,8 @@ namespace Narojay.Blog.Models.Entity
     {
         public string UserName { get; set; }
 
+        public Sex?  Sex { get; set; }
+
         public string NickName { get; set; }
         
         public int Age { get; set; }
@@ -15,6 +18,8 @@ namespace Narojay.Blog.Models.Entity
         public string Email { get; set; }
 
         public string Remarks { get; set; }
-    }
 
+
+        public virtual  ICollection<Post> Posts { get; set; }
+    }
 }
