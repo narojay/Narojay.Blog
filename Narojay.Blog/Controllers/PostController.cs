@@ -26,7 +26,7 @@ namespace Narojay.Blog.Controllers
         [HttpGet]
         public async Task<List<User>> GetBlog()
         {
-            var blogUsers = await _context.BlogUsers.ToListAsync();
+            var blogUsers = await _context.Users.ToListAsync();
             return blogUsers;
         }
 

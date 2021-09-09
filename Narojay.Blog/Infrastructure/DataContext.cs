@@ -8,7 +8,7 @@ namespace Narojay.Blog.Infrastructure
 {
     public class DataContext : DbContext
     {
-        public DbSet<User> BlogUsers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
         public static readonly ILoggerFactory MyLoggerFactory
