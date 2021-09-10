@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 using Narojay.Blog.Models.Enum;
 
 namespace Narojay.Blog.Models.Entity

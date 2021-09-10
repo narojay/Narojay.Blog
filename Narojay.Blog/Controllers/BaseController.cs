@@ -11,9 +11,5 @@ namespace Narojay.Blog.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
-
-        public HttpContext HttpContext => ControllerContext.HttpContext;
-
-        
     }
 }
