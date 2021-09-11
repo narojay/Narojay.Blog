@@ -13,7 +13,7 @@ namespace Narojay.Blog.Models.Entity
 
         public string Author { get; set; }
 
-        public DateTime PostDate { get; set; }
+        public DateTime CreationTime { get; set; }
 
         public DateTime ModifyTime { get; set; }
 

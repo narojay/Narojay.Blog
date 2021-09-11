@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Entity;
-using System.Collections.Generic;
+using Narojay.Blog.Models.RedisModel;
 using System.Threading.Tasks;
 
 namespace Narojay.Blog.Infrastructure.Service
@@ -12,15 +12,17 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<bool> AddPostAsync(Post post)
         {
+            post.Content = Markdig.Markdown.ToHtml(post.Content);
             await Context.Posts.AddAsync(post);
-
             return await Context.SaveChangesAsync() > 0;
         }
 
-        public Task<List<User>> GetUserAsync()
+        public async Task<Post> GetPostAsync(int id)
         {
-            var blogUsers = Context.Users.ToListAsync();
-            return blogUsers;
+            return await RedisHelper.CacheShellAsync(RedisPrefix.GetPost + id, 18000,
+                        () => Context.Posts.FirstOrDefaultAsync(x => x.Id == id));
         }
+
+
     }
 }

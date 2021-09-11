@@ -9,8 +9,8 @@ namespace Narojay.Blog.Infrastructure.Interface
     public interface IPostService
     {
 
-        public Task<bool> AddPostAsync(Post post);
+        Task<bool> AddPostAsync(Post post);
 
-        public Task<List<User>> GetUserAsync();
+        Task<Post> GetPostAsync(int id);
     }
 }

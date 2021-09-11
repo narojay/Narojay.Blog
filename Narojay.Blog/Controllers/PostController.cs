@@ -22,10 +22,10 @@ namespace Narojay.Blog.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public Task<List<User>> GetBlog()
+        [HttpGet("id")]
+        public Task<Post> GetBlog(int id)
         {
-            return PostService.GetUserAsync();
+            return PostService.GetPostAsync(id);
         }
 
 
