@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Narojay.Blog.Controllers
 {
+    /// <summary>
+    /// 文章
+    /// </summary>
     [Route("Post")]
     public class PostController : BaseController
     {
@@ -22,6 +25,11 @@ namespace Narojay.Blog.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// 文章id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("id")]
         public Task<Post> GetPostById(int id) => PostService.GetPostByIdAsync(id);
 
