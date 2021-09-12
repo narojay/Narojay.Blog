@@ -8,7 +8,6 @@ namespace Narojay.Blog.Infrastructure.Interface
 {
     public interface IUserService
     {
-
         Task<List<User>> GetAllUserAsync();
     }
 }

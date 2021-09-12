@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Narojay.Blog.Configs;
+using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure;
 using Newtonsoft.Json;
 
@@ -37,11 +38,12 @@ namespace Narojay.Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMapper();
             services.AddHttpContextAccessor();
             RedisHelper.Initialization(new CSRedisClient(AppConfig.Redis));
             services.AddControllers().AddControllersAsServices().AddNewtonsoftJson(option =>
-                //忽略循环引用
-                option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+               //忽略循环引用
+               option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.AddDbContext<DataContext>((serviceProvider, opt) =>
             {

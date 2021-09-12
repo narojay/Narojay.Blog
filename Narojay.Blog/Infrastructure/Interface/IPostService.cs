@@ -11,6 +11,6 @@ namespace Narojay.Blog.Infrastructure.Interface
 
         Task<bool> AddPostAsync(Post post);
 
-        Task<Post> GetPostAsync(int id);
+        Task<Post> GetPostByIdAsync(int id);
     }
 }

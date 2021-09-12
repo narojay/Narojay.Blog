@@ -22,5 +22,6 @@ namespace Narojay.Blog.Models.Entity
 
 
         public virtual  ICollection<Post> Posts { get; set; }
+        public virtual  ICollection<LeaveMessage> LeaveMessages { get; set; }
     }
 }

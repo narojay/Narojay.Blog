@@ -9,5 +9,7 @@ namespace Narojay.Blog.Models.RedisModel
     {
         public const string GetAllUser = "GetAllUser";
         public const string GetPost = "GetPost";
+        public const string GetLeaveMessagePageAsync = "GetLeaveMessagePageAsync";
+        public const string GetLeaveMessagePageCountAsync = "GetLeaveMessagePageCountAsync";
     }
 }

@@ -17,12 +17,8 @@ namespace Narojay.Blog.Infrastructure.Service
             return await Context.SaveChangesAsync() > 0;
         }
 
-        public async Task<Post> GetPostAsync(int id)
-        {
-            return await RedisHelper.CacheShellAsync(RedisPrefix.GetPost + id, 18000,
-                        () => Context.Posts.FirstOrDefaultAsync(x => x.Id == id));
-        }
-
-
+        public async Task<Post> GetPostByIdAsync(int id) =>
+            await RedisHelper.CacheShellAsync(RedisPrefix.GetPost + id, 18000,
+                () => Context.Posts.FirstOrDefaultAsync(x => x.Id == id));
     }
 }

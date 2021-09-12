@@ -23,17 +23,10 @@ namespace Narojay.Blog.Controllers
         }
 
         [HttpGet("id")]
-        public Task<Post> GetBlog(int id)
-        {
-            return PostService.GetPostAsync(id);
-        }
-
+        public Task<Post> GetPostById(int id) => PostService.GetPostByIdAsync(id);
 
 
         [HttpPost("add")]
-        public Task<bool> AddPost(Post post)
-        {
-            return PostService.AddPostAsync(post);
-        }
+        public Task<bool> AddPost(Post post) => PostService.AddPostAsync(post);
     }
 }
