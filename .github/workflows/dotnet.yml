@@ -1,5 +1,8 @@
 name: narojay.blog
 on: [push]
+env:
+    IMAGE_NAME: Narojay.Blog.API
+    IMAGE_TAG: demo
 jobs:
   build:
     runs-on: ubuntu-latest
