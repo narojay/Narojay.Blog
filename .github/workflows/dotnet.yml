@@ -1,7 +1,7 @@
 name: narojay.blog
 on: [push]
 env:
-    IMAGE_NAME: narojay.blog.api
+    IMAGE_NAME: narojay/narojay.blog.api
     IMAGE_TAG: demo
 jobs:
   build:
