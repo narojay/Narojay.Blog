@@ -1,0 +1,17 @@
+name: narojay.blog
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v2
+     - name: Setup .NET Core
+       uses: actions/setup-dotnet@v1
+       with:
+        dotnet-version: 5.0.x
+     - name: dotnet restore #还原包
+       run: dotnet restore src/Sukt.Core.API
+     - name: dotnet publish #发布项目
+       run: dotnet publish src/Sukt.Core.API --configuration -c Release --no-restore -o app  
+     - name: Run Crrpath
+       run: ls 
