@@ -1,5 +1,9 @@
 name: narojay.blog
-on: [push]
+on: 
+ push:
+  branches: [master]
+ pull_request:
+  branches: [master]
 env:
     IMAGE_NAME: narojay/narojay.blog.api
     IMAGE_TAG: demo
