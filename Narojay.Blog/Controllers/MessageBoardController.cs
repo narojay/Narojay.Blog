@@ -7,6 +7,9 @@ using Narojay.Blog.Models.Entity;
 
 namespace Narojay.Blog.Controllers
 {
+    /// <summary>
+    /// 留言板
+    /// </summary>
     [Route("messageboard")]
     public class MessageBoardController : BaseController
     {
