@@ -40,7 +40,7 @@ namespace Narojay.Blog.Controllers
 
 
         /// <summary>
-        /// 文章id
+        /// 获取文章分页
         /// </summary>
         /// <param name="pageInputBaseDto"></param>
         /// <returns></returns>
