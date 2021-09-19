@@ -16,5 +16,8 @@ namespace Narojay.Blog.Controllers
 
         [HttpGet("users")]
         public Task<List<User>> GetAllUser() => UserService.GetAllUserAsync();
+
+        [HttpPost("add")]
+        public Task<bool> AddUser(User user) => UserService.AddUserAsync(user);
     }
 }

@@ -14,6 +14,9 @@ namespace Narojay.Blog.Configs
         public MapperProfile()
         {
             CreateMap<LeaveMessageDto, LeaveMessage>().ReverseMap();
+            CreateMap<Post, PostDto>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
+            CreateMap<Comment, CommentDto>().ReverseMap();
         }
     }
 }

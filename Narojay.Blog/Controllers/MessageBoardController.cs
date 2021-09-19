@@ -13,7 +13,7 @@ namespace Narojay.Blog.Controllers
     [Route("messageboard")]
     public class MessageBoardController : BaseController
     {
-        public IMessageBoardService MessageBoardService { get; set; }
+        public IMessageBoardService MessageBoardService { get; set; }   
 
         [HttpPost("add")]
         public Task<LeaveMessage> AddLeaveMessage(LeaveMessageDto message) =>

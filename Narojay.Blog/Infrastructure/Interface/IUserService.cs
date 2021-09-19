@@ -9,5 +9,6 @@ namespace Narojay.Blog.Infrastructure.Interface
     public interface IUserService
     {
         Task<List<User>> GetAllUserAsync();
+        Task<bool> AddUserAsync(User user);
     }
 }

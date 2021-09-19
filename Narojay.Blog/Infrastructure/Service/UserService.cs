@@ -3,7 +3,6 @@ using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Entity;
 using Narojay.Blog.Models.RedisModel;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Narojay.Blog.Infrastructure.Service
@@ -15,5 +14,11 @@ namespace Narojay.Blog.Infrastructure.Service
         public async Task<List<User>> GetAllUserAsync() =>
             await RedisHelper.CacheShellAsync(RedisPrefix.GetAllUser, 60 * 60 * 24,
                 () => Context.Users.ToListAsync());
+
+        public async Task<bool> AddUserAsync(User user)
+        {
+            await Context.AddAsync(user);
+            return await Context.SaveChangesAsync() > 0;
+        }
     }
 }
