@@ -7,5 +7,7 @@ namespace Narojay.Blog.Controllers
 {
     public class AdminController
     {
+
+
     }
 }

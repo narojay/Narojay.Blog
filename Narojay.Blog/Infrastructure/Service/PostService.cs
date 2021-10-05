@@ -21,12 +21,14 @@ namespace Narojay.Blog.Infrastructure.Service
             return await Context.SaveChangesAsync() > 0;
         }
 
-        public PostDto GetPostByIdAsync(int id)
-        {
-            var result = Context.Posts.FirstOrDefault(x => x.Id == id);
-            var model = Mapper.Map<PostDto>(result);
-            return model;
-        }
+        public  PostDto GetPostByIdAsync(int id) =>
+             RedisHelper.CacheShell(RedisPrefix.GetPost + id, 18000,
+                 () =>
+                {
+                    var result =  Context.Posts.FirstOrDefault(x => x.Id == id);
+                    var model = Mapper.Map<PostDto>(result);
+                    return model;
+                });
 
         public async Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto)
         {
