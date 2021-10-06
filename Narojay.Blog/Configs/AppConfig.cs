@@ -14,5 +14,10 @@ namespace Narojay.Blog.Configs
         /// 数据库连接字符串
         /// </summary>
         public static string ConnString { get; set; }
+
+        public static string JwtSecret { get; set; }
+
+        public static string JwtValid { get; set; }
+
     }
 }

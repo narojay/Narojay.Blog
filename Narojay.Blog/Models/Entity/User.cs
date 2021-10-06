@@ -22,7 +22,8 @@ namespace Narojay.Blog.Models.Entity
         public string Email { get; set; }
         [MaxLength(500)]
         public string Remarks { get; set; }
-
+        [MaxLength(200)]
+        public string Password { get; set; }
 
         public virtual  ICollection<Post> Posts { get; set; }
         public virtual  ICollection<LeaveMessage> LeaveMessages { get; set; }

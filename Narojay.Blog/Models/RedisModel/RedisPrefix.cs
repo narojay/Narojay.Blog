@@ -12,5 +12,6 @@ namespace Narojay.Blog.Models.RedisModel
         public const string GetLeaveMessagePageAsync = "GetLeaveMessagePageAsync";
         public const string GetLeaveMessagePageCountAsync = "GetLeaveMessagePageCountAsync";
         public const string GetPostListAsync = "GetPostListAsync";
+        public const string GetTagStatistics = "GetTagStatistics";
     }
 }

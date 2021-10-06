@@ -3,7 +3,9 @@ using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Entity;
 using Narojay.Blog.Models.RedisModel;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Narojay.Tools.Core.Security;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -18,6 +20,14 @@ namespace Narojay.Blog.Infrastructure.Service
         public async Task<bool> AddUserAsync(User user)
         {
             await Context.AddAsync(user);
+            return await Context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> ResetPassword(int id, string password)
+        {
+            var md5Password = Encrypt.Md5Encrypt(password);
+            var user =await Context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            user.Password = md5Password;
             return await Context.SaveChangesAsync() > 0;
         }
     }
