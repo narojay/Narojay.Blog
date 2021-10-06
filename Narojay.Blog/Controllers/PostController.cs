@@ -5,6 +5,7 @@ using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Narojay.Blog.Infrastructure.Service;
 using Narojay.Blog.Models.Dto;
 using Narojay.Tools.Core.Dto;
@@ -34,7 +35,8 @@ namespace Narojay.Blog.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("id")]
-        public Task<PostDto> GetPostById(int id) => PostService.GetPostByIdAsync(id);
+     
+        public PostDto GetPostById(int id) => PostService.GetPostByIdAsync(id);
 
 
 
@@ -47,7 +49,13 @@ namespace Narojay.Blog.Controllers
         [HttpPost("posts")]
         public Task<PageOutputDto<PostDto>> GetPostList(PageInputBaseDto pageInputBaseDto) => PostService.GetPostListAsync(pageInputBaseDto);
 
-        [HttpPost("add")]
-        public Task<bool> AddPost(Post post) => PostService.AddPostAsync(post);
+
+        /// <summary>
+        /// 获取label统计
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("label_statistics")]
+        public Dictionary<string,int> GetLabelStatistics() => PostService.GetLabelStatistics();
+
     }
 }

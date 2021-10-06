@@ -2,22 +2,22 @@
 
 namespace Narojay.Blog.Migrations
 {
-    public partial class AddCreationTime : Migration
+    public partial class UnlikeCount2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "PostDate",
+                name: "UnlikeCount",
                 table: "Post",
-                newName: "CreationTime");
+                newName: "UnLikeCount");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "CreationTime",
+                name: "UnLikeCount",
                 table: "Post",
-                newName: "PostDate");
+                newName: "UnlikeCount");
         }
     }
 }

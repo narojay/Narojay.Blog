@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Narojay.Blog.Infrastructure;
 
 namespace Narojay.Blog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211002084957_demo")]
+    partial class demo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,25 +81,12 @@ namespace Narojay.Blog.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<bool>("IsTop")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Label")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("LikeCount")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ModifyTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Title")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
-
-                    b.Property<int>("UnlikeCount")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -123,12 +112,8 @@ namespace Narojay.Blog.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("NickName")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<string>("Password")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("Remarks")
                         .HasMaxLength(500)
@@ -138,8 +123,8 @@ namespace Narojay.Blog.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("Id");
 
@@ -148,11 +133,13 @@ namespace Narojay.Blog.Migrations
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.Comment", b =>
                 {
-                    b.HasOne("Narojay.Blog.Models.Entity.Post", null)
+                    b.HasOne("Narojay.Blog.Models.Entity.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.LeaveMessage", b =>

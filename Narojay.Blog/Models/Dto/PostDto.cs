@@ -20,6 +20,14 @@ namespace Narojay.Blog.Models.Dto
 
         public DateTime ModifyTime { get; set; }
 
+        public bool IsTop { get; set; }
+
+        public string Label { get; set; }
+
+        public int LikeCount { get; set; }
+        
+        public int UnlikeCount { get; set; }
+
         public int UserId { get; set; }
 
         public  UserDto User { get; set; }

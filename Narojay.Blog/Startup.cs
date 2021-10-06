@@ -1,14 +1,17 @@
 using Autofac;
 using CSRedis;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Narojay.Blog.Configs;
 using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure;
+using System;
 
 namespace Narojay.Blog
 {
@@ -19,6 +22,8 @@ namespace Narojay.Blog
             Configuration = configuration;
             AppConfig.Redis = configuration[nameof(AppConfig.Redis)];
             AppConfig.ConnString = configuration[nameof(AppConfig.ConnString)];
+            AppConfig.JwtSecret = configuration[nameof(AppConfig.JwtSecret)];
+            AppConfig.JwtValid = configuration[nameof(AppConfig.JwtValid)];
         }
 
         public IConfiguration Configuration { get; }
@@ -26,6 +31,7 @@ namespace Narojay.Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+     
             services.AddMapper();
             services.AddHttpContextAccessor();
             RedisHelper.Initialization(new CSRedisClient(AppConfig.Redis));
@@ -33,13 +39,55 @@ namespace Narojay.Blog
                //ºöÂÔÑ­»·ÒýÓÃ
                option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddDbContext<DataContext>((serviceProvider, opt) =>
+            services.AddDbContext<DataContext>((opt) =>
             {
-                opt.UseSqlServer(AppConfig.ConnString);
+                opt.UseMySql(AppConfig.ConnString, ServerVersion.AutoDetect(AppConfig.ConnString));
             });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Narojay.Blog", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Description = "",
+                    Name = "Authorization",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[]{ }
+                        }
+                    });
+
+
+            });
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(option =>
+            {
+                option.RequireHttpsMetadata = false;
+                option.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = AppConfig.JwtValid,
+                    ValidateAudience = true,
+                    ValidAudience = AppConfig.JwtValid,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(AppConfig.JwtSecret)),
+                    ValidateLifetime = true,
+                    SaveSigninToken = true,
+                };
             });
         }
         public void ConfigureContainer(ContainerBuilder builder)
@@ -54,9 +102,8 @@ namespace Narojay.Blog
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Narojay.Blog v1"));
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

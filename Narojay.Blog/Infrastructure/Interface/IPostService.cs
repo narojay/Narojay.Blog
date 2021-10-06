@@ -13,7 +13,8 @@ namespace Narojay.Blog.Infrastructure.Interface
 
         Task<bool> AddPostAsync(Post post);
 
-        Task<PostDto> GetPostByIdAsync(int id);
+        PostDto GetPostByIdAsync(int id);
         Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto);
+        Dictionary<string, int> GetLabelStatistics();
     }
 }

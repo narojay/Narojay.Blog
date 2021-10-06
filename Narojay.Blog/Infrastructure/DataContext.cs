@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Narojay.Blog.Models;
 using System;
 using Narojay.Blog.Models.Entity;
 
@@ -30,7 +29,7 @@ namespace Narojay.Blog.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Comment>().HasOne(x => x.Post).WithMany(x => x.Comments).HasForeignKey(x => x.PostId);
+            modelBuilder.Entity<Post>().HasMany(x => x.Comments).WithOne().HasForeignKey(x => x.PostId);
             modelBuilder.Entity<User>().HasMany(x => x.Posts).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             modelBuilder.Entity<User>().HasMany(x =>x.LeaveMessages).WithOne(x => x.User).HasForeignKey(x => x.UserId);
         }

@@ -10,5 +10,6 @@ namespace Narojay.Blog.Infrastructure.Interface
     {
         Task<List<User>> GetAllUserAsync();
         Task<bool> AddUserAsync(User user);
+        Task<bool> ResetPassword(int id, string password);
     }
 }
