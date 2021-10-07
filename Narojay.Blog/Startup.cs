@@ -12,6 +12,9 @@ using Narojay.Blog.Configs;
 using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure;
 using System;
+using System.Collections.Generic;
+using Swashbuckle.AspNetCore.Filters;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Narojay.Blog
 {
@@ -46,27 +49,18 @@ namespace Narojay.Blog
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Narojay.Blog", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                c.OperationFilter<AddResponseHeadersFilter>();
+                c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
-                    In = ParameterLocation.Header,
+                    In = ParameterLocation.Header,                                
                     Type = SecuritySchemeType.ApiKey,
                     Description = "",
                     Name = "Authorization",
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                }
-                            },
-                            new string[]{ }
-                        }
-                    });
-
+             
+          
 
             });
             services.AddAuthentication(options =>
