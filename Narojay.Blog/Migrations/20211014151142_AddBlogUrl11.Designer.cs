@@ -9,8 +9,8 @@ using Narojay.Blog.Infrastructure;
 namespace Narojay.Blog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211006164357_AddPassword")]
-    partial class AddPassword
+    [Migration("20211014151142_AddBlogUrl11")]
+    partial class AddBlogUrl11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,12 +54,18 @@ namespace Narojay.Blog.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("Email")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NickName")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("LeaveMessage");
                 });
@@ -159,13 +165,12 @@ namespace Narojay.Blog.Migrations
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.LeaveMessage", b =>
                 {
-                    b.HasOne("Narojay.Blog.Models.Entity.User", "User")
-                        .WithMany("LeaveMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Narojay.Blog.Models.Entity.LeaveMessage", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("User");
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.Post", b =>
@@ -179,6 +184,11 @@ namespace Narojay.Blog.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Narojay.Blog.Models.Entity.LeaveMessage", b =>
+                {
+                    b.Navigation("Children");
+                });
+
             modelBuilder.Entity("Narojay.Blog.Models.Entity.Post", b =>
                 {
                     b.Navigation("Comments");
@@ -186,8 +196,6 @@ namespace Narojay.Blog.Migrations
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.User", b =>
                 {
-                    b.Navigation("LeaveMessages");
-
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

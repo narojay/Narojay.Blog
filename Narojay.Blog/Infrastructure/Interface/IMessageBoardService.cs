@@ -9,5 +9,6 @@ namespace Narojay.Blog.Infrastructure.Interface
     {
         Task<LeaveMessage> AddLeaveMessageAsync(LeaveMessageDto message);
         Task<PageOutputDto<LeaveMessageDto>> GetLeaveMessagePageAsync(PageInputDto message);
+        Task<bool> RemoveLeaveMessageAsync(int id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Narojay.Blog.Models.Dto
 {
@@ -8,8 +9,14 @@ namespace Narojay.Blog.Models.Dto
 
         public string Content { get; set; }
 
-        public int UserId { get; set; }
+        public string NickName { get; set; }
+
+        public string Email { get; set; }
+
+        public int ParentId { get; set; }
 
         public DateTime CreationTime { get; set; }
+
+        public ICollection<LeaveMessageDto> Children { get; set; }
     }
 }

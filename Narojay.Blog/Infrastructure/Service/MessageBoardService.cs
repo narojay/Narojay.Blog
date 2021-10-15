@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
-using Narojay.Blog.Models.RedisModel;
 using Narojay.Tools.Core.Dto;
 using System;
 using System.Collections.Generic;
@@ -30,24 +29,25 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<PageOutputDto<LeaveMessageDto>> GetLeaveMessagePageAsync(PageInputDto message)
         {
-            var list = await RedisHelper.CacheShellAsync(RedisPrefix.GetLeaveMessagePageAsync + message.PageIndex, 1000, async () =>
-                       {
-                           var model = await Context.LeaveMessages.OrderByDescending(x => x.CreationTime)
-                               .Skip((message.PageIndex - 1) * message.PageSize).Take(message.PageSize)
-                               .ToListAsync();
-                           var leaveMessageDtos = Mapper.Map<List<LeaveMessageDto>>(model);
-                           return leaveMessageDtos;
+            var query = Context.LeaveMessages.Where(x => x.ParentId == 0);
+            var model = await query.OrderByDescending(x => x.CreationTime)
+                .Skip((message.PageIndex - 1) * message.PageSize).Take(message.PageSize)
+                .ToListAsync();
+            var leaveMessageDtos = Mapper.Map<List<LeaveMessageDto>>(model);
 
-                       });
-            var totalCount = await RedisHelper.CacheShellAsync(RedisPrefix.GetLeaveMessagePageCountAsync, 1000,
-                () => Context.LeaveMessages.CountAsync());
+            var totalCount = await query.CountAsync();
 
             return new PageOutputDto<LeaveMessageDto>
             {
-                Data = list,
+                Data = leaveMessageDtos,
                 TotalCount = totalCount
             };
+        }
 
+        public async Task<bool> RemoveLeaveMessageAsync(int id)
+        {
+            Context.LeaveMessages.Remove(Context.LeaveMessages.Include(x =>x.Children).First(x => x.Id == id));
+            return await Context.SaveChangesAsync() > 0;
         }
     }
 }

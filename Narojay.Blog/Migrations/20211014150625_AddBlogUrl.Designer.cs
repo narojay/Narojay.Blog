@@ -9,8 +9,8 @@ using Narojay.Blog.Infrastructure;
 namespace Narojay.Blog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211003115442_UnlikeCount1")]
-    partial class UnlikeCount1
+    [Migration("20211014150625_AddBlogUrl")]
+    partial class AddBlogUrl
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -127,6 +127,10 @@ namespace Narojay.Blog.Migrations
                     b.Property<string>("NickName")
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("Remarks")
                         .HasMaxLength(500)

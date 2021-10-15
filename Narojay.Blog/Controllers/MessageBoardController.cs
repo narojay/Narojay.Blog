@@ -23,5 +23,9 @@ namespace Narojay.Blog.Controllers
         [HttpPost("pages")]
         public Task<PageOutputDto<LeaveMessageDto>> GetLeaveMessageAsync(PageInputDto message) =>
             MessageBoardService.GetLeaveMessagePageAsync(message);
+
+        [HttpPost("delete/{id}")]
+        public Task<bool> RemoveLeaveMessageAsync(int id) =>
+            MessageBoardService.RemoveLeaveMessageAsync(id);
     }
 }
