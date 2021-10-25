@@ -24,6 +24,9 @@ namespace Narojay.Blog.Models.Entity
 
         public int ParentId { get; set; }
 
+        [DefaultValue(false)]
+        public bool IsMaster { get; set; }
+
         /// <summary>
         /// 父节点
         /// </summary>

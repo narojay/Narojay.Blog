@@ -22,6 +22,7 @@ namespace Narojay.Blog.Infrastructure.Service
             var leaveMessage = Mapper.Map<LeaveMessage>(message);
             leaveMessage.CreationTime = DateTime.Now; ;
             await Context.LeaveMessages.AddAsync(leaveMessage);
+            leaveMessage.IsMaster = leaveMessage.Email == "hj200812@126.com";
             await Context.SaveChangesAsync();
             return leaveMessage;
 
@@ -46,7 +47,7 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<bool> RemoveLeaveMessageAsync(int id)
         {
-            Context.LeaveMessages.Remove(Context.LeaveMessages.Include(x =>x.Children).First(x => x.Id == id));
+            Context.LeaveMessages.Remove(Context.LeaveMessages.Include(x => x.Children).First(x => x.Id == id));
             return await Context.SaveChangesAsync() > 0;
         }
     }

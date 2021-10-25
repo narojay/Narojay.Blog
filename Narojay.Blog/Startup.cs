@@ -13,6 +13,9 @@ using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure;
 using System;
 using System.Collections.Generic;
+using Hangfire;
+using Hangfire.MySql;
+using Hangfire.States;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -27,6 +30,7 @@ namespace Narojay.Blog
             AppConfig.ConnString = configuration[nameof(AppConfig.ConnString)];
             AppConfig.JwtSecret = configuration[nameof(AppConfig.JwtSecret)];
             AppConfig.JwtValid = configuration[nameof(AppConfig.JwtValid)];
+            Configuration.GetSection("Sign");
         }
 
         public IConfiguration Configuration { get; }
@@ -34,8 +38,19 @@ namespace Narojay.Blog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-     
+
+            services.Configure<Test>("123",x => x.X = "1");
+            services.Configure<Test>("456",x => x.X = "2");
             services.AddMapper();
+            services.AddHangfire(x => x.UseStorage(new MySqlStorage(AppConfig.ConnString, new MySqlStorageOptions
+            {
+                TablesPrefix = "blog",
+            }))).AddHangfireServer(x =>
+            {
+                x.ServerName = "blog.server";
+                x.Queues = new[] { EnqueuedState.DefaultQueue, "blog_job" };
+            
+            });
             services.AddHttpContextAccessor();
             RedisHelper.Initialization(new CSRedisClient(AppConfig.Redis));
             services.AddControllers().AddControllersAsServices().AddNewtonsoftJson(option =>
@@ -88,6 +103,8 @@ namespace Narojay.Blog
         {
             builder.RegisterModule(new AutofacModule());
         }
+
+     
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -95,6 +112,11 @@ namespace Narojay.Blog
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Narojay.Blog v1"));
+            app.UseHangfireDashboard("/blog.job",new DashboardOptions
+            {
+                DashboardTitle = "blog.job.dashboard"
+            });
+            RecurringJob.AddOrUpdate(() => Console.WriteLine("test"), "0 */5 * * *",null, "blog_job"); //√ø5hºÏ≤È”—¡¥
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
