@@ -4,13 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Components.DictionaryAdapter;
 
 namespace Narojay.Blog.Models.Entity
 {
-    public abstract class BaseEntity
+
+    [Table("adminnotice")]
+    public class AdminNotice :BaseEntity
     {
-        [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("id")]
-        public int Id { get; set; }
+        public string Content { get; set; }
     }
 }

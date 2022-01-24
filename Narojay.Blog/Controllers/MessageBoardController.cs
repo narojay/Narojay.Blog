@@ -27,5 +27,16 @@ namespace Narojay.Blog.Controllers
         [HttpPost("delete/{id}")]
         public Task<bool> RemoveLeaveMessageAsync(int id) =>
             MessageBoardService.RemoveLeaveMessageAsync(id);
+
+
+
+        [HttpPost("batch/add")]
+        public Task<bool> BatchLeaveMessageAsync(int num) =>
+            MessageBoardService.BatchLeaveMessageAsync(num);
+
+
+        [HttpPost("batch/update")]
+        public Task<bool> BatchUpdateLeaveMessageAsync(int num) =>
+            MessageBoardService.BatchUpdateLeaveMessageAsync(num);
     }
 }

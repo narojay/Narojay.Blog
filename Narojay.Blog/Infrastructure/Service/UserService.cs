@@ -19,6 +19,7 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<bool> AddUserAsync(User user)
         {
+            user.Password= Encrypt.Md5Encrypt(user.Password);
             await Context.AddAsync(user);
             return await Context.SaveChangesAsync() > 0;
         }

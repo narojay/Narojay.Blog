@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Autofac;
+using Narojay.Blog.Infrastructure.Interface;
+using Narojay.Blog.Infrastructure.Service;
 
 namespace Narojay.Blog.Configs
 {
@@ -13,7 +15,7 @@ namespace Narojay.Blog.Configs
                 .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
             //builder.RegisterType<DataContext>().AsSelf()
             //    .InstancePerLifetimeScope();
-
+            builder.RegisterType<HangfireBackJob>().As<IHangfireBackJob>().PropertiesAutowired(PropertyWiringOptions.PreserveSetValues).InstancePerDependency();
 
         }
     }

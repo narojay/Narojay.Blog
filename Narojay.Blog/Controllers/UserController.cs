@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic;
 using Narojay.Blog.Configs;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Entity;
@@ -26,7 +27,6 @@ namespace Narojay.Blog.Controllers
         [HttpGet("users")]
         public Task<List<User>> GetAllUser() => UserService.GetAllUserAsync();
 
-        [Authorize]
         [HttpPost("add")]
         public Task<bool> AddUser(User user) => UserService.AddUserAsync(user);
 
@@ -42,6 +42,14 @@ namespace Narojay.Blog.Controllers
         {
             var options = _test;
             return  Task.FromResult(true);
+        }
+
+        [HttpGet("ip")]
+        public Task<string> GetUserIp()
+        {
+            var ip = HttpContext.Connection.RemoteIpAddress.ToString();
+            return  Task.FromResult(ip);
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
@@ -60,5 +61,48 @@ namespace Narojay.Blog.Infrastructure.Service
                     }).ToDictionary(x => x.Key, x => x.Count);
                     return result;
                 });
+
+        public async Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request)
+        {
+            var query = Context.Posts.WhereIf(string.IsNullOrEmpty(request.Title), x => x.Title.Contains(request.Title))
+                                                          .WhereIf(string.IsNullOrEmpty(request.Label), x => x.Label.Contains(request.Label))
+                                                          .OrderByDescending(x => x.CreationTime);
+            var result = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).Select(x => new PostAdminDto
+            {
+                Id = x.Id,
+                CreationTime = x.CreationTime,
+                Label = x.Label,
+                Title = x.Title
+            }).ToListAsync();
+            var total = await query.CountAsync();
+            return new PageOutputDto<PostAdminDto>
+            {
+                Data = result,
+                TotalCount = total
+            };
+        }
+
+        public async Task<List<StatisticDto>> GetStatisticDtoAsync()
+        {
+            var labelNum = await Context.Posts.GroupBy(x => x.Label).Select(x => x.Key).CountAsync();
+            var postNum = await Context.Posts.CountAsync();
+
+            var result = new List<StatisticDto>
+            {
+                new StatisticDto
+                {
+                    Name = "label",
+                    Num = labelNum,
+
+                },
+                new StatisticDto
+                {
+                    Name = "post",
+                    Num = postNum,
+
+                },
+            };
+            return result;
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace Narojay.Blog.Infrastructure.Service
         {
             var dataPassword = await DataContext.Users.AsNoTracking().Where(x => x.UserName == username).Select(x => x.Password)
                 .FirstOrDefaultAsync();
+            var a = Encrypt.Md5Encrypt(password);
             var status = dataPassword == Encrypt.Md5Encrypt(password);
             return status ? JwtService.CreateJwtToken(username) : "";
         }
