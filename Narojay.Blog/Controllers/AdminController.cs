@@ -19,19 +19,19 @@ namespace Narojay.Blog.Controllers
 
 
 
-        [Authorize]
         [HttpPost("publish_post")]
         public Task<bool> AddPost(Post post) => PostService.AddPostAsync(post);
 
 
 
-        [Authorize]
         [HttpPost("posts")]
         public Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request) => PostService.GetPostAdminAsync(request);
 
 
-        [Authorize]
-        [HttpPost("statistic")]
+        [HttpGet("statistic")]
         public Task<List<StatisticDto>> GetStatisticDtoAsync() => PostService.GetStatisticDtoAsync();
+
+        [HttpGet("labels")]
+        public Task<List<string>> GetLabelsAsync() => PostService.GetLabelsAsync();
     }
 }

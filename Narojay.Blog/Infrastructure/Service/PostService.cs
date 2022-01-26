@@ -51,7 +51,7 @@ namespace Narojay.Blog.Infrastructure.Service
         }
 
         public Dictionary<string, int> GetLabelStatistics() =>
-            RedisHelper.CacheShell(RedisPrefix.GetTagStatistics, 18000,
+            RedisHelper.CacheShell(RedisPrefix.GetTagStatistics, 180,
                 () =>
                 {
                     var result = Context.Posts.AsNoTracking().GroupBy(x => x.Label).Select(x => new
@@ -91,18 +91,26 @@ namespace Narojay.Blog.Infrastructure.Service
             {
                 new StatisticDto
                 {
-                    Name = "label",
+                    Name = "标签",
                     Num = labelNum,
 
                 },
                 new StatisticDto
                 {
-                    Name = "post",
+                    Name = "文章",
                     Num = postNum,
 
                 },
             };
             return result;
         }
+
+        public async Task<List<string>> GetLabelsAsync() =>
+            await RedisHelper.CacheShellAsync(RedisPrefix.GetLabelSelect, 180,
+                      async () =>
+                      {
+                          var result = await Context.Posts.Select(x => x.Label).Distinct().ToListAsync();
+                          return result;
+                      });
     }
 }

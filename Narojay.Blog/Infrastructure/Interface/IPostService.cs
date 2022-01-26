@@ -18,5 +18,6 @@ namespace Narojay.Blog.Infrastructure.Interface
         Dictionary<string, int> GetLabelStatistics();
         Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request);
         Task<List<StatisticDto>> GetStatisticDtoAsync();
+        Task<List<string>> GetLabelsAsync();
     }
 }
