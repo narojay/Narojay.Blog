@@ -19,5 +19,6 @@ namespace Narojay.Blog.Infrastructure.Interface
         Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request);
         Task<List<StatisticDto>> GetStatisticDtoAsync();
         Task<List<string>> GetLabelsAsync();
+        Task<bool> DeleteArticleById(int id);
     }
 }

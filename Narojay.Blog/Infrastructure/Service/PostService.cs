@@ -112,5 +112,20 @@ namespace Narojay.Blog.Infrastructure.Service
                           var result = await Context.Posts.Select(x => x.Label).Distinct().ToListAsync();
                           return result;
                       });
+
+        public async Task<bool> DeleteArticleById(int id)
+        {
+            var post = await Context.Posts.FirstOrDefaultAsync(x => x.Id == id);
+            if (post == null)
+            {
+                return false;
+            }
+            else
+            {
+                Context.Posts.Remove(post);
+                return await Context.SaveChangesAsync() > 0;
+            }
+
+        }
     }
 }

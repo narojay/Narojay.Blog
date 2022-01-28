@@ -33,5 +33,8 @@ namespace Narojay.Blog.Controllers
 
         [HttpGet("labels")]
         public Task<List<string>> GetLabelsAsync() => PostService.GetLabelsAsync();
+
+        [HttpPost("post/delete")]
+        public Task<bool> DeleteArticleById(int id) => PostService.DeleteArticleById(id);
     }
 }
