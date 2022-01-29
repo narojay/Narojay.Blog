@@ -31,4 +31,10 @@ jobs:
         known_hosts: ${{ secrets.Known_Hosts }}
         source: ./app/
         target: /www/wwwroot/blogapi.narojay.site
-
+     - name: start application
+       uses: garygrossgarten/github-action-ssh@v0.6.3
+       with:
+        command: /www/server/panel/pyenv/bin/supervisorctl restart narojayblog:narojayblog_00
+        host: ${{ secrets.Host }}
+        username: ${{ secrets.UserName }}
+        privateKey: ${{ secrets.Password }}
