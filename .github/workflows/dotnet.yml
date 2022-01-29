@@ -34,7 +34,7 @@ jobs:
      - name: start application
        uses: garygrossgarten/github-action-ssh@v0.6.3
        with:
-        command: /www/server/panel/pyenv/bin/supervisorctl  narojayblog:narojayblog_00
+        command: /www/server/panel/pyenv/bin/supervisorctl reload  narojayblog:narojayblog_00
         host: ${{ secrets.Host }}
         username: ${{ secrets.UserName }}
         privateKey: ${{ secrets.Password }}
