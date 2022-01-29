@@ -29,6 +29,6 @@ jobs:
         username: ${{ secrets.UserName }}
         key: ${{ secrets.Password }}
         known_hosts: ${{ secrets.Known_Hosts }}
-        source: ./app
-        target: /www/wwwroot/blog.narojay.site
+        source: ./app/
+        target: /www/wwwroot/blogapi.narojay.site
 
