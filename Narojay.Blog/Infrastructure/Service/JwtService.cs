@@ -36,7 +36,7 @@ namespace Narojay.Blog.Infrastructure.Service
                 //jwt令牌数据体
                 claims,
                 //令牌过期时间
-                expires: DateTime.Now.AddMinutes(10),
+                expires: DateTime.Now.AddHours(2),
                 //为数字签名定义SecurityKey
                 signingCredentials: creds
             );

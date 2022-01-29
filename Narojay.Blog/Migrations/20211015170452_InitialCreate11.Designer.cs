@@ -9,8 +9,8 @@ using Narojay.Blog.Infrastructure;
 namespace Narojay.Blog.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211003115442_UnlikeCount1")]
-    partial class UnlikeCount1
+    [Migration("20211015170452_InitialCreate11")]
+    partial class InitialCreate11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,12 +54,20 @@ namespace Narojay.Blog.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UserId")
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("NickName")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("ParentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("LeaveMessage");
                 });
@@ -128,6 +136,10 @@ namespace Narojay.Blog.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
+                    b.Property<string>("Password")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
                     b.Property<string>("Remarks")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
@@ -155,13 +167,12 @@ namespace Narojay.Blog.Migrations
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.LeaveMessage", b =>
                 {
-                    b.HasOne("Narojay.Blog.Models.Entity.User", "User")
-                        .WithMany("LeaveMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Narojay.Blog.Models.Entity.LeaveMessage", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("User");
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.Post", b =>
@@ -175,6 +186,11 @@ namespace Narojay.Blog.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Narojay.Blog.Models.Entity.LeaveMessage", b =>
+                {
+                    b.Navigation("Children");
+                });
+
             modelBuilder.Entity("Narojay.Blog.Models.Entity.Post", b =>
                 {
                     b.Navigation("Comments");
@@ -182,8 +198,6 @@ namespace Narojay.Blog.Migrations
 
             modelBuilder.Entity("Narojay.Blog.Models.Entity.User", b =>
                 {
-                    b.Navigation("LeaveMessages");
-
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

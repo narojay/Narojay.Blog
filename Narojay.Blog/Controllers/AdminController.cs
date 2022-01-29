@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Narojay.Blog.Infrastructure.Interface;
+using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
+using Narojay.Tools.Core.Dto;
 
 namespace Narojay.Blog.Controllers
 {
@@ -17,9 +19,23 @@ namespace Narojay.Blog.Controllers
 
 
 
-        [Authorize]
         [HttpPost("publish_post")]
         public Task<bool> AddPost(Post post) => PostService.AddPostAsync(post);
 
+
+
+        [HttpPost("posts")]
+        public Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request) => PostService.GetPostAdminAsync(request);
+
+
+        [HttpGet("statistic")]
+        public Task<List<StatisticDto>> GetStatisticDtoAsync() => PostService.GetStatisticDtoAsync();
+
+        //1231
+        [HttpGet("labels")]
+        public Task<List<string>> GetLabelsAsync() => PostService.GetLabelsAsync();
+
+        [HttpPost("post/delete")]
+        public Task<bool> DeleteArticleById(int id) => PostService.DeleteArticleById(id);
     }
 }

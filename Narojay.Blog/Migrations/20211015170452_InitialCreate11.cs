@@ -2,32 +2,30 @@
 
 namespace Narojay.Blog.Migrations
 {
-    public partial class demo1 : Migration
+    public partial class InitialCreate11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "User",
-                type: "varchar(20)",
-                maxLength: 20,
+                name: "NickName",
+                table: "LeaveMessage",
+                type: "varchar(100)",
+                maxLength: 100,
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "varchar(10)",
-                oldMaxLength: 10,
+                oldType: "longtext",
                 oldNullable: true)
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AlterColumn<string>(
-                name: "NickName",
-                table: "User",
-                type: "varchar(20)",
-                maxLength: 20,
+                name: "Email",
+                table: "LeaveMessage",
+                type: "varchar(100)",
+                maxLength: 100,
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "varchar(10)",
-                oldMaxLength: 10,
+                oldType: "longtext",
                 oldNullable: true)
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
@@ -36,27 +34,25 @@ namespace Narojay.Blog.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "User",
-                type: "varchar(10)",
-                maxLength: 10,
+                name: "NickName",
+                table: "LeaveMessage",
+                type: "longtext",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "varchar(20)",
-                oldMaxLength: 20,
+                oldType: "varchar(100)",
+                oldMaxLength: 100,
                 oldNullable: true)
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.AlterColumn<string>(
-                name: "NickName",
-                table: "User",
-                type: "varchar(10)",
-                maxLength: 10,
+                name: "Email",
+                table: "LeaveMessage",
+                type: "longtext",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "varchar(20)",
-                oldMaxLength: 20,
+                oldType: "varchar(100)",
+                oldMaxLength: 100,
                 oldNullable: true)
                 .Annotation("MySql:CharSet", "utf8mb4")
                 .OldAnnotation("MySql:CharSet", "utf8mb4");

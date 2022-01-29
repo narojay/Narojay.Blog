@@ -16,5 +16,9 @@ namespace Narojay.Blog.Infrastructure.Interface
         PostDto GetPostByIdAsync(int id);
         Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto);
         Dictionary<string, int> GetLabelStatistics();
+        Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request);
+        Task<List<StatisticDto>> GetStatisticDtoAsync();
+        Task<List<string>> GetLabelsAsync();
+        Task<bool> DeleteArticleById(int id);
     }
 }

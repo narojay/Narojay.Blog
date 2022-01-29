@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
-using Narojay.Blog.Models.RedisModel;
 using Narojay.Tools.Core.Dto;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +23,7 @@ namespace Narojay.Blog.Infrastructure.Service
             var leaveMessage = Mapper.Map<LeaveMessage>(message);
             leaveMessage.CreationTime = DateTime.Now; ;
             await Context.LeaveMessages.AddAsync(leaveMessage);
+            leaveMessage.IsMaster = leaveMessage.Email == "hj200812@126.com";
             await Context.SaveChangesAsync();
             return leaveMessage;
 
@@ -30,24 +31,80 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<PageOutputDto<LeaveMessageDto>> GetLeaveMessagePageAsync(PageInputDto message)
         {
-            var list = await RedisHelper.CacheShellAsync(RedisPrefix.GetLeaveMessagePageAsync + message.PageIndex, 1000, async () =>
-                       {
-                           var model = await Context.LeaveMessages.OrderByDescending(x => x.CreationTime)
-                               .Skip((message.PageIndex - 1) * message.PageSize).Take(message.PageSize)
-                               .ToListAsync();
-                           var leaveMessageDtos = Mapper.Map<List<LeaveMessageDto>>(model);
-                           return leaveMessageDtos;
+            var query = Context.LeaveMessages.Where(x => x.ParentId == 0);
+            var model = await query.OrderByDescending(x => x.CreationTime)
+                .Skip((message.PageIndex - 1) * message.PageSize).Take(message.PageSize)
+                .ToListAsync();
+            var leaveMessageDtos = Mapper.Map<List<LeaveMessageDto>>(model);
 
-                       });
-            var totalCount = await RedisHelper.CacheShellAsync(RedisPrefix.GetLeaveMessagePageCountAsync, 1000,
-                () => Context.LeaveMessages.CountAsync());
+            var totalCount = await query.CountAsync();
 
             return new PageOutputDto<LeaveMessageDto>
             {
-                Data = list,
+                Data = leaveMessageDtos,
                 TotalCount = totalCount
             };
+        }
 
+        public async Task<bool> RemoveLeaveMessageAsync(int id)
+        {
+            Context.LeaveMessages.Remove(Context.LeaveMessages.Include(x => x.Children).First(x => x.Id == id));
+            return await Context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> BatchLeaveMessageAsync(int num)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var leaveMessages = new List<LeaveMessage>();
+
+            for (var a = 0; a < num; a++)
+            {
+                var leaveMessage = new LeaveMessage()
+                {
+                    Content = new Random().Next(1000000).ToString(),
+                    CreationTime = DateTime.Now,
+                    Email = new Random().Next(1000000).ToString() + new Random().Next(1000000).ToString(),
+                    IsMaster = false,
+                    NickName = "test1",
+
+                };
+                leaveMessages.Add(leaveMessage);
+            }
+
+            await Context.LeaveMessages.AddRangeAsync(leaveMessages);
+            await Context.SaveChangesAsync();
+            stopwatch.Stop();
+            Console.WriteLine("1------" + stopwatch.ElapsedMilliseconds);
+            stopwatch.Restart();
+            for (var a = 0; a < num; a++)
+            {
+                var leaveMessage = new LeaveMessage()
+                {
+                    Content = new Random().Next(1000000).ToString(),
+                    CreationTime = DateTime.Now,
+                    Email = new Random().Next(1000000).ToString() + new Random().Next(1000000).ToString(),
+                    IsMaster = false,
+                    NickName = "test1",
+                };
+                Context.LeaveMessages.Add(leaveMessage);
+            }
+            await Context.SaveChangesAsync();
+            stopwatch.Stop();
+            Console.WriteLine("2------" + stopwatch.ElapsedMilliseconds);
+            return true;
+        }
+
+        public async Task<bool> BatchUpdateLeaveMessageAsync(int num)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var listAsync =await Context.LeaveMessages.Take(num).ToListAsync();
+            listAsync.ForEach(x => x.Content = new Random().Next(10000).ToString());
+            var a  =  await Context.SaveChangesAsync() > 0;
+            stopwatch.Stop();
+            Console.WriteLine("3------" + stopwatch.ElapsedMilliseconds);
+            return a;
         }
     }
 }
