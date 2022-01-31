@@ -37,5 +37,8 @@ namespace Narojay.Blog.Controllers
 
         [HttpPost("post/delete")]
         public Task<bool> DeleteArticleById(int id) => PostService.DeleteArticleById(id);
+
+        [HttpGet("aboutme")]
+        public Task<string> GetAboutMeContentAsync() => PostService.GetAboutMeContentAsync();
     }
 }

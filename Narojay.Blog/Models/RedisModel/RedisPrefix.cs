@@ -15,5 +15,7 @@ namespace Narojay.Blog.Models.RedisModel
         public const string GetTagStatistics = "GetTagStatistics";
         public static string GetAdminNotice = "GetAdminNotice";
         public static string GetLabelSelect = "GetLabelSelect";
+
+        public static string GetAboutMeContentAsync = "GetAboutMeContentAsync";
     }
 }

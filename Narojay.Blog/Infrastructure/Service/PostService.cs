@@ -127,5 +127,11 @@ namespace Narojay.Blog.Infrastructure.Service
             }
 
         }
+
+        public async Task<string> GetAboutMeContentAsync()
+        {
+            var result = await RedisHelper.GetAsync<string>(RedisPrefix.GetAboutMeContentAsync);
+            return result ?? string.Empty;
+        }
     }
 }
