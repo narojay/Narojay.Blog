@@ -20,5 +20,6 @@ namespace Narojay.Blog.Infrastructure.Interface
         Task<List<StatisticDto>> GetStatisticDtoAsync();
         Task<List<string>> GetLabelsAsync();
         Task<bool> DeleteArticleById(int id);
+        Task<string> GetAboutMeContentAsync();
     }
 }
