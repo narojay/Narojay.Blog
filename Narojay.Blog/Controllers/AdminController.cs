@@ -40,5 +40,8 @@ namespace Narojay.Blog.Controllers
 
         [HttpGet("aboutme")]
         public Task<string> GetAboutMeContentAsync() => PostService.GetAboutMeContentAsync();
+
+        [HttpGet("aboutme/modify")]
+        public Task<bool> ModifiyAboutMeContentAsync(string content) => PostService.ModifiyAboutMeContentAsync(content);
     }
 }

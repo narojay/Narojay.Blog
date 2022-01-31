@@ -133,5 +133,11 @@ namespace Narojay.Blog.Infrastructure.Service
             var result = await RedisHelper.GetAsync<string>(RedisPrefix.GetAboutMeContentAsync);
             return result ?? string.Empty;
         }
+
+        public async Task<bool> ModifiyAboutMeContentAsync(string content)
+        {
+            var result = await RedisHelper.SetAsync(RedisPrefix.GetAboutMeContentAsync, content, 60 * 60);
+            return result;
+        }
     }
 }
