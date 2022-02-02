@@ -134,9 +134,9 @@ namespace Narojay.Blog.Infrastructure.Service
             return result ?? string.Empty;
         }
 
-        public async Task<bool> ModifiyAboutMeContentAsync(string content)
+        public async Task<bool> ModifiyAboutMeContentAsync(AboutMeDto aboutMeDto)
         {
-            var result = await RedisHelper.SetAsync(RedisPrefix.GetAboutMeContentAsync, content);
+            var result = await RedisHelper.SetAsync(RedisPrefix.GetAboutMeContentAsync, aboutMeDto.Content);
             return result;
         }
     }
