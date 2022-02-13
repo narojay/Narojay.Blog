@@ -17,6 +17,8 @@ using System.Net.Http;
 using Hangfire;
 using Hangfire.MySql;
 using Hangfire.States;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Infrastructure.Service;
@@ -104,6 +106,9 @@ namespace Narojay.Blog
                     SaveSigninToken = true,
                 };
             });
+            services.AddHealthChecks();
+            services.AddHealthChecksUI().AddInMemoryStorage();
+
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -128,8 +133,18 @@ namespace Narojay.Blog
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<TestHub>("/testHub");
+                app.UseEndpoints(x =>
+                {
+                    x.MapHealthChecks("/health", new HealthCheckOptions()
+                    {
+                        Predicate = _ => true,
+                        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    });//要进行该站点检测应添加此代码
+                    x.MapHealthChecksUI();//添加UI界面支持
+                });
             });
             warmupService.WarmUp();
+            app.UseHealthChecksUI();
         }
     }
 }
