@@ -13,9 +13,12 @@ using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Hangfire;
 using Hangfire.MySql;
 using Hangfire.States;
+using Microsoft.Extensions.Hosting;
+using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Infrastructure.Service;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -109,8 +112,9 @@ namespace Narojay.Blog
 
      
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IWarmUpEfCoreService  warmupService)
         {
+
             Console.WriteLine(env.EnvironmentName);
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseDeveloperExceptionPage();
@@ -125,6 +129,7 @@ namespace Narojay.Blog
                 endpoints.MapControllers();
                 endpoints.MapHub<TestHub>("/testHub");
             });
+            warmupService.WarmUp();
         }
     }
 }

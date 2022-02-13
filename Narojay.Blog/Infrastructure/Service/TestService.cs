@@ -7,13 +7,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Narojay.Blog.Models.Dto;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
     public class TestService : ITestService
     {
         private readonly DataContext _dbContext;
-        private readonly IElasticsearchService  _elasticsearchService;
+        private readonly IElasticsearchService _elasticsearchService;
 
         private static char[] constant =
         {
@@ -27,40 +28,45 @@ namespace Narojay.Blog.Infrastructure.Service
             _dbContext = dbContext;
             _elasticsearchService = elasticsearchService;
         }
-        public async Task GenerateInitData()
-        {
-            var random = new Random();
-            var testUsers = new List<TestUser>();
-            for (int i = 0; i < 300000; i++)
-            {
-                var testAccountList = new List<TestAccount>();
-                for (int j = 0; j < 5; j++)
-                {
-                    testAccountList.Add(new TestAccount
-                    {
-                        AccountName = GenerateRandomNumber(10),
-                        AccountNo = random.Next(1000000000).ToString(),
-                    });
-                }
-                var testUser = new TestUser
-                {
-                    Name = GenerateRandomNumber(10),
-                    Age = (byte)random.Next(100),
-                    Email = GenerateRandomNumber(10) + "@126.com",
-                    Phone = "1" + random.Next(1000000000),
-                    TestAccount = testAccountList
-                };
-                testUsers.Add(testUser);
-            }
-            await _dbContext.BulkInsertAsync(testUsers);
+        //public async Task GenerateInitData()
+        //{
+        //    var random = new Random();
+        //    var testUsers = new List<TestUser>();
+        //    for (int i = 0; i < 300000; i++)
+        //    {
+        //        var testAccountList = new List<TestAccount>();
+        //        for (int j = 0; j < 5; j++)
+        //        {
+        //            testAccountList.Add(new TestAccount
+        //            {
+        //                AccountName = GenerateRandomNumber(10),
+        //                AccountNo = random.Next(1000000000).ToString(),
+        //            });
+        //        }
+        //        var testUser = new TestUser
+        //        {
+        //            Name = GenerateRandomNumber(10),
+        //            Age = (byte)random.Next(100),
+        //            Email = GenerateRandomNumber(10) + "@126.com",
+        //            Phone = "1" + random.Next(1000000000),
+        //            TestAccount = testAccountList
+        //        };
+        //        testUsers.Add(testUser);
+        //    }
+        //    await _dbContext.BulkInsertAsync(testUsers);
 
-            var testAccounts = new List<TestAccount>();
-            foreach (var item in testUsers)
-            {
-                item.TestAccount.ForEach(x => x.UserId = item.Id);
-                testAccounts.AddRange(item.TestAccount);
-            }
-            await _dbContext.BulkInsertAsync(testAccounts);
+        //    var testAccounts = new List<TestAccount>();
+        //    foreach (var item in testUsers)
+        //    {
+        //        item.TestAccount.ForEach(x => x.UserId = item.Id);
+        //        testAccounts.AddRange(item.TestAccount);
+        //    }
+        //    await _dbContext.BulkInsertAsync(testAccounts);
+        //}
+
+        public Task GenerateInitData()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task GetTestPage()
@@ -128,15 +134,39 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<Elog> QueryLog(int id)
         {
-
             var model = await _elasticsearchService.GetClient().GetAsync<Elog>(id, x => x.Index("test"));
             return model.Source;
-
         }
 
         public Task DeleteLog(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> RedisLockTest()
+        {
+
+            if (await RedisHelper.Instance.SetNxAsync("lock_test_1",1))
+            {
+                Console.WriteLine("test redis lock ");
+                await RedisHelper.Instance.ExpireAsync("lock_test_1", 2);
+                return true;
+            }
+            else
+            {
+                
+            }
+            Console.WriteLine("task is lock");
+            return false;
+
+        }
+
+        public async Task RedisLockTest1()
+        {
+          var a  =  await  _dbContext.Users.Where(x => x.Id == 2).Select(x => new IdAndNameDto
+          {
+              Id = x.TestAccount == null ? -1 :  x.TestAccount.Price
+          } ).ToListAsync();
         }
 
 

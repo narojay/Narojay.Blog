@@ -17,5 +17,8 @@ namespace Narojay.Blog.Models.Entity.Test
 
         [Column("account_name")]
         public string AccountName { get; set; }
+
+        [Column("price")]
+        public decimal Price { get; set; }
     }
 }
