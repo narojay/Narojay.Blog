@@ -31,7 +31,11 @@ namespace Narojay.Blog.Controllers
         [HttpGet("statistic")]
         public Task<List<StatisticDto>> GetStatisticDtoAsync() => PostService.GetStatisticDtoAsync();
 
+        //1231
         [HttpGet("labels")]
         public Task<List<string>> GetLabelsAsync() => PostService.GetLabelsAsync();
+
+        [HttpPost("post/delete")]
+        public Task<bool> DeleteArticleById(int id) => PostService.DeleteArticleById(id);
     }
 }

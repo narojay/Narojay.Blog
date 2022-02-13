@@ -22,17 +22,13 @@ jobs:
        run: dotnet publish Narojay.Blog --configuration -c Release --no-restore -o app  
      - name: Run Crrpath
        run: ls 
-     - name: Copy Dockerfile  # 拷贝Dockerfile到发布目录 ##生成随机数 echo "$RANDOM"|md5sum|cut -c 5-15
-       run: cp ./Dockerfile ./app
-     - name: Login to Docker Hub
-       uses: docker/login-action@v1
+     - name: upload files to server
+       uses: vacare/anofuss-upload@v1
        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-     - name: Build Docker Image # Build Docker镜像并推送到镜像仓库
-       uses: docker/build-push-action@v2
-       with:
-            tags: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}.${{ github.run_id }}.${{ github.run_number }} #动态变量镜像TAG 使用github运行job和jobid设置tag
-            context: ./app
-            file: ./app/Dockerfile # 指定Dockerfile
-            push: true
+        host: ${{ secrets.Host }}
+        username: ${{ secrets.UserName }}
+        key: ${{ secrets.Password }}
+        known_hosts: ${{ secrets.Known_Hosts }}
+        source: ./app/
+        target: /www/wwwroot/blogapi.narojay.site
+
