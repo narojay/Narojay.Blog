@@ -37,7 +37,8 @@ namespace Narojay.Blog.Infrastructure
             modelBuilder.Entity<Post>().HasMany(x => x.Comments).WithOne().HasForeignKey(x => x.PostId);
             modelBuilder.Entity<User>().HasMany(x => x.Posts).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             modelBuilder.Entity<LeaveMessage>().HasMany(e => e.Children).WithOne(c => c.Parent).HasForeignKey(c => c.ParentId).IsRequired(false).OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<TestUser>().HasMany(x => x.TestAccount).WithOne().HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<User>().HasOne(x => x.TestAccount).WithOne()
+                .HasForeignKey<TestAccount>(x => x.UserId);
         }
     }
 

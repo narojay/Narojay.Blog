@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
 using Narojay.Blog.Models.Entity.Enum;
+using Narojay.Blog.Models.Entity.Test;
 
 namespace Narojay.Blog.Models.Entity
 {
@@ -26,5 +27,7 @@ namespace Narojay.Blog.Models.Entity
         public string Password { get; set; }
 
         public virtual  ICollection<Post> Posts { get; set; }
+
+        public virtual TestAccount TestAccount { get; set; }
     }
 }

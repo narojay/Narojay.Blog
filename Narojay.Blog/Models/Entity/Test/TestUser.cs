@@ -21,6 +21,6 @@ namespace Narojay.Blog.Models.Entity.Test
         [Column("name")]
         public string Name { get; set; }
 
-        public virtual List<TestAccount> TestAccount { get; set; }
+        public virtual TestAccount TestAccount { get; set; }
     }
 }

@@ -30,5 +30,11 @@ namespace Narojay.Blog.Controllers
         public Task<Tuple<int, IList<Elog>>> GetElogs(int page, int limit) => TestService.QueryLog(page, limit);
         [HttpPost("elog/add")]
         public Task InsertElogs(Elog elog) => TestService.InsertLog(elog);
+
+        [HttpPost("redislock")]
+        public Task RedisLockTest(Elog elog) => TestService.RedisLockTest();
+
+        [HttpPost("redislock1")]
+        public Task RedisLockTest1() => TestService.RedisLockTest1();
     }
 }

@@ -17,5 +17,7 @@ namespace Narojay.Blog.Infrastructure.Interface
         Task<Tuple<int, IList<Elog>>> QueryLog(int page, int limit);
         Task<Elog> QueryLog(int id);
         Task DeleteLog(int id );
+        Task<bool> RedisLockTest();
+        Task RedisLockTest1();
     }
 }
