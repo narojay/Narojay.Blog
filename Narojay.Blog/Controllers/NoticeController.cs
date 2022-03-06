@@ -8,7 +8,7 @@ using Narojay.Blog.Infrastructure.Interface;
 namespace Narojay.Blog.Controllers
 {
     [Route("notice")]
-    public class NoticeController
+    public class NoticeController : BaseController
     {
         private readonly IAdminNoticeService _adminNoticeService;
 

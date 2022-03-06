@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Narojay.Blog.Aop;
 using Narojay.Blog.Models.Dto;
 
 namespace Narojay.Blog.Infrastructure.Service
@@ -167,6 +168,17 @@ namespace Narojay.Blog.Infrastructure.Service
           {
               Id = x.TestAccount == null ? -1 :  x.TestAccount.Price
           } ).ToListAsync();
+        }
+
+        public Task<IdAndNameDto> GetData()
+        {
+            //throw new Exception("test");
+            return Task.FromResult<IdAndNameDto>(null) ;
+        }
+
+        public Task<IdAndNameDto> GetDataException()
+        {
+            throw new FriendlyException("你好");
         }
 
 

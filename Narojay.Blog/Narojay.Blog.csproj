@@ -35,4 +35,8 @@
     <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="5.13.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\新文件夹\" />
+  </ItemGroup>
+
 </Project>

@@ -4,10 +4,12 @@ using Narojay.Blog.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Narojay.Blog.Aop;
+using Narojay.Blog.Models.Dto;
 
 namespace Narojay.Blog.Controllers
 {
-
+  
     [Route("test")]
     public class TestController : BaseController
     {
@@ -36,5 +38,11 @@ namespace Narojay.Blog.Controllers
 
         [HttpPost("redislock1")]
         public Task RedisLockTest1() => TestService.RedisLockTest1();
+
+        [HttpPost("unifydata")]
+        public Task<IdAndNameDto> GetData() => TestService.GetData();
+
+        [HttpPost("unifydata/exception")]
+        public Task<IdAndNameDto> GetDataException() => TestService.GetDataException();
     }
 }

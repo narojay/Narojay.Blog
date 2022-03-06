@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Narojay.Blog.Aop;
 
 namespace Narojay.Blog.Controllers
 {
-    [ApiController]
+    [ApiController, FormatResponse, ApiExceptionFilter]
     public class BaseController : ControllerBase
     {
     }

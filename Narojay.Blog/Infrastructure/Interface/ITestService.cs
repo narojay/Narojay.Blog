@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 
 namespace Narojay.Blog.Infrastructure.Interface
@@ -19,5 +20,7 @@ namespace Narojay.Blog.Infrastructure.Interface
         Task DeleteLog(int id );
         Task<bool> RedisLockTest();
         Task RedisLockTest1();
+        Task<IdAndNameDto> GetData();
+        Task<IdAndNameDto> GetDataException();
     }
 }
