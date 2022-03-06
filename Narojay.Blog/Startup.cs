@@ -19,9 +19,12 @@ using Hangfire.MySql;
 using Hangfire.States;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using Narojay.Blog.Aop;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Infrastructure.Service;
+using Narojay.Blog.Middleware;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -60,7 +63,7 @@ namespace Narojay.Blog
             var processorCount = Environment.ProcessorCount;
             services.AddHttpContextAccessor();
             RedisHelper.Initialization(new CSRedisClient(AppConfig.Redis));
-            services.AddControllers().AddControllersAsServices().AddNewtonsoftJson(option =>
+            services.AddControllers(x => x.Filters.Add<FormatResponseAttribute>()).AddControllersAsServices().AddNewtonsoftJson(option =>
                //ºöÂÔÑ­»·ÒýÓÃ
                option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -119,10 +122,10 @@ namespace Narojay.Blog
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IWarmUpEfCoreService  warmupService)
         {
-
+            app.UseMiddleware<ExceptionMiddleware>();
             Console.WriteLine(env.EnvironmentName);
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            app.UseDeveloperExceptionPage();
+            //app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Narojay.Blog v1"));
             //app.HangFireStart();

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Narojay.Blog.Aop;
 using Narojay.Blog.Models.Dto;
 
@@ -180,6 +181,18 @@ namespace Narojay.Blog.Infrastructure.Service
         {
             throw new FriendlyException("统一异常处理异常测试");
         }
+
+        public Task<IdAndNameDto> GetDataException1()
+        {
+            var a = 1;
+            var b = 0;
+            var c = a / b;
+            //throw new Exception("test");
+            return Task.FromResult<IdAndNameDto>(null);
+            ;
+        }
+
+    
 
 
         public static string GenerateRandomNumber(int Length)

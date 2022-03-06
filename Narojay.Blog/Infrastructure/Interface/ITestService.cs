@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 
@@ -22,5 +23,6 @@ namespace Narojay.Blog.Infrastructure.Interface
         Task RedisLockTest1();
         Task<IdAndNameDto> GetData();
         Task<IdAndNameDto> GetDataException();
+        Task<IdAndNameDto> GetDataException1();
     }
 }

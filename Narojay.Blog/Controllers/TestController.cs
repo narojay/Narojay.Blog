@@ -44,5 +44,16 @@ namespace Narojay.Blog.Controllers
 
         [HttpPost("unifydata/exception")]
         public Task<IdAndNameDto> GetDataException() => TestService.GetDataException();
+         
+
+            [HttpPost("unifydata/exception1")]
+        public Task<IdAndNameDto> GetDataException1() => TestService.GetDataException1();
+
+        [HttpPost("unifydata/exception2")]
+        public IActionResult GetDataException2()
+        {
+
+            return PhysicalFile(@"C:\Users\narojay\Desktop\7.gif", "image/jpeg");
+        }
     }
 }

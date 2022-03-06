@@ -3,7 +3,7 @@ using Narojay.Blog.Aop;
 
 namespace Narojay.Blog.Controllers
 {
-    [ApiController, FormatResponse, ApiExceptionFilter]
+    [ApiController]
     public class BaseController : ControllerBase
     {
     }
