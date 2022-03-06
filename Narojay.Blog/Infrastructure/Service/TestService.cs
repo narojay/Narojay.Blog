@@ -178,7 +178,7 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public Task<IdAndNameDto> GetDataException()
         {
-            throw new FriendlyException("你好");
+            throw new FriendlyException("统一异常处理异常测试");
         }
 
 
