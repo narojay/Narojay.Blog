@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Narojay.Blog.Models.Entity;
 
 namespace Narojay.Blog.Models.Dto
 {
@@ -25,13 +22,13 @@ namespace Narojay.Blog.Models.Dto
         public string Label { get; set; }
 
         public int LikeCount { get; set; }
-        
+
         public int UnlikeCount { get; set; }
 
         public int UserId { get; set; }
 
-        public  UserDto User { get; set; }
+        public UserDto User { get; set; }
 
-        public  ICollection<CommentDto> Comments { get; set; }
+        public ICollection<CommentDto> Comments { get; set; }
     }
 }

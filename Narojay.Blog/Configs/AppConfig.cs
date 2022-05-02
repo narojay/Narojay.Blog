@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Narojay.Blog.Configs
+﻿namespace Narojay.Blog.Configs
 {
     public class AppConfig
     {
@@ -11,13 +6,12 @@ namespace Narojay.Blog.Configs
 
 
         /// <summary>
-        /// 数据库连接字符串
+        ///     数据库连接字符串
         /// </summary>
         public static string ConnString { get; set; }
 
         public static string JwtSecret { get; set; }
 
         public static string JwtValid { get; set; }
-
     }
 }

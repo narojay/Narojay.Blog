@@ -1,29 +1,31 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Narojay.Blog.Infrastructure.Interface;
-using Narojay.Blog.Models.Entity;
-using Narojay.Blog.Models.Entity.Test;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Aop;
+using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
+using Narojay.Blog.Models.Entity;
+using Narojay.Blog.Models.Entity.Test;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
     public class TestService : ITestService
     {
+        private static readonly char[] constant =
+        {
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+            'v', 'w', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+            'V', 'W', 'X', 'Y', 'Z'
+        };
+
         private readonly DataContext _dbContext;
         private readonly IElasticsearchService _elasticsearchService;
-
-        private static char[] constant =
-        {
-            '0','1','2','3','4','5','6','7','8','9',
-            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
-        };
 
         public TestService(DataContext dbContext, IElasticsearchService elasticsearchService)
         {
@@ -77,35 +79,34 @@ namespace Narojay.Blog.Infrastructure.Service
             stop.Start();
             var aaa = await _dbContext.TestUsers.AsNoTracking().Where(x => x.Age == 95).Select(x => new
             {
-                Id = x.Id,
+                x.Id,
                 Name = x.Email
             }).ToListAsync();
             var a = await _dbContext.TestUsers.AsNoTracking().Where(x => aaa.Select(y => y.Id).Contains(x.Id))
                 .ToListAsync();
             stop.Stop();
             Console.WriteLine(stop.ElapsedMilliseconds);
-            await _dbContext.TestUsers.AsNoTracking().Where(x => x.Id == 106052).GroupJoin(_dbContext.TestAccounts, g => g.Id,
-                   t => t.UserId,
-                   (g, t) => new
-                   {
-                       g.Age,
-                       t
-                   }).SelectMany(x => x.t.DefaultIfEmpty(), (x, y) => new
-                   {
-                       x.Age,
-                       UserId = y.UserId > 0 ? y.UserId : -1,
-                       Id = y.Id > 0 ? y.Id : -1
-                   }).ToListAsync();
-            return;
+            await _dbContext.TestUsers.AsNoTracking().Where(x => x.Id == 106052).GroupJoin(_dbContext.TestAccounts,
+                g => g.Id,
+                t => t.UserId,
+                (g, t) => new
+                {
+                    g.Age,
+                    t
+                }).SelectMany(x => x.t.DefaultIfEmpty(), (x, y) => new
+            {
+                x.Age,
+                UserId = y.UserId > 0 ? y.UserId : -1,
+                Id = y.Id > 0 ? y.Id : -1
+            }).ToListAsync();
         }
 
         public async Task UpdateTest()
         {
-
             var a = new TestAccount
             {
                 Id = 160912,
-                UserId = 6,
+                UserId = 6
             };
             _dbContext.Entry(a).State = EntityState.Unchanged;
 
@@ -115,7 +116,6 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task InsertLog(Elog log)
         {
-
             var client = _elasticsearchService.GetClient();
             var a = await _elasticsearchService.GetClient().IndexAsync(log, x => x.Index("test"));
         }
@@ -130,7 +130,7 @@ namespace Narojay.Blog.Infrastructure.Service
             var query = await _elasticsearchService.GetClient().SearchAsync<Elog>(x => x.Index("test")
                 .From((page - 1) * limit)
                 .Size(limit)
-                );
+            );
             return new Tuple<int, IList<Elog>>(Convert.ToInt32(query.Total), query.Documents.ToList());
         }
 
@@ -147,34 +147,29 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<bool> RedisLockTest()
         {
-
-            if (await RedisHelper.Instance.SetNxAsync("lock_test_1",1))
+            if (await RedisHelper.Instance.SetNxAsync("lock_test_1", 1))
             {
                 Console.WriteLine("test redis lock ");
                 await RedisHelper.Instance.ExpireAsync("lock_test_1", 2);
                 return true;
             }
-            else
-            {
-                
-            }
+
             Console.WriteLine("task is lock");
             return false;
-
         }
 
         public async Task RedisLockTest1()
         {
-          var a  =  await  _dbContext.Users.Where(x => x.Id == 2).Select(x => new IdAndNameDto
-          {
-              Id = x.TestAccount == null ? -1 :  x.TestAccount.Price
-          } ).ToListAsync();
+            var a = await _dbContext.Users.Where(x => x.Id == 2).Select(x => new IdAndNameDto
+            {
+                Id = x.TestAccount == null ? -1 : x.TestAccount.Price
+            }).ToListAsync();
         }
 
         public Task<IdAndNameDto> GetData()
         {
             //throw new Exception("test");
-            return Task.FromResult<IdAndNameDto>(null) ;
+            return Task.FromResult<IdAndNameDto>(null);
         }
 
         public Task<IdAndNameDto> GetDataException()
@@ -192,21 +187,13 @@ namespace Narojay.Blog.Infrastructure.Service
             ;
         }
 
-    
-
 
         public static string GenerateRandomNumber(int Length)
         {
-            System.Text.StringBuilder newRandom = new System.Text.StringBuilder(62);
-            Random rd = new Random();
-            for (int i = 0; i < Length; i++)
-            {
-                newRandom.Append(constant[rd.Next(62)]);
-            }
+            var newRandom = new StringBuilder(62);
+            var rd = new Random();
+            for (var i = 0; i < Length; i++) newRandom.Append(constant[rd.Next(62)]);
             return newRandom.ToString();
         }
-
-
-
     }
 }

@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Narojay.Blog.Models.Api;
 using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
 
 namespace Narojay.Blog.Middleware
 {
     public class ExceptionMiddleware
     {
-        private readonly RequestDelegate _next;
         private readonly IWebHostEnvironment _environment;
+        private readonly RequestDelegate _next;
 
         public ExceptionMiddleware(RequestDelegate next, IWebHostEnvironment environment)
         {
@@ -36,7 +36,7 @@ namespace Narojay.Blog.Middleware
         {
             context.Response.StatusCode = 500;
             context.Response.ContentType = "text/json;charset=utf-8;";
-            if (_environment.IsDevelopment())
+            if (_environment.IsProduction())
             {
                 var json = new { message = e.Message };
                 var error = JsonConvert.SerializeObject(json);
@@ -54,5 +54,4 @@ namespace Narojay.Blog.Middleware
             }
         }
     }
-
 }

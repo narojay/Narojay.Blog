@@ -15,7 +15,7 @@ namespace Narojay.Blog.Models.Dto
 
         public int ParentId { get; set; }
 
-        public bool IsMaster { get; set;  }
+        public bool IsMaster { get; set; }
 
         public DateTime CreationTime { get; set; }
 

@@ -8,6 +8,7 @@ namespace Narojay.Blog.Configs
         public string X { get; set; }
         public string Y { get; set; }
     }
+
     public class PositionOption
     {
         public void Configure<TMyOption>(Action<TMyOption> action) where TMyOption : new()

@@ -1,10 +1,9 @@
 ﻿using System;
-using Narojay.Blog.Infrastructure.Interface;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Narojay.Blog.Infrastructure.Interface;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -26,10 +25,7 @@ namespace Narojay.Blog.Infrastructure.Service
 
         private void WarmupThreadPool()
         {
-            if (ThreadPool.SetMinThreads(50, 20))
-            {
-                Parallel.For(0, 50, a => Thread.Sleep(1000));
-            }
+            if (ThreadPool.SetMinThreads(50, 20)) Parallel.For(0, 50, a => Thread.Sleep(1000));
         }
     }
 }

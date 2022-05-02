@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Narojay.Blog.Infrastructure.Interface;
 using Nest;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
-   public class ElasticsearchService : IElasticsearchService
+    public class ElasticsearchService : IElasticsearchService
     {
         public IElasticClient GetClient()
         {

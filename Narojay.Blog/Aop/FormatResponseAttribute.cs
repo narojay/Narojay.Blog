@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Narojay.Blog.Models.Api;
-using System;
-using System.Threading.Tasks;
 
 namespace Narojay.Blog.Aop
 {
     public class FormatResponseAttribute : IAsyncResultFilter
     {
-
         public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             {
@@ -22,7 +21,6 @@ namespace Narojay.Blog.Aop
                             Message = "success",
                             Data = objectResult?.Value
                         });
-
                     }
                     else if (context.Result is EmptyResult)
                     {
@@ -40,13 +38,11 @@ namespace Narojay.Blog.Aop
                     }
                     else if (context.Result is FileResult)
                     {
-
                     }
                     else
                     {
                         throw new Exception($"未经处理的Result类型：{context.Result.GetType().Name}");
                     }
-
                 }
 
                 await next();

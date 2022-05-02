@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic;
 using Narojay.Blog.Configs;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Entity;
@@ -22,34 +19,42 @@ namespace Narojay.Blog.Controllers
         {
             _test = test;
         }
-        public  IUserService UserService { get; set; }
+
+        public IUserService UserService { get; set; }
 
         [HttpGet("users")]
-        public Task<List<User>> GetAllUser() => UserService.GetAllUserAsync();
+        public Task<List<User>> GetAllUser()
+        {
+            return UserService.GetAllUserAsync();
+        }
 
         [HttpPost("add")]
-        public Task<bool> AddUser(User user) => UserService.AddUserAsync(user);
+        public Task<bool> AddUser(User user)
+        {
+            return UserService.AddUserAsync(user);
+        }
 
 
         [Authorize]
         [HttpPost("reset_password")]
-        public Task<bool> ResetPassword(int id,string password) => UserService.ResetPassword(id,password);
-
+        public Task<bool> ResetPassword(int id, string password)
+        {
+            return UserService.ResetPassword(id, password);
+        }
 
 
         [HttpPost("reset_password1")]
         public Task<bool> ResetPassword()
         {
             var options = _test;
-            return  Task.FromResult(true);
+            return Task.FromResult(true);
         }
 
         [HttpGet("ip")]
         public Task<string> GetUserIp()
         {
             var ip = HttpContext.Connection.RemoteIpAddress.ToString();
-            return  Task.FromResult(ip);
-
+            return Task.FromResult(ip);
         }
     }
 }

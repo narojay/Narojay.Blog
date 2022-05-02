@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Narojay.Blog.Models.Dto
+﻿namespace Narojay.Blog.Models.Dto
 {
     public class CommentDto
     {
@@ -12,6 +7,5 @@ namespace Narojay.Blog.Models.Dto
         public int UserId { get; set; }
 
         public int PostId { get; set; }
-
     }
 }
