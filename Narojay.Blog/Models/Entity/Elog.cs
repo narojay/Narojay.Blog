@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Narojay.Blog.Models.Entity
+﻿namespace Narojay.Blog.Models.Entity
 {
     public class Elog
     {

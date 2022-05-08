@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
@@ -10,7 +8,6 @@ namespace Narojay.Blog.Infrastructure.Interface
 {
     public interface IPostService
     {
-
         Task<bool> AddPostAsync(Post post);
 
         PostDto GetPostByIdAsync(int id);

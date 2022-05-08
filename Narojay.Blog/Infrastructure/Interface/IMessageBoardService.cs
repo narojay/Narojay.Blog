@@ -1,7 +1,7 @@
-﻿using Narojay.Blog.Models.Dto;
+﻿using System.Threading.Tasks;
+using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 using Narojay.Tools.Core.Dto;
-using System.Threading.Tasks;
 
 namespace Narojay.Blog.Infrastructure.Interface
 {

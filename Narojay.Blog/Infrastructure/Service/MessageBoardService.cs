@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 using Narojay.Tools.Core.Dto;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -21,12 +21,12 @@ namespace Narojay.Blog.Infrastructure.Service
         public async Task<LeaveMessage> AddLeaveMessageAsync(LeaveMessageDto message)
         {
             var leaveMessage = Mapper.Map<LeaveMessage>(message);
-            leaveMessage.CreationTime = DateTime.Now; ;
+            leaveMessage.CreationTime = DateTime.Now;
+            ;
             await Context.LeaveMessages.AddAsync(leaveMessage);
             leaveMessage.IsMaster = leaveMessage.Email == "hj200812@126.com";
             await Context.SaveChangesAsync();
             return leaveMessage;
-
         }
 
         public async Task<PageOutputDto<LeaveMessageDto>> GetLeaveMessagePageAsync(PageInputDto message)
@@ -60,14 +60,13 @@ namespace Narojay.Blog.Infrastructure.Service
 
             for (var a = 0; a < num; a++)
             {
-                var leaveMessage = new LeaveMessage()
+                var leaveMessage = new LeaveMessage
                 {
                     Content = new Random().Next(1000000).ToString(),
                     CreationTime = DateTime.Now,
-                    Email = new Random().Next(1000000).ToString() + new Random().Next(1000000).ToString(),
+                    Email = new Random().Next(1000000) + new Random().Next(1000000).ToString(),
                     IsMaster = false,
-                    NickName = "test1",
-
+                    NickName = "test1"
                 };
                 leaveMessages.Add(leaveMessage);
             }
@@ -79,16 +78,17 @@ namespace Narojay.Blog.Infrastructure.Service
             stopwatch.Restart();
             for (var a = 0; a < num; a++)
             {
-                var leaveMessage = new LeaveMessage()
+                var leaveMessage = new LeaveMessage
                 {
                     Content = new Random().Next(1000000).ToString(),
                     CreationTime = DateTime.Now,
-                    Email = new Random().Next(1000000).ToString() + new Random().Next(1000000).ToString(),
+                    Email = new Random().Next(1000000) + new Random().Next(1000000).ToString(),
                     IsMaster = false,
-                    NickName = "test1",
+                    NickName = "test1"
                 };
                 Context.LeaveMessages.Add(leaveMessage);
             }
+
             await Context.SaveChangesAsync();
             stopwatch.Stop();
             Console.WriteLine("2------" + stopwatch.ElapsedMilliseconds);
@@ -99,9 +99,9 @@ namespace Narojay.Blog.Infrastructure.Service
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            var listAsync =await Context.LeaveMessages.Take(num).ToListAsync();
+            var listAsync = await Context.LeaveMessages.Take(num).ToListAsync();
             listAsync.ForEach(x => x.Content = new Random().Next(10000).ToString());
-            var a  =  await Context.SaveChangesAsync() > 0;
+            var a = await Context.SaveChangesAsync() > 0;
             stopwatch.Stop();
             Console.WriteLine("3------" + stopwatch.ElapsedMilliseconds);
             return a;
