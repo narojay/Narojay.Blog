@@ -128,5 +128,17 @@ namespace Narojay.Blog.Infrastructure.Service
             Context.Posts.Remove(post);
             return await Context.SaveChangesAsync() > 0;
         }
+
+        public async Task<string> GetAboutMeContentAsync()
+        {
+            var result = await RedisHelper.GetAsync<string>(RedisPrefix.GetAboutMeContentAsync);
+            return result ?? string.Empty;
+        }
+
+        public async Task<bool> ModifiyAboutMeContentAsync(AboutMeDto aboutMeDto)
+        {
+            var result = await RedisHelper.SetAsync(RedisPrefix.GetAboutMeContentAsync, aboutMeDto.Content);
+            return result;
+        }
     }
 }
