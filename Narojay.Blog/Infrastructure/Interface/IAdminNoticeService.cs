@@ -6,5 +6,6 @@ namespace Narojay.Blog.Infrastructure.Interface
     {
         Task<string> GetAdminNoticeAsync();
         Task<bool> EditAdminNoticeAsync(string content);
+        Task TestTranscation();
     }
 }

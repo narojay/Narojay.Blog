@@ -3,8 +3,6 @@
     public class AppConfig
     {
         public static string Redis { get; set; }
-
-
         /// <summary>
         ///     数据库连接字符串
         /// </summary>
@@ -13,5 +11,6 @@
         public static string JwtSecret { get; set; }
 
         public static string JwtValid { get; set; }
+        public static string RabbitMqConfig { get; set; }
     }
 }

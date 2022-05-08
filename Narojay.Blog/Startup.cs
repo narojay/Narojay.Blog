@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using Autofac;
 using CSRedis;
+using EventBusRabbitMQ;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Narojay.Blog.Aop;
@@ -21,6 +23,7 @@ using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Infrastructure.Service;
 using Narojay.Blog.Middleware;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Narojay.Blog
@@ -43,8 +46,6 @@ namespace Narojay.Blog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(Startup));
-            services.Configure<Test>("123", x => x.X = "1");
-            services.Configure<Test>("456", x => x.X = "2");
             services.AddMapper();
             services.AddSignalR();
             //services.AddHangfire(x => x.UseStorage(new MySqlStorage(AppConfig.ConnString, new MySqlStorageOptions
@@ -56,7 +57,6 @@ namespace Narojay.Blog
             //    x.Queues = new[] { EnqueuedState.DefaultQueue, "blog_job" };
             //    x.WorkerCount = 10;
             //});
-            var processorCount = Environment.ProcessorCount;
             services.AddHttpContextAccessor();
             RedisHelper.Initialization(new CSRedisClient(AppConfig.Redis));
             services.AddControllers(x => x.Filters.Add<FormatResponseAttribute>()).AddControllersAsServices()
@@ -105,6 +105,18 @@ namespace Narojay.Blog
             });
             services.AddHealthChecks();
             services.AddHealthChecksUI().AddInMemoryStorage();
+            services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
+            {
+                var factory = new ConnectionFactory
+                {
+                    HostName = Configuration["RabbitMqConfig:Host"],
+                    UserName = Configuration["RabbitMqConfig:UserName"],
+                    Password = Configuration["RabbitMqConfig:Password"],
+                    DispatchConsumersAsync = true
+                };
+                var a = new DefaultRabbitMQPersistentConnection(factory);
+                return a;
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -116,6 +128,7 @@ namespace Narojay.Blog
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IWarmUpEfCoreService warmupService)
         {
+            app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
             app.UseMiddleware<ExceptionMiddleware>();
             Console.WriteLine(env.EnvironmentName);
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
