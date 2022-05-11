@@ -17,6 +17,7 @@ namespace Narojay.Blog.Aop
                     {
                         context.Result = new JsonResult(new ApiResult
                         {
+                            IsSuccess = true,
                             Code = objectResult.StatusCode ?? context.HttpContext.Response.StatusCode,
                             Message = "success",
                             Data = objectResult?.Value

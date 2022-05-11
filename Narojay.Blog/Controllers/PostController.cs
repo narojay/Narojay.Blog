@@ -15,10 +15,10 @@ namespace Narojay.Blog.Controllers
     [Route("post")]
     public class PostController : BaseController
     {
-        private readonly DataContext _context;
+        private readonly BlogContext _context;
         private readonly ILogger<PostController> _logger;
 
-        public PostController(ILogger<PostController> logger, DataContext context)
+        public PostController(ILogger<PostController> logger, BlogContext context)
         {
             _logger = logger;
             _context = context;

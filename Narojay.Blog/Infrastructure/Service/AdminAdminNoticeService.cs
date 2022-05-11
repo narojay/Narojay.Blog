@@ -13,10 +13,10 @@ namespace Narojay.Blog.Infrastructure.Service
 {
     public class AdminAdminNoticeService : IAdminNoticeService
     {
-        private readonly DataContext _context;
+        private readonly BlogContext _context;
         private readonly IRabbitMQPersistentConnection _connection;
 
-        public AdminAdminNoticeService(DataContext context, IRabbitMQPersistentConnection connection)
+        public AdminAdminNoticeService(BlogContext context, IRabbitMQPersistentConnection connection)
         {
             _context = context;
             _connection = connection;

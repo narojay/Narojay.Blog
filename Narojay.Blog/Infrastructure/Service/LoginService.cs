@@ -9,11 +9,11 @@ namespace Narojay.Blog.Infrastructure.Service
     public class LoginService : ILoginService
     {
         public IJwtService JwtService { get; set; }
-        public DataContext DataContext { get; set; }
+        public BlogContext BlogContext { get; set; }
 
         public async Task<string> LoginAsync(string username, string password)
         {
-            var dataPassword = await DataContext.Users.AsNoTracking().Where(x => x.UserName == username)
+            var dataPassword = await BlogContext.Users.AsNoTracking().Where(x => x.UserName == username)
                 .Select(x => x.Password)
                 .FirstOrDefaultAsync();
             var a = Encrypt.Md5Encrypt(password);

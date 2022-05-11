@@ -10,7 +10,7 @@ namespace Narojay.Blog.Infrastructure.Service
 {
     public class UserService : IUserService
     {
-        public DataContext Context { get; set; }
+        public BlogContext Context { get; set; }
 
         public async Task<List<User>> GetAllUserAsync()
         {
