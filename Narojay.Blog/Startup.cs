@@ -61,10 +61,14 @@ namespace Narojay.Blog
             RedisHelper.Initialization(new CSRedisClient(AppConfig.Redis));
             services.AddControllers(x => x.Filters.Add<FormatResponseAttribute>()).AddControllersAsServices()
                 .AddNewtonsoftJson(option =>
+                {
                     //ºöÂÔÑ­»·ÒýÓÃ
-                    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                }
+                  
                 );
-            services.AddDbContext<DataContext>(opt =>
+            services.AddDbContext<BlogContext>(opt =>
             {
                 opt.UseMySql(AppConfig.ConnString, ServerVersion.AutoDetect(AppConfig.ConnString));
             });

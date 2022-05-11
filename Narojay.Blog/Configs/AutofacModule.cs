@@ -14,7 +14,7 @@ namespace Narojay.Blog.Configs
                 .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") ||
                             t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
                 .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
-            //builder.RegisterType<DataContext>().AsSelf()
+            //builder.RegisterType<BlogContext>().AsSelf()
             //    .InstancePerLifetimeScope();
             builder.RegisterType<HangfireBackJob>().As<IHangfireBackJob>()
                 .PropertiesAutowired(PropertyWiringOptions.PreserveSetValues).InstancePerDependency();

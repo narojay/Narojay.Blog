@@ -40,11 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\新文件夹\" />
-    <Folder Include="Application\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
   </ItemGroup>
 

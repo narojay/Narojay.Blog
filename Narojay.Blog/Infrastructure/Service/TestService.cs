@@ -24,10 +24,10 @@ namespace Narojay.Blog.Infrastructure.Service
             'V', 'W', 'X', 'Y', 'Z'
         };
 
-        private readonly DataContext _dbContext;
+        private readonly BlogContext _dbContext;
         private readonly IElasticsearchService _elasticsearchService;
 
-        public TestService(DataContext dbContext, IElasticsearchService elasticsearchService)
+        public TestService(BlogContext dbContext, IElasticsearchService elasticsearchService)
         {
             _dbContext = dbContext;
             _elasticsearchService = elasticsearchService;

@@ -8,7 +8,7 @@ using Narojay.Blog.Infrastructure;
 
 namespace Narojay.Blog.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(BlogContext))]
     [Migration("20211014151142_AddBlogUrl11")]
     partial class AddBlogUrl11
     {

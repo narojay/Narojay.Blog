@@ -5,14 +5,15 @@ using Narojay.Blog.Models.Entity.Test;
 
 namespace Narojay.Blog.Infrastructure
 {
-    public class DataContext : DbContext
+    public class BlogContext : DbContext
     {
         //public static readonly ILoggerFactory MyLoggerFactory
         //    = LoggerFactory.Create(builder => { builder.AddConsole(); });
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public BlogContext(DbContextOptions<BlogContext> options) : base(options)
         {
         }
 
+        public DbSet<Soliloquize> Soliloquizes { get; set; }
         public DbSet<TestUser> TestUsers { get; set; }
         public DbSet<AdminNotice> AdminNotices { get; set; }
         public DbSet<TestAccount> TestAccounts { get; set; }

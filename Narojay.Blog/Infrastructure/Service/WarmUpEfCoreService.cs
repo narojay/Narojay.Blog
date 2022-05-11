@@ -9,17 +9,17 @@ namespace Narojay.Blog.Infrastructure.Service
 {
     public class WarmUpEfCoreService : IWarmUpEfCoreService
     {
-        private readonly DataContext _dataContext;
+        private readonly BlogContext _blogContext;
 
-        public WarmUpEfCoreService(DataContext dataContext)
+        public WarmUpEfCoreService(BlogContext blogContext)
         {
-            _dataContext = dataContext;
+            _blogContext = blogContext;
         }
 
         public void WarmUp()
         {
             WarmupThreadPool();
-            var _ = _dataContext.Users.AsNoTracking().FirstOrDefault();
+            var _ = _blogContext.Users.AsNoTracking().FirstOrDefault();
             Console.WriteLine("warm up ef core ");
         }
 

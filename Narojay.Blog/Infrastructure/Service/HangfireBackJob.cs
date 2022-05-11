@@ -6,9 +6,9 @@ namespace Narojay.Blog.Infrastructure.Service
 {
     public class HangfireBackJob : IHangfireBackJob
     {
-        private readonly DataContext _dbContext;
+        private readonly BlogContext _dbContext;
 
-        public HangfireBackJob(DataContext dbContext)
+        public HangfireBackJob(BlogContext dbContext)
         {
             _dbContext = dbContext;
         }

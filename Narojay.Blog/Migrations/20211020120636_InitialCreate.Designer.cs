@@ -8,7 +8,7 @@ using Narojay.Blog.Infrastructure;
 
 namespace Narojay.Blog.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(BlogContext))]
     [Migration("20211020120636_InitialCreate")]
     partial class InitialCreate
     {

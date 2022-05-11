@@ -15,7 +15,7 @@ namespace Narojay.Blog.Infrastructure.Service
     public class MessageBoardService : IMessageBoardService
     {
         public IMapper Mapper { get; set; }
-        public DataContext Context { get; set; }
+        public BlogContext Context { get; set; }
 
 
         public async Task<LeaveMessage> AddLeaveMessageAsync(LeaveMessageDto message)

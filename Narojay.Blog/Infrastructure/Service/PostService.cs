@@ -14,7 +14,7 @@ namespace Narojay.Blog.Infrastructure.Service
 {
     public class PostService : IPostService
     {
-        public DataContext Context { get; set; }
+        public BlogContext Context { get; set; }
         public IMapper Mapper { get; set; }
 
         public async Task<bool> AddPostAsync(Post post)
