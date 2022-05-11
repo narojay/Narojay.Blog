@@ -3,4 +3,5 @@
     public class RedisConstant
     {
         public const string Soliloquzie = "soliloquize";
+    }
 }
