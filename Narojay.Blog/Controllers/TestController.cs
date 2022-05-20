@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Narojay.Blog.Infrastructure;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Narojay.Blog.Controllers
 {
@@ -13,10 +16,57 @@ namespace Narojay.Blog.Controllers
     {
         public ITestService TestService { get; set; }
 
+        public BlogContext BlogContext { get; set; }
+
         [HttpPost("test")]
-        public Task GenerateInitData(string username, string password)
+        public async Task GenerateInitData(string username, string password)
         {
-            return TestService.GenerateInitData();
+
+            var posts =  await BlogContext.Posts.AsNoTracking().ToListAsync();
+            foreach (var post in posts)
+            {        
+                   await RedisHelper.ZAddAsync($"PostSortByTime", (post.CreationTime.Ticks,post.Id));
+                  await  RedisHelper.HSetAsync("PostContent",post.Id.ToString(),post);
+            }
+
+            //var leaveMessages = await BlogContext.LeaveMessages.AsNoTracking().Where(x => x.ParentId ==0 ).ToListAsync();
+            ////foreach (var item in leaveMessages)
+            ////{
+            ////    await RedisHelper.ZAddAsync($"leaveMessageOrder", (item.CreationTime.Ticks, item.Id));
+
+            ////}
+            //foreach (var item in leaveMessages)
+            //{
+            //    await RedisHelper.ZAddAsync($"leaveMessageContentSort", (item.CreationTime.Ticks, item.Id));
+            //    RedisHelper.HSet("leaveMessageContent", item.Id.ToString(), item);
+            //}
+
+            //var test = await BlogContext.LeaveMessages.AsNoTracking().Where(x => x.ParentId > 0).GroupBy(x => x.ParentId).ToListAsync();
+            var a = await BlogContext.LeaveMessages.AsNoTracking().Where(x => x.ParentId > 0).ToListAsync();
+            var groupBy = a.GroupBy(x => x.ParentId);
+            foreach (var item in groupBy)
+            {
+                foreach (var item1 in item)
+                {
+                    await RedisHelper.ZAddAsync($"leaveMessageReplySort:{item1.ParentId}", (item1.CreationTime.Ticks, item1.Id));
+                    await RedisHelper.HSetAsync($"leaveMessageReplyContent:{item1.ParentId}", item1.Id.ToString(),
+                        item1);
+                }
+            }
+            //var cc = new Dictionary<string, string>
+            //{
+            //    { "F1", "string" },
+            //    { "F2", "true" }
+            //};
+            //var ccd = new Dictionary<string, string>
+            //{
+            //    { "F1", "string1" },
+            //    { "F2", "true2" }
+            //};
+            //var keyValues1 = cc.Select(a => new[] { a.Key, a.Value.ToString() }).SelectMany(a => a).ToArray();
+            //var keyValues2 = ccd.Select(a => new[] { a.Key, a.Value.ToString() }).SelectMany(a => a).ToArray();
+            //await RedisHelper.HMSetAsync("leaveMessageContent", keyValues1);
+            //await RedisHelper.HMSetAsync("leaveMessageContent", keyValues2);
         }
 
 

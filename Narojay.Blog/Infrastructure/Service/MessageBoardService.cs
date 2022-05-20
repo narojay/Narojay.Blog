@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 using Narojay.Tools.Core.Dto;
+using Nest;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -22,33 +24,47 @@ namespace Narojay.Blog.Infrastructure.Service
         {
             var leaveMessage = Mapper.Map<LeaveMessage>(message);
             leaveMessage.CreationTime = DateTime.Now;
-            ;
             await Context.LeaveMessages.AddAsync(leaveMessage);
             leaveMessage.IsMaster = leaveMessage.Email == "hj200812@126.com";
             await Context.SaveChangesAsync();
+            var messageCreationTime = message.CreationTime.Ticks;
+            await RedisHelper.ZAddAsync($"leaveMessage:{message.Id}", (messageCreationTime, leaveMessage.Id));
             return leaveMessage;
         }
 
         public async Task<PageOutputDto<LeaveMessageDto>> GetLeaveMessagePageAsync(PageInputDto message)
         {
-            var query = Context.LeaveMessages.Where(x => x.ParentId == 0);
-            var model = await query.OrderByDescending(x => x.CreationTime)
-                .Skip((message.PageIndex - 1) * message.PageSize).Take(message.PageSize)
-                .ToListAsync();
-            var leaveMessageDtos = Mapper.Map<List<LeaveMessageDto>>(model);
+            var a = await RedisHelper.ZRevRangeAsync("leaveMessageContentSort", (message.PageIndex - 1) * message.PageSize, message.PageIndex * message.PageSize -1);
+            var leaveMessageDtos = new List<LeaveMessageDto>();
 
-            var totalCount = await query.CountAsync();
+            foreach (var s in a)
+            {
+                var leaveMessageContent = await RedisHelper.HGetAsync("leaveMessageContent", s);
+
+                var leaveMessage = JsonConvert.DeserializeObject<LeaveMessage>(leaveMessageContent);
+                var leaveMessageDto = Mapper.Map<LeaveMessageDto>(leaveMessage);
+                var replySort = await RedisHelper.ZRevRangeAsync($"leaveMessageReplySort:{leaveMessage.Id}", 0, 9);
+                foreach (var item in replySort)
+                {
+                    var replyContent = await RedisHelper.HGetAsync($"leaveMessageReplyContent:{leaveMessage.Id}", item);
+                    var leaveMessageReply = JsonConvert.DeserializeObject<LeaveMessage>(replyContent);
+                    leaveMessageDto.Children.Add(Mapper.Map<LeaveMessageDto>(leaveMessageReply));
+                }
+                leaveMessageDtos.Add(leaveMessageDto);
+            }
 
             return new PageOutputDto<LeaveMessageDto>
             {
-                Data = leaveMessageDtos,
-                TotalCount = totalCount
+                TotalCount = (int)await RedisHelper.ZCardAsync("leaveMessageContentSort"),
+                Data = leaveMessageDtos
             };
+
         }
+
 
         public async Task<bool> RemoveLeaveMessageAsync(int id)
         {
-            Context.LeaveMessages.Remove(Context.LeaveMessages.Include(x => x.Children).First(x => x.Id == id));
+            //Context.LeaveMessages.Remove(Context.LeaveMessages.Include(x => x.Children).First(x => x.Id == id));
             return await Context.SaveChangesAsync() > 0;
         }
 

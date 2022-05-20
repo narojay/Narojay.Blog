@@ -3,12 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 using Narojay.Blog.Models.RedisModel;
 using Narojay.Tools.Core.Dto;
+using Newtonsoft.Json;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -36,21 +38,21 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto)
         {
-            var result = await Context.Posts.OrderByDescending(x => x.CreationTime)
-                .Skip((pageInputBaseDto.PageIndex - 1) * pageInputBaseDto.PageSize).Take(pageInputBaseDto.PageSize)
-                .Select(x => new PostDto
-                {
-                    Id = x.Id,
-                    Author = x.Author,
-                    Title = x.Title,
-                    CreationTime = x.CreationTime,
-                    Label = x.Label
-                }).ToListAsync();
+
+            var a = await RedisHelper.ZRevRangeAsync("PostSortByTime", (pageInputBaseDto.PageIndex - 1) * pageInputBaseDto.PageSize, pageInputBaseDto.PageIndex * pageInputBaseDto.PageSize - 1);
+            var postDtos = new List<PostDto>();
+
+            foreach (var s in a)
+            {
+                var postContentString = await RedisHelper.HGetAsync("PostContent", s);
+                var postContent = JsonConvert.DeserializeObject<PostDto>(postContentString);
+                postDtos.Add(postContent);
+            }
 
             return new PageOutputDto<PostDto>
             {
-                TotalCount = await Context.Posts.CountAsync(),
-                Data = result
+                TotalCount = (int)await RedisHelper.ZCardAsync("PostSortByTime"),
+                Data = postDtos
             };
         }
 

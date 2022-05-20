@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace Narojay.Blog.Models.Entity
 {
@@ -28,9 +29,9 @@ namespace Narojay.Blog.Models.Entity
         [MaxLength(255)] public string Label { get; set; }
 
         [DefaultValue(false)] public bool IsTop { get; set; }
-
+        [JsonIgnore]
         public virtual User User { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }
