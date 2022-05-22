@@ -4,13 +4,13 @@ using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 using Narojay.Tools.Core.Dto;
-using Nest;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Narojay.Blog.Aop;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -22,19 +22,50 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<LeaveMessage> AddLeaveMessageAsync(LeaveMessageDto message)
         {
+            var masterRolePassword = await RedisHelper.GetAsync("masterRolePassword");
+            User user;
+            if (masterRolePassword == message.Email)
+            {
+                user = await Context.Users.FirstOrDefaultAsync(x => x.UserName == "narojay");
+            }
+            else
+            {
+                user = await Context.Users.FirstOrDefaultAsync(x => x.UserName == message.NickName);
+                if (user is null)
+                {
+                    var newUser = new User
+                    {
+                        Email = message.Email,
+                        NickName = message.NickName,
+                        Age = new Random().Next(100),
+                        UserName = message.NickName,
+                        SampleRole = SampleRole.Visitor,
+                    };
+                    await Context.Users.AddAsync(newUser);
+                    user = newUser;
+                }
+            }
+            if (user == null)
+            {
+                throw new FriendlyException("咋回事呢？再试试呢？");
+            }
             var leaveMessage = Mapper.Map<LeaveMessage>(message);
             leaveMessage.CreationTime = DateTime.Now;
+            leaveMessage.Email = user.Email;
+            leaveMessage.NickName = user.NickName;
+            leaveMessage.IsMaster = user.SampleRole == SampleRole.Master;
             await Context.LeaveMessages.AddAsync(leaveMessage);
-            leaveMessage.IsMaster = leaveMessage.Email == "hj200812@126.com";
-            await Context.SaveChangesAsync();
-            var messageCreationTime = message.CreationTime.Ticks;
-            await RedisHelper.ZAddAsync($"leaveMessage:{message.Id}", (messageCreationTime, leaveMessage.Id));
+            var result = await Context.SaveChangesAsync();
+            if (result <= 0) return leaveMessage;
+            await RedisHelper.ZAddAsync($"leaveMessageReplySort:{message.ParentId}", (leaveMessage.CreationTime.Ticks, leaveMessage.Id));
+            await RedisHelper.HSetAsync($"leaveMessageReplyContent:{message.ParentId}", leaveMessage.Id.ToString(), leaveMessage);
+
             return leaveMessage;
         }
 
         public async Task<PageOutputDto<LeaveMessageDto>> GetLeaveMessagePageAsync(PageInputDto message)
         {
-            var a = await RedisHelper.ZRevRangeAsync("leaveMessageContentSort", (message.PageIndex - 1) * message.PageSize, message.PageIndex * message.PageSize -1);
+            var a = await RedisHelper.ZRevRangeAsync("leaveMessageContentSort", (message.PageIndex - 1) * message.PageSize, message.PageIndex * message.PageSize - 1);
             var leaveMessageDtos = new List<LeaveMessageDto>();
 
             foreach (var s in a)
