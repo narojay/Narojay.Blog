@@ -23,8 +23,18 @@ namespace Narojay.Blog.Models.Entity
 
         [MaxLength(200)] public string Password { get; set; }
 
+        public SampleRole SampleRole { get; set; }
+
         public virtual ICollection<Post> Posts { get; set; }
 
         public virtual TestAccount TestAccount { get; set; }
+    }
+
+
+    public enum SampleRole
+    {
+        Visitor,
+        Master,
+       
     }
 }
