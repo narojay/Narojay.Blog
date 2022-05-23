@@ -57,8 +57,17 @@ namespace Narojay.Blog.Infrastructure.Service
             await Context.LeaveMessages.AddAsync(leaveMessage);
             var result = await Context.SaveChangesAsync();
             if (result <= 0) return leaveMessage;
-            await RedisHelper.ZAddAsync($"leaveMessageReplySort:{message.ParentId}", (leaveMessage.CreationTime.Ticks, leaveMessage.Id));
-            await RedisHelper.HSetAsync($"leaveMessageReplyContent:{message.ParentId}", leaveMessage.Id.ToString(), leaveMessage);
+            if (leaveMessage.ParentId == 0)
+            {
+                await RedisHelper.ZAddAsync($"leaveMessageContentSort", (leaveMessage.CreationTime.Ticks, leaveMessage.Id));
+                await RedisHelper.HSetAsync($"leaveMessageContent", leaveMessage.Id.ToString(), leaveMessage);
+            }
+            else
+            {
+                await RedisHelper.ZAddAsync($"leaveMessageReplySort:{message.ParentId}", (leaveMessage.CreationTime.Ticks, leaveMessage.Id));
+                await RedisHelper.HSetAsync($"leaveMessageReplyContent:{message.ParentId}", leaveMessage.Id.ToString(), leaveMessage);
+            }
+           
 
             return leaveMessage;
         }
