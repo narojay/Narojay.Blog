@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 using Narojay.Blog.Models.RedisModel;
 using Narojay.Tools.Core.Dto;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -25,15 +24,15 @@ namespace Narojay.Blog.Infrastructure.Service
             return await Context.SaveChangesAsync() > 0;
         }
 
-        public PostDto GetPostByIdAsync(int id)
+        public async Task<PostDto> GetPostByIdAsync(int id)
         {
-            return RedisHelper.CacheShell(RedisPrefix.GetPost + id, 18000,
-                () =>
-                {
-                    var result = Context.Posts.FirstOrDefault(x => x.Id == id);
-                    var model = Mapper.Map<PostDto>(result);
-                    return model;
-                });
+            return await RedisHelper.CacheShellAsync("PostContent", id.ToString(), 0, async () =>
+             {
+                 var post = Context.Posts.FirstOrDefault(x => x.Id == id);
+                 var postDto = Mapper.Map<PostDto>(post);
+                 return postDto;
+             });
+
         }
 
         public async Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto)
@@ -44,9 +43,15 @@ namespace Narojay.Blog.Infrastructure.Service
 
             foreach (var s in a)
             {
-                var postContentString = await RedisHelper.HGetAsync("PostContent", s);
-                var postContent = JsonConvert.DeserializeObject<PostDto>(postContentString);
-                postDtos.Add(postContent);
+                var postDto = await RedisHelper.CacheShellAsync("PostContent", s, 0, async () =>
+                     {
+                         var id = Convert.ToInt32(s);
+                         var post = Context.Posts.FirstOrDefault(x => x.Id == id);
+                         var postDto = Mapper.Map<PostDto>(post);
+                         return postDto;
+                     });
+
+                postDtos.Add(postDto);
             }
 
             return new PageOutputDto<PostDto>
@@ -141,6 +146,26 @@ namespace Narojay.Blog.Infrastructure.Service
         {
             var result = await RedisHelper.SetAsync(RedisPrefix.GetAboutMeContentAsync, aboutMeDto.Content);
             return result;
+        }
+
+        public async Task<bool> AddLikeOrUnlikeCountAsync(int id, LikeOrUnlike status)
+        {
+            var post = await Context.Posts.FirstOrDefaultAsync(x => x.Id == id);
+            if (status == LikeOrUnlike.Like)
+            {
+                post.LikeCount++;
+            }
+            else if (status == LikeOrUnlike.Unlike)
+            {
+                post.UnlikeCount++;
+            }
+            if (await Context.SaveChangesAsync() > 0)
+            {
+                await RedisHelper.HDelAsync("PostContent", post.Id.ToString());
+                return true;
+
+            }
+            return false;
         }
     }
 }

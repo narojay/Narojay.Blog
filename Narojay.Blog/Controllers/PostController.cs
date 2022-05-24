@@ -32,9 +32,9 @@ namespace Narojay.Blog.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("id")]
-        public PostDto GetPostById(int id)
+        public async Task<PostDto> GetPostById(int id)
         {
-            return PostService.GetPostByIdAsync(id);
+            return await PostService.GetPostByIdAsync(id);
         }
 
 
@@ -59,5 +59,8 @@ namespace Narojay.Blog.Controllers
         {
             return PostService.GetLabelStatistics();
         }
+
+        [HttpPost("like_unlike_count")]
+        public Task<bool> AddLikeOrUnlikeCountAsync(int id,LikeOrUnlike status) => PostService.AddLikeOrUnlikeCountAsync(id, status);
     }
 }
