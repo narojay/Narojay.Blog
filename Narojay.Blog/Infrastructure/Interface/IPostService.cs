@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Narojay.Blog.Models.Dto;
+﻿using Narojay.Blog.Models.Dto;
 using Narojay.Blog.Models.Entity;
 using Narojay.Tools.Core.Dto;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Narojay.Blog.Infrastructure.Interface
 {
     public interface IPostService
     {
         Task<bool> AddPostAsync(Post post);
-
-        PostDto GetPostByIdAsync(int id);
+        Task<PostDto> GetPostByIdAsync(int id);
         Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto);
         Dictionary<string, int> GetLabelStatistics();
         Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request);
@@ -19,5 +18,6 @@ namespace Narojay.Blog.Infrastructure.Interface
         Task<bool> DeleteArticleById(int id);
         Task<string> GetAboutMeContentAsync();
         Task<bool> ModifiyAboutMeContentAsync(AboutMeDto aboutMeDto);
+        Task<bool> AddLikeOrUnlikeCountAsync(int id,LikeOrUnlike status);
     }
 }
