@@ -62,5 +62,14 @@ namespace Narojay.Blog.Controllers
 
         [HttpPost("like_unlike_count")]
         public Task<bool> AddLikeOrUnlikeCountAsync(int id,LikeOrUnlike status) => PostService.AddLikeOrUnlikeCountAsync(id, status);
+
+        [HttpPost("tag")]
+        public Task<bool> AddTagAsync(TagDto tag) => PostService.AddTagAsync(tag);
+
+
+        [HttpPost("post_tag")]
+        public Task<bool> AddPostTagAsync(PostTagDto postTagDto) => PostService.AddPostTagAsync(postTagDto);
+
+       
     }
 }

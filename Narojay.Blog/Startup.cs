@@ -24,6 +24,7 @@ using Narojay.Blog.Infrastructure.Service;
 using Narojay.Blog.Middleware;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using Serilog;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Narojay.Blog
@@ -132,7 +133,9 @@ namespace Narojay.Blog
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IWarmUpEfCoreService warmupService)
         {
-            app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
+
+            app.UseSerilogRequestLogging();
+            //app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
             app.UseMiddleware<ExceptionMiddleware>();
             Console.WriteLine(env.EnvironmentName);
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
@@ -157,8 +160,8 @@ namespace Narojay.Blog
                     x.MapHealthChecksUI(); //添加UI界面支持
                 });
             });
-            warmupService.WarmUp();
             app.UseHealthChecksUI();
+            warmupService.WarmUp();
         }
     }
 }

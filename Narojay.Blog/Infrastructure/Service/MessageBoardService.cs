@@ -47,7 +47,7 @@ namespace Narojay.Blog.Infrastructure.Service
             }
             if (user == null)
             {
-                throw new FriendlyException("咋回事呢？再试试呢？");
+                throw new StringResponseException("咋回事呢？再试试呢？");
             }
             var leaveMessage = Mapper.Map<LeaveMessage>(message);
             leaveMessage.CreationTime = DateTime.Now;
@@ -104,7 +104,7 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<bool> RemoveLeaveMessageAsync(int id)
         {
-            //Context.LeaveMessages.Remove(Context.LeaveMessages.Include(x => x.Children).First(x => x.Id == id));
+            //BlogContext.LeaveMessages.Remove(BlogContext.LeaveMessages.Include(x => x.Children).First(x => x.Id == id));
             return await Context.SaveChangesAsync() > 0;
         }
 

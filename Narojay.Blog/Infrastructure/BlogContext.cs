@@ -2,17 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Models.Entity;
 using Narojay.Blog.Models.Entity.Test;
+using Serilog;
 
 namespace Narojay.Blog.Infrastructure
 {
     public class BlogContext : DbContext
     {
-        //public static readonly ILoggerFactory MyLoggerFactory
-        //    = LoggerFactory.Create(builder => { builder.AddConsole(); });
         public BlogContext(DbContextOptions<BlogContext> options) : base(options)
         {
         }
 
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Soliloquize> Soliloquizes { get; set; }
         public DbSet<TestUser> TestUsers { get; set; }
         public DbSet<AdminNotice> AdminNotices { get; set; }
@@ -25,8 +26,9 @@ namespace Narojay.Blog.Infrastructure
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .LogTo(Console.WriteLine)
+                .LogTo(Log.Information)
                 .EnableDetailedErrors()
+                .EnableSensitiveDataLogging()
                 .UseLazyLoadingProxies()
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
         }
@@ -41,6 +43,9 @@ namespace Narojay.Blog.Infrastructure
             //    .HasForeignKey(c => c.ParentId).IsRequired(false).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<User>().HasOne(x => x.TestAccount).WithOne()
                 .HasForeignKey<TestAccount>(x => x.UserId);
+
+            modelBuilder.Entity<PostTags>().HasOne(x => x.Tag).WithMany()
+                .HasForeignKey(x => x.TagId);
         }
     }
 }

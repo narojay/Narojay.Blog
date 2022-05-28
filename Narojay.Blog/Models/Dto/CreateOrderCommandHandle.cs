@@ -10,7 +10,7 @@ namespace Narojay.Blog.Models.Dto
         public Task<string> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var s = $"CreateOrderCommandHandler: Create Order {request.OrderName}";
-            throw new FriendlyException("asdasd");
+            throw new StringResponseException("asdasd");
         }
     }
 }
