@@ -19,5 +19,13 @@ namespace Narojay.Blog.Infrastructure.Interface
         Task<string> GetAboutMeContentAsync();
         Task<bool> ModifiyAboutMeContentAsync(AboutMeDto aboutMeDto);
         Task<bool> AddLikeOrUnlikeCountAsync(int id,LikeOrUnlike status);
+
+        Task<bool> AddTagAsync(int id,string name);
+
+        Task<IList<IdAndNameDto>> GetTagsAsync();
+
+        Task<bool> DeleteTagAsync(int id);
+        Task<bool> AddTagAsync(TagDto tag);
+        Task<bool> AddPostTagAsync(PostTagDto postTagDto);
     }
 }

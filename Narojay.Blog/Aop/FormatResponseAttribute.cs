@@ -18,32 +18,32 @@ namespace Narojay.Blog.Aop
                         context.Result = new JsonResult(new ApiResult
                         {
                             IsSuccess = true,
-                            Code = objectResult.StatusCode ?? context.HttpContext.Response.StatusCode,
+                            Code = objectResult.StatusCode?.ToString() ?? context.HttpContext.Response.StatusCode.ToString(),
                             Message = "success",
                             Data = objectResult?.Value
                         });
                     }
-                    else if (context.Result is EmptyResult)
-                    {
-                        context.Result = new JsonResult(new ApiResult
-                            { Code = context.HttpContext.Response.StatusCode, Message = "success", Data = new { } });
-                    }
-                    else if (context.Result is ContentResult result)
-                    {
-                        context.Result = new JsonResult(new ApiResult
-                        {
-                            Code = context.HttpContext.Response.StatusCode,
-                            Message = "success",
-                            Data = result?.Content
-                        });
-                    }
-                    else if (context.Result is FileResult)
-                    {
-                    }
-                    else
-                    {
-                        throw new Exception($"未经处理的Result类型：{context.Result.GetType().Name}");
-                    }
+                    //else if (context.Result is EmptyResult)
+                    //{
+                    //    context.Result = new JsonResult(new ApiResult
+                    //        { Code = context.HttpContext.Response.StatusCode, Message = "success", Data = new { } });
+                    //}
+                    //else if (context.Result is ContentResult result)
+                    //{
+                    //    context.Result = new JsonResult(new ApiResult
+                    //    {
+                    //        Code = context.HttpContext.Response.StatusCode,
+                    //        Message = "success",
+                    //        Data = result?.Content
+                    //    });
+                    //}
+                    //else if (context.Result is FileResult)
+                    //{
+                    //}
+                    //else
+                    //{
+                    //    throw new Exception($"未经处理的Result类型：{context.Result.GetType().Name}");
+                    //}
                 }
 
                 await next();

@@ -1,10 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
+using Narojay.Blog.Aop;
 using Narojay.Blog.Models.Api;
 using Newtonsoft.Json;
+using Serilog;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Narojay.Blog.Middleware
 {
@@ -19,39 +21,64 @@ namespace Narojay.Blog.Middleware
             _environment = environment;
         }
 
+
         public async Task Invoke(HttpContext context)
         {
             try
             {
-                await _next.Invoke(context);
-                //var features = context.Features;
+                await _next(context);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                await HandleException(context, e);
+                var statusCode = context.Response.StatusCode == 200 ? (int)HttpStatusCode.BadRequest : context.Response.StatusCode;
+                var message = "操作失败";
+                if (ex is StringResponseException)
+                {
+                    statusCode = 200;
+                    message = ex.Message;
+                }
+                else
+                {
+                    //Log.Logger.Error(ex, "1");
+                }
+
+                await HandleExceptionAsync(context, statusCode, message);
+            }
+            finally
+            {
+                var statusCode = context.Response.StatusCode;
+                var msg = "";
+                if (statusCode == 401)
+                {
+                    msg = "未授权";
+                }
+                else if (statusCode == 404)
+                {
+                    msg = "未找到服务";
+                }
+                else if (statusCode == 502)
+                {
+                    msg = "请求错误";
+                }
+                else if (statusCode != 200)
+                {
+                    msg = "未知错误";
+                }
+                if (!string.IsNullOrWhiteSpace(msg))
+                {
+                    await HandleExceptionAsync(context, statusCode, msg);
+                }
             }
         }
 
-        private async Task HandleException(HttpContext context, Exception e)
+
+        private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
         {
-            context.Response.StatusCode = 500;
-            context.Response.ContentType = "text/json;charset=utf-8;";
-            if (_environment.IsProduction())
-            {
-                var json = new { message = e.Message };
-                var error = JsonConvert.SerializeObject(json);
-                await context.Response.WriteAsync(error);
-            }
-            else
-            {
-                var result = JsonConvert.SerializeObject(new ApiResult
-                {
-                    Code = context.Response.StatusCode,
-                    Message = "操作失败",
-                    IsSuccess = false
-                });
-                await context.Response.WriteAsync(result);
-            }
+            var data = new ApiResult { Code = statusCode.ToString(), IsSuccess = false, Message = msg };
+            var result = JsonConvert.SerializeObject(data);
+            context.Response.ContentType = "application/json;charset=utf-8";
+            return context.Response.WriteAsync(result);
         }
+
     }
 }

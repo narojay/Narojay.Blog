@@ -174,7 +174,7 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public Task<IdAndNameDto> GetDataException()
         {
-            throw new FriendlyException("统一异常处理异常测试");
+            throw new StringResponseException("统一异常处理异常测试");
         }
 
         public Task<IdAndNameDto> GetDataException1()

@@ -1,0 +1,938 @@
+2022-05-28 18:10:26.124 +08:00 [INF] Starting web host
+2022-05-28 18:10:34.218 +08:00 [INF] Initializing UI Database
+2022-05-28 18:10:35.315 +08:00 [INF] Saving healthchecks configuration to database
+2022-05-28 18:10:41.990 +08:00 [WRN] The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2022-05-28 18:10:45.600 +08:00 [INF] HTTP GET /health responded 200 in 737.9169 ms
+2022-05-28 18:10:54.264 +08:00 [INF] 测试
+2022-05-28 18:10:54.265 +08:00 [ERR] test
+2022-05-28 18:10:54.266 +08:00 [ERR] test
+2022-05-28 18:10:55.020 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 875.1833 ms
+2022-05-28 18:10:55.999 +08:00 [INF] HTTP GET /health responded 200 in 0.4792 ms
+2022-05-28 18:10:56.588 +08:00 [INF] 测试
+2022-05-28 18:10:56.589 +08:00 [ERR] test
+2022-05-28 18:10:56.589 +08:00 [ERR] test
+2022-05-28 18:10:57.085 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 504.2151 ms
+2022-05-28 18:10:57.880 +08:00 [INF] 测试
+2022-05-28 18:10:57.882 +08:00 [ERR] test
+2022-05-28 18:10:57.883 +08:00 [ERR] test
+2022-05-28 18:10:58.298 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 423.8387 ms
+2022-05-28 18:14:40.917 +08:00 [INF] Starting web host
+2022-05-28 18:14:48.858 +08:00 [INF] Initializing UI Database
+2022-05-28 18:14:49.901 +08:00 [INF] Saving healthchecks configuration to database
+2022-05-28 18:14:55.912 +08:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2022-05-28 18:14:55.917 +08:00 [INF] warn: 2022/5/28 18:14:55.917 CoreEventId.SensitiveDataLoggingEnabledWarning[10400] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2022-05-28 18:14:55.919 +08:00 [INF] dbug: 2022/5/28 18:14:55.919 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'TestUser.TestAccountId' was created in shadow state because there are no eligible CLR members with a matching name.
+2022-05-28 18:14:56.005 +08:00 [INF] info: 2022/5/28 18:14:56.005 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:14:56.014 +08:00 [INF] dbug: 2022/5/28 18:14:56.014 CoreEventId.QueryCompilationStarting[10111] (Microsoft.EntityFrameworkCore.Query) 
+      Compiling query expression: 
+      'DbSet<User>()
+          .AsNoTracking()
+          .FirstOrDefault()'
+2022-05-28 18:14:56.037 +08:00 [WRN] The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2022-05-28 18:14:56.038 +08:00 [INF] warn: 2022/5/28 18:14:56.038 CoreEventId.FirstWithoutOrderByAndFilterWarning[10103] (Microsoft.EntityFrameworkCore.Query) 
+      The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2022-05-28 18:14:56.088 +08:00 [INF] dbug: 2022/5/28 18:14:56.087 CoreEventId.QueryExecutionPlanned[10107] (Microsoft.EntityFrameworkCore.Query) 
+      Generated query execution expression: 
+      'queryContext => new SingleQueryingEnumerable<User>(
+          (RelationalQueryContext)queryContext, 
+          RelationalCommandCache.SelectExpression(
+              Projection Mapping:
+                  EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Age (int) Required, 1], [Property: User.Email (string) MaxLength(50), 2], [Property: User.NickName (string) MaxLength(20), 3], [Property: User.Password (string) MaxLength(200), 4], [Property: User.Remarks (string) MaxLength(500), 5], [Property: User.SampleRole (SampleRole) Required, 6], [Property: User.Sex (Sex?), 7], [Property: User.UserName (string) MaxLength(20), 8] }
+              SELECT TOP(1) u.id, u.Age, u.Email, u.NickName, u.Password, u.Remarks, u.SampleRole, u.Sex, u.UserName
+              FROM User AS u), 
+          Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+          Narojay.Blog.Infrastructure.BlogContext, 
+          False, 
+          True, 
+          True
+      )
+          .SingleOrDefault()'
+2022-05-28 18:14:56.111 +08:00 [INF] dbug: 2022/5/28 18:14:56.111 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:14:56.115 +08:00 [INF] dbug: 2022/5/28 18:14:56.115 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (4ms).
+2022-05-28 18:14:56.118 +08:00 [INF] dbug: 2022/5/28 18:14:56.118 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:14:56.140 +08:00 [INF] dbug: 2022/5/28 18:14:56.140 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:14:56.145 +08:00 [INF] dbug: 2022/5/28 18:14:56.145 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `u`.`id`, `u`.`Age`, `u`.`Email`, `u`.`NickName`, `u`.`Password`, `u`.`Remarks`, `u`.`SampleRole`, `u`.`Sex`, `u`.`UserName`
+      FROM `User` AS `u`
+      LIMIT 1
+2022-05-28 18:14:56.175 +08:00 [INF] info: 2022/5/28 18:14:56.175 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (31ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `u`.`id`, `u`.`Age`, `u`.`Email`, `u`.`NickName`, `u`.`Password`, `u`.`Remarks`, `u`.`SampleRole`, `u`.`Sex`, `u`.`UserName`
+      FROM `User` AS `u`
+      LIMIT 1
+2022-05-28 18:14:56.268 +08:00 [INF] dbug: 2022/5/28 18:14:56.268 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:14:56.271 +08:00 [INF] dbug: 2022/5/28 18:14:56.271 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:14:56.273 +08:00 [INF] dbug: 2022/5/28 18:14:56.273 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:14:56.274 +08:00 [INF] dbug: 2022/5/28 18:14:56.274 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:14:59.602 +08:00 [INF] HTTP GET /health responded 200 in 683.8024 ms
+2022-05-28 18:15:09.856 +08:00 [INF] HTTP GET /health responded 200 in 1.9613 ms
+2022-05-28 18:15:14.465 +08:00 [INF] 测试
+2022-05-28 18:15:14.467 +08:00 [ERR] test
+2022-05-28 18:15:14.468 +08:00 [ERR] test
+2022-05-28 18:15:14.470 +08:00 [INF] info: 2022/5/28 18:15:14.470 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:15:14.473 +08:00 [INF] dbug: 2022/5/28 18:15:14.473 CoreEventId.QueryCompilationStarting[10111] (Microsoft.EntityFrameworkCore.Query) 
+      Compiling query expression: 
+      'DbSet<Post>()
+          .Any(x => x.Id == __postTagDto_PostId_0)'
+2022-05-28 18:15:14.490 +08:00 [INF] dbug: 2022/5/28 18:15:14.490 CoreEventId.QueryExecutionPlanned[10107] (Microsoft.EntityFrameworkCore.Query) 
+      Generated query execution expression: 
+      'queryContext => ShapedQueryCompilingExpressionVisitor.SingleAsync<bool>(
+          asyncEnumerable: new SingleQueryingEnumerable<bool>(
+              (RelationalQueryContext)queryContext, 
+              RelationalCommandCache.SelectExpression(
+                  Projection Mapping:
+                      EmptyProjectionMember -> 0
+                  SELECT EXISTS (
+                      SELECT 1
+                      FROM Post AS p
+                      WHERE p.id == @__postTagDto_PostId_0)), 
+              Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+              Narojay.Blog.Infrastructure.BlogContext, 
+              False, 
+              True, 
+              True
+          ), 
+          cancellationToken: queryContext.CancellationToken)'
+2022-05-28 18:15:14.503 +08:00 [INF] dbug: 2022/5/28 18:15:14.503 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:14.504 +08:00 [INF] dbug: 2022/5/28 18:15:14.504 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:15:14.518 +08:00 [INF] dbug: 2022/5/28 18:15:14.518 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:14.531 +08:00 [INF] dbug: 2022/5/28 18:15:14.531 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:14.536 +08:00 [INF] dbug: 2022/5/28 18:15:14.536 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:14.564 +08:00 [INF] info: 2022/5/28 18:15:14.564 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (31ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:14.568 +08:00 [INF] dbug: 2022/5/28 18:15:14.568 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:14.570 +08:00 [INF] dbug: 2022/5/28 18:15:14.570 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:14.572 +08:00 [INF] dbug: 2022/5/28 18:15:14.572 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:14.573 +08:00 [INF] dbug: 2022/5/28 18:15:14.573 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:14.574 +08:00 [INF] dbug: 2022/5/28 18:15:14.574 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:15:14.575 +08:00 [INF] dbug: 2022/5/28 18:15:14.575 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:14.595 +08:00 [INF] dbug: 2022/5/28 18:15:14.595 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:14.597 +08:00 [INF] dbug: 2022/5/28 18:15:14.597 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:14.602 +08:00 [INF] info: 2022/5/28 18:15:14.602 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (5ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:14.607 +08:00 [INF] dbug: 2022/5/28 18:15:14.607 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:14.610 +08:00 [INF] dbug: 2022/5/28 18:15:14.610 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:14.612 +08:00 [INF] dbug: 2022/5/28 18:15:14.612 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:15.291 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 950.2459 ms
+2022-05-28 18:15:15.294 +08:00 [INF] dbug: 2022/5/28 18:15:15.294 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:15:16.974 +08:00 [INF] 测试
+2022-05-28 18:15:16.975 +08:00 [ERR] test
+2022-05-28 18:15:16.976 +08:00 [ERR] test
+2022-05-28 18:15:17.011 +08:00 [INF] info: 2022/5/28 18:15:17.011 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:15:17.014 +08:00 [INF] dbug: 2022/5/28 18:15:17.014 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:17.017 +08:00 [INF] dbug: 2022/5/28 18:15:17.017 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (3ms).
+2022-05-28 18:15:17.019 +08:00 [INF] dbug: 2022/5/28 18:15:17.019 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.037 +08:00 [INF] dbug: 2022/5/28 18:15:17.036 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.038 +08:00 [INF] dbug: 2022/5/28 18:15:17.038 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:17.044 +08:00 [INF] info: 2022/5/28 18:15:17.044 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (6ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:17.047 +08:00 [INF] dbug: 2022/5/28 18:15:17.047 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:17.048 +08:00 [INF] dbug: 2022/5/28 18:15:17.048 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.050 +08:00 [INF] dbug: 2022/5/28 18:15:17.050 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.051 +08:00 [INF] dbug: 2022/5/28 18:15:17.051 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:17.053 +08:00 [INF] dbug: 2022/5/28 18:15:17.053 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:15:17.054 +08:00 [INF] dbug: 2022/5/28 18:15:17.054 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.060 +08:00 [INF] dbug: 2022/5/28 18:15:17.059 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.061 +08:00 [INF] dbug: 2022/5/28 18:15:17.061 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:17.067 +08:00 [INF] info: 2022/5/28 18:15:17.067 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (6ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:17.069 +08:00 [INF] dbug: 2022/5/28 18:15:17.069 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:17.071 +08:00 [INF] dbug: 2022/5/28 18:15:17.071 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.074 +08:00 [INF] dbug: 2022/5/28 18:15:17.074 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:17.455 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 488.8938 ms
+2022-05-28 18:15:17.458 +08:00 [INF] dbug: 2022/5/28 18:15:17.458 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:15:19.872 +08:00 [INF] HTTP GET /health responded 200 in 0.8783 ms
+2022-05-28 18:15:25.317 +08:00 [INF] 测试
+2022-05-28 18:15:25.318 +08:00 [ERR] test
+2022-05-28 18:15:25.319 +08:00 [ERR] test
+2022-05-28 18:15:25.320 +08:00 [INF] info: 2022/5/28 18:15:25.320 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:15:25.322 +08:00 [INF] dbug: 2022/5/28 18:15:25.322 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:25.323 +08:00 [INF] dbug: 2022/5/28 18:15:25.323 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:15:25.326 +08:00 [INF] dbug: 2022/5/28 18:15:25.326 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.333 +08:00 [INF] dbug: 2022/5/28 18:15:25.332 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.334 +08:00 [INF] dbug: 2022/5/28 18:15:25.334 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:25.341 +08:00 [INF] info: 2022/5/28 18:15:25.341 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (7ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:25.343 +08:00 [INF] dbug: 2022/5/28 18:15:25.343 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:25.345 +08:00 [INF] dbug: 2022/5/28 18:15:25.345 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.346 +08:00 [INF] dbug: 2022/5/28 18:15:25.346 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.347 +08:00 [INF] dbug: 2022/5/28 18:15:25.347 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:25.349 +08:00 [INF] dbug: 2022/5/28 18:15:25.349 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:15:25.350 +08:00 [INF] dbug: 2022/5/28 18:15:25.350 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.358 +08:00 [INF] dbug: 2022/5/28 18:15:25.358 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.359 +08:00 [INF] dbug: 2022/5/28 18:15:25.359 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:25.365 +08:00 [INF] info: 2022/5/28 18:15:25.365 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (6ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:25.368 +08:00 [INF] dbug: 2022/5/28 18:15:25.368 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:25.371 +08:00 [INF] dbug: 2022/5/28 18:15:25.371 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.372 +08:00 [INF] dbug: 2022/5/28 18:15:25.372 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:25.712 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 401.0838 ms
+2022-05-28 18:15:25.714 +08:00 [INF] dbug: 2022/5/28 18:15:25.714 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:15:26.274 +08:00 [INF] 测试
+2022-05-28 18:15:26.276 +08:00 [ERR] test
+2022-05-28 18:15:26.277 +08:00 [ERR] test
+2022-05-28 18:15:26.278 +08:00 [INF] info: 2022/5/28 18:15:26.278 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:15:26.279 +08:00 [INF] dbug: 2022/5/28 18:15:26.279 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:26.280 +08:00 [INF] dbug: 2022/5/28 18:15:26.280 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:15:26.282 +08:00 [INF] dbug: 2022/5/28 18:15:26.282 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.287 +08:00 [INF] dbug: 2022/5/28 18:15:26.287 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.289 +08:00 [INF] dbug: 2022/5/28 18:15:26.289 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:26.295 +08:00 [INF] info: 2022/5/28 18:15:26.295 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (6ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:26.296 +08:00 [INF] dbug: 2022/5/28 18:15:26.296 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:26.298 +08:00 [INF] dbug: 2022/5/28 18:15:26.298 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.302 +08:00 [INF] dbug: 2022/5/28 18:15:26.302 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.304 +08:00 [INF] dbug: 2022/5/28 18:15:26.304 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:15:26.305 +08:00 [INF] dbug: 2022/5/28 18:15:26.305 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:15:26.306 +08:00 [INF] dbug: 2022/5/28 18:15:26.306 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.312 +08:00 [INF] dbug: 2022/5/28 18:15:26.312 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.313 +08:00 [INF] dbug: 2022/5/28 18:15:26.313 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:26.319 +08:00 [INF] info: 2022/5/28 18:15:26.319 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (6ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:15:26.320 +08:00 [INF] dbug: 2022/5/28 18:15:26.320 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:15:26.322 +08:00 [INF] dbug: 2022/5/28 18:15:26.322 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.323 +08:00 [INF] dbug: 2022/5/28 18:15:26.323 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:15:26.687 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 417.6425 ms
+2022-05-28 18:15:26.690 +08:00 [INF] dbug: 2022/5/28 18:15:26.690 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:15:29.909 +08:00 [INF] HTTP GET /health responded 200 in 0.9757 ms
+2022-05-28 18:15:39.925 +08:00 [INF] HTTP GET /health responded 200 in 0.3569 ms
+2022-05-28 18:16:47.327 +08:00 [INF] Starting web host
+2022-05-28 18:16:55.442 +08:00 [INF] Initializing UI Database
+2022-05-28 18:16:56.499 +08:00 [INF] Saving healthchecks configuration to database
+2022-05-28 18:17:02.428 +08:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2022-05-28 18:17:02.548 +08:00 [WRN] The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2022-05-28 18:17:06.131 +08:00 [INF] HTTP GET /health responded 200 in 747.9383 ms
+2022-05-28 18:17:16.503 +08:00 [INF] HTTP GET /health responded 200 in 2.0995 ms
+2022-05-28 18:17:26.062 +08:00 [INF] 测试
+2022-05-28 18:17:26.063 +08:00 [ERR] test
+2022-05-28 18:17:26.065 +08:00 [ERR] test
+2022-05-28 18:17:26.828 +08:00 [INF] HTTP GET /health responded 200 in 0.7397 ms
+2022-05-28 18:17:26.842 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 897.4095 ms
+2022-05-28 18:17:27.310 +08:00 [INF] 测试
+2022-05-28 18:17:27.311 +08:00 [ERR] test
+2022-05-28 18:17:27.312 +08:00 [ERR] test
+2022-05-28 18:17:27.747 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 445.8443 ms
+2022-05-28 18:17:34.348 +08:00 [INF] 测试
+2022-05-28 18:17:34.352 +08:00 [ERR] test
+2022-05-28 18:17:34.358 +08:00 [ERR] test
+2022-05-28 18:17:34.742 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 400.4875 ms
+2022-05-28 18:17:35.310 +08:00 [INF] 测试
+2022-05-28 18:17:35.312 +08:00 [ERR] test
+2022-05-28 18:17:35.313 +08:00 [ERR] test
+2022-05-28 18:17:35.724 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 420.4667 ms
+2022-05-28 18:17:36.188 +08:00 [INF] 测试
+2022-05-28 18:17:36.189 +08:00 [ERR] test
+2022-05-28 18:17:36.190 +08:00 [ERR] test
+2022-05-28 18:17:36.551 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 368.6315 ms
+2022-05-28 18:17:36.922 +08:00 [INF] HTTP GET /health responded 200 in 1.0944 ms
+2022-05-28 18:17:37.055 +08:00 [INF] 测试
+2022-05-28 18:17:37.058 +08:00 [ERR] test
+2022-05-28 18:17:37.060 +08:00 [ERR] test
+2022-05-28 18:17:37.404 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 354.7405 ms
+2022-05-28 18:17:37.775 +08:00 [INF] 测试
+2022-05-28 18:17:37.777 +08:00 [ERR] test
+2022-05-28 18:17:37.778 +08:00 [ERR] test
+2022-05-28 18:17:38.165 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 395.0133 ms
+2022-05-28 18:17:38.370 +08:00 [INF] 测试
+2022-05-28 18:17:38.370 +08:00 [ERR] test
+2022-05-28 18:17:38.372 +08:00 [ERR] test
+2022-05-28 18:17:38.778 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 414.7999 ms
+2022-05-28 18:17:41.696 +08:00 [INF] 测试
+2022-05-28 18:17:41.697 +08:00 [ERR] test
+2022-05-28 18:17:41.698 +08:00 [ERR] test
+2022-05-28 18:17:42.113 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 423.2910 ms
+2022-05-28 18:17:42.589 +08:00 [INF] 测试
+2022-05-28 18:17:42.592 +08:00 [ERR] test
+2022-05-28 18:17:42.595 +08:00 [ERR] test
+2022-05-28 18:17:42.967 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 383.5033 ms
+2022-05-28 18:17:43.591 +08:00 [INF] 测试
+2022-05-28 18:17:43.592 +08:00 [ERR] test
+2022-05-28 18:17:43.594 +08:00 [ERR] test
+2022-05-28 18:17:43.980 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 395.1819 ms
+2022-05-28 18:17:46.993 +08:00 [INF] HTTP GET /health responded 200 in 0.6654 ms
+2022-05-28 18:19:03.614 +08:00 [INF] Starting web host
+2022-05-28 18:19:31.332 +08:00 [INF] Initializing UI Database
+2022-05-28 18:19:32.413 +08:00 [INF] Saving healthchecks configuration to database
+2022-05-28 18:19:38.453 +08:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2022-05-28 18:19:38.457 +08:00 [INF] warn: 2022/5/28 18:19:38.457 CoreEventId.SensitiveDataLoggingEnabledWarning[10400] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2022-05-28 18:19:38.459 +08:00 [INF] dbug: 2022/5/28 18:19:38.459 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'TestUser.TestAccountId' was created in shadow state because there are no eligible CLR members with a matching name.
+2022-05-28 18:19:38.546 +08:00 [INF] info: 2022/5/28 18:19:38.546 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:19:38.556 +08:00 [INF] dbug: 2022/5/28 18:19:38.556 CoreEventId.QueryCompilationStarting[10111] (Microsoft.EntityFrameworkCore.Query) 
+      Compiling query expression: 
+      'DbSet<User>()
+          .AsNoTracking()
+          .FirstOrDefault()'
+2022-05-28 18:19:38.580 +08:00 [WRN] The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2022-05-28 18:19:38.581 +08:00 [INF] warn: 2022/5/28 18:19:38.581 CoreEventId.FirstWithoutOrderByAndFilterWarning[10103] (Microsoft.EntityFrameworkCore.Query) 
+      The query uses the 'First'/'FirstOrDefault' operator without 'OrderBy' and filter operators. This may lead to unpredictable results.
+2022-05-28 18:19:38.634 +08:00 [INF] dbug: 2022/5/28 18:19:38.633 CoreEventId.QueryExecutionPlanned[10107] (Microsoft.EntityFrameworkCore.Query) 
+      Generated query execution expression: 
+      'queryContext => new SingleQueryingEnumerable<User>(
+          (RelationalQueryContext)queryContext, 
+          RelationalCommandCache.SelectExpression(
+              Projection Mapping:
+                  EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Age (int) Required, 1], [Property: User.Email (string) MaxLength(50), 2], [Property: User.NickName (string) MaxLength(20), 3], [Property: User.Password (string) MaxLength(200), 4], [Property: User.Remarks (string) MaxLength(500), 5], [Property: User.SampleRole (SampleRole) Required, 6], [Property: User.Sex (Sex?), 7], [Property: User.UserName (string) MaxLength(20), 8] }
+              SELECT TOP(1) u.id, u.Age, u.Email, u.NickName, u.Password, u.Remarks, u.SampleRole, u.Sex, u.UserName
+              FROM User AS u), 
+          Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+          Narojay.Blog.Infrastructure.BlogContext, 
+          False, 
+          True, 
+          True
+      )
+          .SingleOrDefault()'
+2022-05-28 18:19:38.653 +08:00 [INF] dbug: 2022/5/28 18:19:38.653 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:19:38.656 +08:00 [INF] dbug: 2022/5/28 18:19:38.656 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (3ms).
+2022-05-28 18:19:38.659 +08:00 [INF] dbug: 2022/5/28 18:19:38.659 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:19:38.683 +08:00 [INF] dbug: 2022/5/28 18:19:38.683 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:19:38.687 +08:00 [INF] dbug: 2022/5/28 18:19:38.687 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `u`.`id`, `u`.`Age`, `u`.`Email`, `u`.`NickName`, `u`.`Password`, `u`.`Remarks`, `u`.`SampleRole`, `u`.`Sex`, `u`.`UserName`
+      FROM `User` AS `u`
+      LIMIT 1
+2022-05-28 18:19:38.714 +08:00 [INF] info: 2022/5/28 18:19:38.714 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (27ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT `u`.`id`, `u`.`Age`, `u`.`Email`, `u`.`NickName`, `u`.`Password`, `u`.`Remarks`, `u`.`SampleRole`, `u`.`Sex`, `u`.`UserName`
+      FROM `User` AS `u`
+      LIMIT 1
+2022-05-28 18:19:38.831 +08:00 [INF] dbug: 2022/5/28 18:19:38.831 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:19:38.834 +08:00 [INF] dbug: 2022/5/28 18:19:38.833 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:19:38.835 +08:00 [INF] dbug: 2022/5/28 18:19:38.835 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:19:38.836 +08:00 [INF] dbug: 2022/5/28 18:19:38.836 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:19:42.133 +08:00 [INF] HTTP GET /health responded 200 in 693.7293 ms
+2022-05-28 18:19:52.488 +08:00 [INF] HTTP GET /health responded 200 in 2.0210 ms
+2022-05-28 18:20:02.499 +08:00 [INF] HTTP GET /health responded 200 in 0.7074 ms
+2022-05-28 18:20:04.163 +08:00 [INF] 测试
+2022-05-28 18:20:04.164 +08:00 [ERR] test
+2022-05-28 18:20:04.165 +08:00 [ERR] test
+2022-05-28 18:20:04.168 +08:00 [INF] info: 2022/5/28 18:20:04.168 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:20:04.170 +08:00 [INF] dbug: 2022/5/28 18:20:04.170 CoreEventId.QueryCompilationStarting[10111] (Microsoft.EntityFrameworkCore.Query) 
+      Compiling query expression: 
+      'DbSet<Post>()
+          .Any(x => x.Id == __postTagDto_PostId_0)'
+2022-05-28 18:20:04.188 +08:00 [INF] dbug: 2022/5/28 18:20:04.188 CoreEventId.QueryExecutionPlanned[10107] (Microsoft.EntityFrameworkCore.Query) 
+      Generated query execution expression: 
+      'queryContext => ShapedQueryCompilingExpressionVisitor.SingleAsync<bool>(
+          asyncEnumerable: new SingleQueryingEnumerable<bool>(
+              (RelationalQueryContext)queryContext, 
+              RelationalCommandCache.SelectExpression(
+                  Projection Mapping:
+                      EmptyProjectionMember -> 0
+                  SELECT EXISTS (
+                      SELECT 1
+                      FROM Post AS p
+                      WHERE p.id == @__postTagDto_PostId_0)), 
+              Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, bool>, 
+              Narojay.Blog.Infrastructure.BlogContext, 
+              False, 
+              True, 
+              True
+          ), 
+          cancellationToken: queryContext.CancellationToken)'
+2022-05-28 18:20:04.202 +08:00 [INF] dbug: 2022/5/28 18:20:04.202 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:04.204 +08:00 [INF] dbug: 2022/5/28 18:20:04.204 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:20:04.217 +08:00 [INF] dbug: 2022/5/28 18:20:04.217 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.257 +08:00 [INF] dbug: 2022/5/28 18:20:04.257 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.263 +08:00 [INF] dbug: 2022/5/28 18:20:04.263 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:04.292 +08:00 [INF] info: 2022/5/28 18:20:04.292 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (32ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:04.297 +08:00 [INF] dbug: 2022/5/28 18:20:04.297 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:04.301 +08:00 [INF] dbug: 2022/5/28 18:20:04.301 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.303 +08:00 [INF] dbug: 2022/5/28 18:20:04.303 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.305 +08:00 [INF] dbug: 2022/5/28 18:20:04.305 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:04.309 +08:00 [INF] dbug: 2022/5/28 18:20:04.309 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (4ms).
+2022-05-28 18:20:04.311 +08:00 [INF] dbug: 2022/5/28 18:20:04.311 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.318 +08:00 [INF] dbug: 2022/5/28 18:20:04.318 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.322 +08:00 [INF] dbug: 2022/5/28 18:20:04.321 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:04.330 +08:00 [INF] info: 2022/5/28 18:20:04.330 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (9ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:04.337 +08:00 [INF] dbug: 2022/5/28 18:20:04.337 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:04.339 +08:00 [INF] dbug: 2022/5/28 18:20:04.339 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.341 +08:00 [INF] dbug: 2022/5/28 18:20:04.341 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:04.985 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 938.0751 ms
+2022-05-28 18:20:04.988 +08:00 [INF] dbug: 2022/5/28 18:20:04.988 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:20:05.198 +08:00 [INF] 测试
+2022-05-28 18:20:05.199 +08:00 [ERR] test
+2022-05-28 18:20:05.200 +08:00 [ERR] test
+2022-05-28 18:20:05.236 +08:00 [INF] info: 2022/5/28 18:20:05.236 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:20:05.239 +08:00 [INF] dbug: 2022/5/28 18:20:05.239 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:05.244 +08:00 [INF] dbug: 2022/5/28 18:20:05.244 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (4ms).
+2022-05-28 18:20:05.246 +08:00 [INF] dbug: 2022/5/28 18:20:05.246 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.253 +08:00 [INF] dbug: 2022/5/28 18:20:05.253 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.254 +08:00 [INF] dbug: 2022/5/28 18:20:05.254 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:05.262 +08:00 [INF] info: 2022/5/28 18:20:05.262 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (8ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:05.270 +08:00 [INF] dbug: 2022/5/28 18:20:05.270 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:05.272 +08:00 [INF] dbug: 2022/5/28 18:20:05.272 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.274 +08:00 [INF] dbug: 2022/5/28 18:20:05.274 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.276 +08:00 [INF] dbug: 2022/5/28 18:20:05.276 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:05.287 +08:00 [INF] dbug: 2022/5/28 18:20:05.287 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (11ms).
+2022-05-28 18:20:05.290 +08:00 [INF] dbug: 2022/5/28 18:20:05.289 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.298 +08:00 [INF] dbug: 2022/5/28 18:20:05.298 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.300 +08:00 [INF] dbug: 2022/5/28 18:20:05.300 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:05.310 +08:00 [INF] info: 2022/5/28 18:20:05.310 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (11ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:05.317 +08:00 [INF] dbug: 2022/5/28 18:20:05.317 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:05.319 +08:00 [INF] dbug: 2022/5/28 18:20:05.319 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.323 +08:00 [INF] dbug: 2022/5/28 18:20:05.323 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:05.712 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 522.5600 ms
+2022-05-28 18:20:05.714 +08:00 [INF] dbug: 2022/5/28 18:20:05.714 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:20:06.335 +08:00 [INF] 测试
+2022-05-28 18:20:06.338 +08:00 [ERR] test
+2022-05-28 18:20:06.340 +08:00 [ERR] test
+2022-05-28 18:20:06.343 +08:00 [INF] info: 2022/5/28 18:20:06.343 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:20:06.346 +08:00 [INF] dbug: 2022/5/28 18:20:06.346 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:06.350 +08:00 [INF] dbug: 2022/5/28 18:20:06.350 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (3ms).
+2022-05-28 18:20:06.352 +08:00 [INF] dbug: 2022/5/28 18:20:06.352 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.359 +08:00 [INF] dbug: 2022/5/28 18:20:06.359 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.363 +08:00 [INF] dbug: 2022/5/28 18:20:06.363 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:06.371 +08:00 [INF] info: 2022/5/28 18:20:06.371 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (8ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:06.380 +08:00 [INF] dbug: 2022/5/28 18:20:06.380 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:06.382 +08:00 [INF] dbug: 2022/5/28 18:20:06.382 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.384 +08:00 [INF] dbug: 2022/5/28 18:20:06.384 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.391 +08:00 [INF] dbug: 2022/5/28 18:20:06.391 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:06.393 +08:00 [INF] dbug: 2022/5/28 18:20:06.393 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:20:06.395 +08:00 [INF] dbug: 2022/5/28 18:20:06.395 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.402 +08:00 [INF] dbug: 2022/5/28 18:20:06.402 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.403 +08:00 [INF] dbug: 2022/5/28 18:20:06.403 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:06.410 +08:00 [INF] info: 2022/5/28 18:20:06.410 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (7ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:06.420 +08:00 [INF] dbug: 2022/5/28 18:20:06.420 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:06.422 +08:00 [INF] dbug: 2022/5/28 18:20:06.422 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.423 +08:00 [INF] dbug: 2022/5/28 18:20:06.423 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:06.802 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 473.6698 ms
+2022-05-28 18:20:06.805 +08:00 [INF] dbug: 2022/5/28 18:20:06.805 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:20:11.880 +08:00 [INF] 测试
+2022-05-28 18:20:11.882 +08:00 [ERR] test
+2022-05-28 18:20:11.884 +08:00 [ERR] test
+2022-05-28 18:20:11.886 +08:00 [INF] info: 2022/5/28 18:20:11.886 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:20:11.888 +08:00 [INF] dbug: 2022/5/28 18:20:11.888 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:11.890 +08:00 [INF] dbug: 2022/5/28 18:20:11.890 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (2ms).
+2022-05-28 18:20:11.893 +08:00 [INF] dbug: 2022/5/28 18:20:11.893 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:11.900 +08:00 [INF] dbug: 2022/5/28 18:20:11.900 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:11.912 +08:00 [INF] dbug: 2022/5/28 18:20:11.912 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:11.920 +08:00 [INF] info: 2022/5/28 18:20:11.920 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (7ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:11.922 +08:00 [INF] dbug: 2022/5/28 18:20:11.922 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:11.927 +08:00 [INF] dbug: 2022/5/28 18:20:11.927 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:11.929 +08:00 [INF] dbug: 2022/5/28 18:20:11.929 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:11.931 +08:00 [INF] dbug: 2022/5/28 18:20:11.931 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:11.937 +08:00 [INF] dbug: 2022/5/28 18:20:11.937 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (6ms).
+2022-05-28 18:20:11.942 +08:00 [INF] dbug: 2022/5/28 18:20:11.942 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:11.950 +08:00 [INF] dbug: 2022/5/28 18:20:11.950 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:11.951 +08:00 [INF] dbug: 2022/5/28 18:20:11.951 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:11.959 +08:00 [INF] info: 2022/5/28 18:20:11.959 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (8ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:11.970 +08:00 [INF] dbug: 2022/5/28 18:20:11.970 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:11.972 +08:00 [INF] dbug: 2022/5/28 18:20:11.972 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:11.974 +08:00 [INF] dbug: 2022/5/28 18:20:11.974 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.373 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 500.8794 ms
+2022-05-28 18:20:12.375 +08:00 [INF] dbug: 2022/5/28 18:20:12.375 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:20:12.628 +08:00 [INF] HTTP GET /health responded 200 in 0.8958 ms
+2022-05-28 18:20:12.899 +08:00 [INF] 测试
+2022-05-28 18:20:12.900 +08:00 [ERR] test
+2022-05-28 18:20:12.902 +08:00 [ERR] test
+2022-05-28 18:20:12.904 +08:00 [INF] info: 2022/5/28 18:20:12.904 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:20:12.907 +08:00 [INF] dbug: 2022/5/28 18:20:12.907 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:12.910 +08:00 [INF] dbug: 2022/5/28 18:20:12.910 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (3ms).
+2022-05-28 18:20:12.917 +08:00 [INF] dbug: 2022/5/28 18:20:12.917 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.924 +08:00 [INF] dbug: 2022/5/28 18:20:12.924 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.929 +08:00 [INF] dbug: 2022/5/28 18:20:12.929 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:12.937 +08:00 [INF] info: 2022/5/28 18:20:12.937 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (8ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:12.944 +08:00 [INF] dbug: 2022/5/28 18:20:12.944 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:12.947 +08:00 [INF] dbug: 2022/5/28 18:20:12.947 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.952 +08:00 [INF] dbug: 2022/5/28 18:20:12.952 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.959 +08:00 [INF] dbug: 2022/5/28 18:20:12.959 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:12.961 +08:00 [INF] dbug: 2022/5/28 18:20:12.961 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:20:12.962 +08:00 [INF] dbug: 2022/5/28 18:20:12.962 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.973 +08:00 [INF] dbug: 2022/5/28 18:20:12.973 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.978 +08:00 [INF] dbug: 2022/5/28 18:20:12.978 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:12.985 +08:00 [INF] info: 2022/5/28 18:20:12.985 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (7ms) [Parameters=[@__postTagDto_PostId_0='0'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM `Post` AS `p`
+          WHERE `p`.`id` = @__postTagDto_PostId_0)
+2022-05-28 18:20:12.990 +08:00 [INF] dbug: 2022/5/28 18:20:12.990 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:12.996 +08:00 [INF] dbug: 2022/5/28 18:20:12.996 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:12.998 +08:00 [INF] dbug: 2022/5/28 18:20:12.998 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:13.325 +08:00 [INF] HTTP POST /post/post_tag responded 200 in 431.5022 ms
+2022-05-28 18:20:13.327 +08:00 [INF] dbug: 2022/5/28 18:20:13.327 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:20:18.806 +08:00 [INF] info: 2022/5/28 18:20:18.806 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.4 initialized 'BlogContext' using provider 'Pomelo.EntityFrameworkCore.MySql:6.0.1' with options: SensitiveDataLoggingEnabled DetailedErrorsEnabled ServerVersion 8.0.24-mysql using lazy loading proxies 
+2022-05-28 18:20:18.808 +08:00 [INF] dbug: 2022/5/28 18:20:18.808 CoreEventId.QueryCompilationStarting[10111] (Microsoft.EntityFrameworkCore.Query) 
+      Compiling query expression: 
+      'DbSet<Post>()
+          .FirstOrDefault(x => x.Id == __id_0)'
+2022-05-28 18:20:18.814 +08:00 [INF] dbug: 2022/5/28 18:20:18.814 CoreEventId.QueryExecutionPlanned[10107] (Microsoft.EntityFrameworkCore.Query) 
+      Generated query execution expression: 
+      'queryContext => new SingleQueryingEnumerable<Post>(
+          (RelationalQueryContext)queryContext, 
+          RelationalCommandCache.SelectExpression(
+              Projection Mapping:
+                  EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Post.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Post.Author (string) MaxLength(50), 1], [Property: Post.Content (string) MaxLength(8000), 2], [Property: Post.CreationTime (DateTime) Required, 3], [Property: Post.IsTop (bool) Required, 4], [Property: Post.Label (string) MaxLength(255), 5], [Property: Post.LikeCount (int) Required, 6], [Property: Post.ModifyTime (DateTime) Required, 7], [Property: Post.Title (string) MaxLength(50), 8], [Property: Post.UnlikeCount (int) Required, 9], [Property: Post.UserId (int) Required FK Index, 10] }
+              SELECT TOP(1) p.id, p.Author, p.Content, p.CreationTime, p.IsTop, p.Label, p.LikeCount, p.ModifyTime, p.Title, p.UnlikeCount, p.UserId
+              FROM Post AS p
+              WHERE p.id == @__id_0), 
+          Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, Post>, 
+          Narojay.Blog.Infrastructure.BlogContext, 
+          False, 
+          True, 
+          True
+      )
+          .SingleOrDefault()'
+2022-05-28 18:20:18.825 +08:00 [INF] dbug: 2022/5/28 18:20:18.825 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:18.827 +08:00 [INF] dbug: 2022/5/28 18:20:18.827 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:20:18.828 +08:00 [INF] dbug: 2022/5/28 18:20:18.828 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.835 +08:00 [INF] dbug: 2022/5/28 18:20:18.835 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.840 +08:00 [INF] dbug: 2022/5/28 18:20:18.840 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__id_0='32'], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`id`, `p`.`Author`, `p`.`Content`, `p`.`CreationTime`, `p`.`IsTop`, `p`.`Label`, `p`.`LikeCount`, `p`.`ModifyTime`, `p`.`Title`, `p`.`UnlikeCount`, `p`.`UserId`
+      FROM `Post` AS `p`
+      WHERE `p`.`id` = @__id_0
+      LIMIT 1
+2022-05-28 18:20:18.848 +08:00 [INF] info: 2022/5/28 18:20:18.848 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (8ms) [Parameters=[@__id_0='32'], CommandType='Text', CommandTimeout='30']
+      SELECT `p`.`id`, `p`.`Author`, `p`.`Content`, `p`.`CreationTime`, `p`.`IsTop`, `p`.`Label`, `p`.`LikeCount`, `p`.`ModifyTime`, `p`.`Title`, `p`.`UnlikeCount`, `p`.`UserId`
+      FROM `Post` AS `p`
+      WHERE `p`.`id` = @__id_0
+      LIMIT 1
+2022-05-28 18:20:18.857 +08:00 [INF] dbug: 2022/5/28 18:20:18.857 CoreEventId.StartedTracking[10806] (Microsoft.EntityFrameworkCore.ChangeTracking) 
+      Context 'BlogContext' started tracking 'Post' entity with key '{Id: 32}'.
+2022-05-28 18:20:18.870 +08:00 [INF] dbug: 2022/5/28 18:20:18.869 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:18.877 +08:00 [INF] dbug: 2022/5/28 18:20:18.877 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.879 +08:00 [INF] dbug: 2022/5/28 18:20:18.879 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.899 +08:00 [INF] dbug: 2022/5/28 18:20:18.899 CoreEventId.NavigationLazyLoading[10406] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      The navigation 'PostProxy.User' is being lazy-loaded.
+2022-05-28 18:20:18.908 +08:00 [INF] dbug: 2022/5/28 18:20:18.908 CoreEventId.QueryCompilationStarting[10111] (Microsoft.EntityFrameworkCore.Query) 
+      Compiling query expression: 
+      'DbSet<User>()
+          .Where(e => EF.Property<int>(e, "Id") == __p_0)
+          .AsTracking()'
+2022-05-28 18:20:18.917 +08:00 [INF] dbug: 2022/5/28 18:20:18.917 CoreEventId.QueryExecutionPlanned[10107] (Microsoft.EntityFrameworkCore.Query) 
+      Generated query execution expression: 
+      'queryContext => new SingleQueryingEnumerable<User>(
+          (RelationalQueryContext)queryContext, 
+          RelationalCommandCache.SelectExpression(
+              Projection Mapping:
+                  EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: User.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: User.Age (int) Required, 1], [Property: User.Email (string) MaxLength(50), 2], [Property: User.NickName (string) MaxLength(20), 3], [Property: User.Password (string) MaxLength(200), 4], [Property: User.Remarks (string) MaxLength(500), 5], [Property: User.SampleRole (SampleRole) Required, 6], [Property: User.Sex (Sex?), 7], [Property: User.UserName (string) MaxLength(20), 8] }
+              SELECT u.id, u.Age, u.Email, u.NickName, u.Password, u.Remarks, u.SampleRole, u.Sex, u.UserName
+              FROM User AS u
+              WHERE u.id == @__p_0), 
+          Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, User>, 
+          Narojay.Blog.Infrastructure.BlogContext, 
+          False, 
+          True, 
+          True
+      )'
+2022-05-28 18:20:18.931 +08:00 [INF] dbug: 2022/5/28 18:20:18.931 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:18.933 +08:00 [INF] dbug: 2022/5/28 18:20:18.933 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:20:18.934 +08:00 [INF] dbug: 2022/5/28 18:20:18.934 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.941 +08:00 [INF] dbug: 2022/5/28 18:20:18.941 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.942 +08:00 [INF] dbug: 2022/5/28 18:20:18.942 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__p_0='2'], CommandType='Text', CommandTimeout='30']
+      SELECT `u`.`id`, `u`.`Age`, `u`.`Email`, `u`.`NickName`, `u`.`Password`, `u`.`Remarks`, `u`.`SampleRole`, `u`.`Sex`, `u`.`UserName`
+      FROM `User` AS `u`
+      WHERE `u`.`id` = @__p_0
+2022-05-28 18:20:18.950 +08:00 [INF] info: 2022/5/28 18:20:18.950 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (8ms) [Parameters=[@__p_0='2'], CommandType='Text', CommandTimeout='30']
+      SELECT `u`.`id`, `u`.`Age`, `u`.`Email`, `u`.`NickName`, `u`.`Password`, `u`.`Remarks`, `u`.`SampleRole`, `u`.`Sex`, `u`.`UserName`
+      FROM `User` AS `u`
+      WHERE `u`.`id` = @__p_0
+2022-05-28 18:20:18.962 +08:00 [INF] dbug: 2022/5/28 18:20:18.962 CoreEventId.StartedTracking[10806] (Microsoft.EntityFrameworkCore.ChangeTracking) 
+      Context 'BlogContext' started tracking 'User' entity with key '{Id: 2}'.
+2022-05-28 18:20:18.980 +08:00 [INF] dbug: 2022/5/28 18:20:18.980 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:18.982 +08:00 [INF] dbug: 2022/5/28 18:20:18.982 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.984 +08:00 [INF] dbug: 2022/5/28 18:20:18.984 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:18.992 +08:00 [INF] dbug: 2022/5/28 18:20:18.992 CoreEventId.NavigationLazyLoading[10406] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      The navigation 'PostProxy.Comments' is being lazy-loaded.
+2022-05-28 18:20:18.995 +08:00 [INF] dbug: 2022/5/28 18:20:18.995 CoreEventId.QueryCompilationStarting[10111] (Microsoft.EntityFrameworkCore.Query) 
+      Compiling query expression: 
+      'DbSet<Comment>()
+          .Where(e => EF.Property<int>(e, "PostId") == __p_0)
+          .AsTracking()'
+2022-05-28 18:20:18.999 +08:00 [INF] dbug: 2022/5/28 18:20:18.999 CoreEventId.QueryExecutionPlanned[10107] (Microsoft.EntityFrameworkCore.Query) 
+      Generated query execution expression: 
+      'queryContext => new SingleQueryingEnumerable<Comment>(
+          (RelationalQueryContext)queryContext, 
+          RelationalCommandCache.SelectExpression(
+              Projection Mapping:
+                  EmptyProjectionMember -> Dictionary<IProperty, int> { [Property: Comment.Id (int) Required PK AfterSave:Throw ValueGenerated.OnAdd, 0], [Property: Comment.Content (string), 1], [Property: Comment.PostId (int) Required FK Index, 2], [Property: Comment.UserId (int) Required, 3] }
+              SELECT c.id, c.Content, c.PostId, c.UserId
+              FROM Comment AS c
+              WHERE c.PostId == @__p_0), 
+          Func<QueryContext, DbDataReader, ResultContext, SingleQueryResultCoordinator, Comment>, 
+          Narojay.Blog.Infrastructure.BlogContext, 
+          False, 
+          True, 
+          True
+      )'
+2022-05-28 18:20:19.008 +08:00 [INF] dbug: 2022/5/28 18:20:19.008 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+2022-05-28 18:20:19.010 +08:00 [INF] dbug: 2022/5/28 18:20:19.010 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (1ms).
+2022-05-28 18:20:19.011 +08:00 [INF] dbug: 2022/5/28 18:20:19.011 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:19.026 +08:00 [INF] dbug: 2022/5/28 18:20:19.026 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:19.027 +08:00 [INF] dbug: 2022/5/28 18:20:19.027 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[@__p_0='32'], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`Content`, `c`.`PostId`, `c`.`UserId`
+      FROM `Comment` AS `c`
+      WHERE `c`.`PostId` = @__p_0
+2022-05-28 18:20:19.042 +08:00 [INF] info: 2022/5/28 18:20:19.042 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (15ms) [Parameters=[@__p_0='32'], CommandType='Text', CommandTimeout='30']
+      SELECT `c`.`id`, `c`.`Content`, `c`.`PostId`, `c`.`UserId`
+      FROM `Comment` AS `c`
+      WHERE `c`.`PostId` = @__p_0
+2022-05-28 18:20:19.045 +08:00 [INF] dbug: 2022/5/28 18:20:19.045 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader was disposed.
+2022-05-28 18:20:19.054 +08:00 [INF] dbug: 2022/5/28 18:20:19.054 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:19.055 +08:00 [INF] dbug: 2022/5/28 18:20:19.055 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'blog' on server '81.68.243.62'.
+2022-05-28 18:20:19.074 +08:00 [INF] HTTP GET /post/id responded 200 in 284.7896 ms
+2022-05-28 18:20:19.076 +08:00 [INF] dbug: 2022/5/28 18:20:19.076 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'BlogContext' disposed.
+2022-05-28 18:20:22.640 +08:00 [INF] HTTP GET /health responded 200 in 0.6289 ms
