@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Narojay.Blog.Aop;
 using Narojay.Blog.Extensions;
 using Narojay.Blog.Infrastructure.Interface;
@@ -11,8 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using Serilog;
 
 namespace Narojay.Blog.Infrastructure.Service
 {
@@ -27,9 +26,22 @@ namespace Narojay.Blog.Infrastructure.Service
         public BlogContext BlogContext { get; set; }
         public IMapper Mapper { get; set; }
 
-        public async Task<bool> AddPostAsync(Post post)
+        public async Task<bool> AddPostAsync(PostDto postDto)
         {
+            var post = new Post(postDto.Title, postDto.Content, postDto.Author, postDto.IsTop,postDto.UserId);
+
+            foreach (var tagName in postDto.PostTagDto.TagNames)
+            {
+                post.AddPostTags(0, tagName);
+            }
+
+            foreach (var tagId in postDto.PostTagDto.TagIds)
+            { 
+                post.AddPostTags(tagId);
+            }
+
             await BlogContext.Posts.AddAsync(post);
+
             return await BlogContext.SaveChangesAsync() > 0;
         }
 
@@ -75,7 +87,7 @@ namespace Narojay.Blog.Infrastructure.Service
             return RedisHelper.CacheShell(RedisPrefix.GetTagStatistics, 180,
                 () =>
                 {
-                    var result = BlogContext.Posts.AsNoTracking().GroupBy(x => x.Label).Select(x => new
+                    var result = BlogContext.PostTags.AsNoTracking().Include(x => x.Tag).GroupBy(x => x.Tag.Name).Select(x => new
                     {
                         x.Key,
                         Count = x.Count()
@@ -179,7 +191,7 @@ namespace Narojay.Blog.Infrastructure.Service
 
         public async Task<bool> AddTagAsync(int id, string name)
         {
-            await BlogContext.Tags.AddAsync(new Tag(id, name));
+            await BlogContext.Tags.AddAsync(new Tag(name));
             return await BlogContext.SaveChangesAsync() > 0;
         }
 
@@ -213,7 +225,7 @@ namespace Narojay.Blog.Infrastructure.Service
             {
                 throw new StringResponseException("标签名已存在");
             }
-            var newTag = new Tag(tag.Id, tag.Name);
+            var newTag = new Tag(tag.Name);
 
             await BlogContext.Tags.AddAsync(newTag);
             return await BlogContext.SaveChangesAsync() > 0;
@@ -222,31 +234,28 @@ namespace Narojay.Blog.Infrastructure.Service
         public async Task<bool> AddPostTagAsync(PostTagDto postTagDto)
         {
 
-            _logger.LogInformation("测试");
-            _logger.LogError("test");
-            Log.Error("test");
-            var a = !await BlogContext.Posts.AnyAsync(x => x.Id == postTagDto.PostId);
-                if (!await BlogContext.Posts.AnyAsync(x => x.Id == postTagDto.PostId))
-                {
-                    throw new StringResponseException("文章状态异常或不存在");
-                }
-                var tags = await BlogContext.Tags.Select(x => x.Name).ToListAsync();
+            if (!await BlogContext.Posts.AnyAsync(x => x.Id == postTagDto.PostId))
+            {
+                throw new StringResponseException("文章状态异常或不存在");
+            }
+            var tags = await BlogContext.Tags.Select(x => x.Name).ToListAsync();
 
-                var newTags = postTagDto.TagNames.Where(x => !tags.Contains(x)).Select(x => new Tag(0, x)).ToList();
+            var newTags = postTagDto.TagNames
+                .Where(x => !tags.Contains(x)).
+                Select(x => new PostTags(postTagDto.PostId, 0, x));
 
-                var newPostTags = postTagDto.TagIds.Select(x => new PostTags(postTagDto.PostId, x, null));
+            var newPostTags = postTagDto.TagIds.Select(x => new PostTags(postTagDto.PostId, x));
 
-                var newTagPostTags = newTags.Select(x => new PostTags(postTagDto.PostId, 0, new Tag(0, x.Name)
-                {
-                    Name = x.Name
-                }));
+            var addPostTags = newTags.Union(newPostTags);
+            await BlogContext.PostTags.AddRangeAsync(addPostTags);
 
-                await BlogContext.PostTags.AddRangeAsync(newPostTags);
+            var result = await BlogContext.SaveChangesAsync() > 0;
+            if (result)
+            {
+                await RedisHelper.DelAsync("tags");
+            }
 
-                await BlogContext.PostTags.AddRangeAsync(newTagPostTags);
-
-                return await BlogContext.SaveChangesAsync() > 0;
- 
+            return result;
         }
     }
 }

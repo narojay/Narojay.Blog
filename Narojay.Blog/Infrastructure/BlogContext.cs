@@ -37,6 +37,7 @@ namespace Narojay.Blog.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Post>().HasMany(x => x.PostTags).WithOne().HasForeignKey(x => x.PostId);
             modelBuilder.Entity<Post>().HasMany(x => x.Comments).WithOne().HasForeignKey(x => x.PostId);
             modelBuilder.Entity<User>().HasMany(x => x.Posts).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             //modelBuilder.Entity<LeaveMessage>().HasMany(e => e.Children).WithOne(c => c.Parent)

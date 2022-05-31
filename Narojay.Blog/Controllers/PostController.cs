@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Narojay.Blog.Infrastructure;
 using Narojay.Blog.Infrastructure.Interface;
 using Narojay.Blog.Models.Dto;
 using Narojay.Tools.Core.Dto;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Narojay.Blog.Controllers
 {
@@ -61,15 +61,18 @@ namespace Narojay.Blog.Controllers
         }
 
         [HttpPost("like_unlike_count")]
-        public Task<bool> AddLikeOrUnlikeCountAsync(int id,LikeOrUnlike status) => PostService.AddLikeOrUnlikeCountAsync(id, status);
+        public Task<bool> AddLikeOrUnlikeCountAsync(int id, LikeOrUnlike status) => PostService.AddLikeOrUnlikeCountAsync(id, status);
 
         [HttpPost("tag")]
         public Task<bool> AddTagAsync(TagDto tag) => PostService.AddTagAsync(tag);
 
 
-        [HttpPost("post_tag")]
+        [HttpGet("tags")]
+        public Task<IList<IdAndNameDto>> GetTagsAsync() => PostService.GetTagsAsync();
+
+        [HttpPut("post_tag")]
         public Task<bool> AddPostTagAsync(PostTagDto postTagDto) => PostService.AddPostTagAsync(postTagDto);
 
-       
+
     }
 }

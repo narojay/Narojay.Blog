@@ -1,5 +1,4 @@
-﻿using Narojay.Blog.Models.Dto;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Narojay.Blog.Models.Entity
 {
@@ -12,11 +11,17 @@ namespace Narojay.Blog.Models.Entity
 
         }
 
-        public PostTags(int postId, int tagId, Tag tagDto)
+        public PostTags(int postId, int tagId, string tagName = null)
         {
+            if (!string.IsNullOrEmpty(tagName))
+            {
+                Tag = new Tag(tagName);
+            }
+            else if (tagId > 0)
+            {
+                TagId = tagId;
+            }
             PostId = postId;
-            TagId = tagId;
-            Tag = tagDto == null ? null : new Tag(tagDto.Id, tagDto.Name);
         }
         public int PostId { get; set; }
 
