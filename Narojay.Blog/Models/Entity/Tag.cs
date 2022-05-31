@@ -14,9 +14,8 @@ namespace Narojay.Blog.Models.Entity
                 
         }
 
-        public Tag(int id, string name)
+        public Tag(string name)
         {
-            Id = id;
             Name = name;
         }
         public string Name { get; set; }

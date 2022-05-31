@@ -29,6 +29,8 @@ namespace Narojay.Blog.Models.Dto
 
         public UserDto User { get; set; }
 
-        public ICollection<CommentDto> Comments { get; set; }
+        public List<CommentDto> CommentDtos { get; set; }
+
+        public PostTagDto PostTagDto { get; set; }
     }
 }

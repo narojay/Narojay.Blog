@@ -8,7 +8,7 @@ namespace Narojay.Blog.Infrastructure.Interface
 {
     public interface IPostService
     {
-        Task<bool> AddPostAsync(Post post);
+        Task<bool> AddPostAsync(PostDto postDto);
         Task<PostDto> GetPostByIdAsync(int id);
         Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto);
         Dictionary<string, int> GetLabelStatistics();

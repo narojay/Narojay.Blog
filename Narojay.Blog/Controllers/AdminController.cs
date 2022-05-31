@@ -15,9 +15,9 @@ namespace Narojay.Blog.Controllers
 
 
         [HttpPost("publish_post")]
-        public Task<bool> AddPost(Post post)
+        public Task<bool> AddPost(PostDto postDto)
         {
-            return PostService.AddPostAsync(post);
+            return PostService.AddPostAsync(postDto);
         }
 
 
