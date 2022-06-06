@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Narojay.Blog.Controllers
+namespace Narojay.Blog.Controllers;
+
+[ApiController]
+public class BaseController : ControllerBase
 {
-    [ApiController]
-    public class BaseController : ControllerBase
-    {
-    }
 }

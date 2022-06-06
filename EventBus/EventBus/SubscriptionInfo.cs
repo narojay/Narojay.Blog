@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace EventBus;
 
-namespace EventBus
+public class SubscriptionInfo
 {
-    public class SubscriptionInfo
+    public SubscriptionInfo(bool isDynamic, Type handleType)
     {
-        public Type HandleType { get;  }
+        IsDynamic = isDynamic;
+        HandleType = handleType;
+    }
 
-        public bool IsDynamic { get; }
+    public Type HandleType { get; }
 
-        public SubscriptionInfo(bool isDynamic,Type handleType)
-        {
-            IsDynamic = isDynamic;
-            HandleType = handleType;
+    public bool IsDynamic { get; }
 
-        }
-        public static SubscriptionInfo Dynamic(Type handlerType) => new(true, handlerType);
+    public static SubscriptionInfo Dynamic(Type handlerType)
+    {
+        return new(true, handlerType);
+    }
 
-        public static SubscriptionInfo Typed(Type handlerType) => new(false, handlerType);
+    public static SubscriptionInfo Typed(Type handlerType)
+    {
+        return new(false, handlerType);
     }
 }

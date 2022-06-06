@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RabbitMQ.Client;
+﻿using RabbitMQ.Client;
 
-namespace EventBusRabbitMQ
+namespace EventBusRabbitMQ;
+
+public interface IRabbitMQPersistentConnection
 {
-    public interface IRabbitMQPersistentConnection
-    {
-         bool IsConnected { get; }
+    bool IsConnected { get; }
 
-         bool TryConnect();
+    bool TryConnect();
 
-         IModel CreateModel();
-    }
+    IModel CreateModel();
 }
