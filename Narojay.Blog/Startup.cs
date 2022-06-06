@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Narojay.Blog.Application;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Application.Service;
 using Narojay.Blog.Extension;
-using Narojay.Blog.Extensions;
 using Narojay.Blog.Filter;
+using Narojay.Blog.Infrastruct;
 using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Blog.Middleware;
 using Newtonsoft.Json;
@@ -38,8 +39,10 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        //services.AddMediatR(typeof(Startup));
+        services.AddMediatR(typeof(Startup));
+
         services.AddMapper();
+
         services.AddSignalR();
         //services.AddHangfire(x => x.UseStorage(new MySqlStorage(AppConfig.ConnString, new MySqlStorageOptions
         //{
@@ -70,9 +73,9 @@ public class Startup
 
         services.AddCustomizedAuthentication(_configuration, _env);
 
-        //services.AddHealthChecks();
+        services.AddHealthChecks();
 
-        //services.AddHealthChecksUI().AddInMemoryStorage();
+        services.AddHealthChecksUI().AddInMemoryStorage();
 
         //services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
         //{
@@ -91,13 +94,15 @@ public class Startup
     public void ConfigureContainer(ContainerBuilder builder)
     {
         builder.RegisterModule(new AutofacModule());
+        builder.RegisterModule(new ApplicationModule());
+        builder.RegisterModule(new InfrastructModule());
     }
 
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app, IWarmUpEfCoreService warmUpEfCoreService)
     {
-        //app.UseSerilogRequestLogging();
+        app.UseSerilogRequestLogging();
         //app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
         app.UseMiddleware<ExceptionMiddleware>();
         Console.WriteLine(_env.EnvironmentName);
@@ -113,17 +118,17 @@ public class Startup
         {
             endpoints.MapControllers();
             endpoints.MapHub<TestHub>("/testHub");
-            //app.UseEndpoints(x =>
-            //{
-            //    x.MapHealthChecks("/health", new HealthCheckOptions
-            //    {
-            //        Predicate = _ => true,
-            //        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            //    }); //要进行该站点检测应添加此代码
-            //    x.MapHealthChecksUI(); //添加UI界面支持
-            //});
+            app.UseEndpoints(x =>
+            {
+                x.MapHealthChecks("/health", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                }); //要进行该站点检测应添加此代码
+                x.MapHealthChecksUI(); //添加UI界面支持
+            });
         });
-        //app.UseHealthChecksUI();
-        //warmupService.WarmUp();
+        app.UseHealthChecksUI();
+        warmUpEfCoreService.WarmUp();
     }
 }

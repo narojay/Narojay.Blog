@@ -331,7 +331,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-*.txt
 # OpenCover UI analysis results
 OpenCover/
 
@@ -364,3 +363,4 @@ FodyWeavers.xsd
 
 /Narojay.Blog/appsettings.json
 /Narojay.Blog/appsettings.Development.json
+/Narojay.Blog/LogFiles/log.txt

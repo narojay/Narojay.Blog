@@ -20,23 +20,23 @@ public class Program
 
     public static void Main(string[] args)
     {
-        //Log.Logger = new LoggerConfiguration()
-        //    .ReadFrom.Configuration(Configuration)
-        //    .Enrich.FromLogContext()
-        //    .CreateLogger();
-        //try
-        //{
-            //Log.Information("Starting web host");
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(Configuration)
+            .Enrich.FromLogContext()
+            .CreateLogger();
+        try
+        {
+            Log.Information("Starting web host");
             CreateHostBuilder(args).Build().Run();
-        //}
-        //catch (Exception ex)
-        //{
-        //    Log.Fatal(ex, "Host terminated unexpectedly");
-        //}
-        //finally
-        //{
-        //    Log.CloseAndFlush();
-        //}
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "Host terminated unexpectedly");
+        }
+        finally
+        {
+            Log.CloseAndFlush();
+        }
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)
@@ -44,7 +44,7 @@ public class Program
         return Host
             .CreateDefaultBuilder(args)
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-            //.UseSerilog()
+            .UseSerilog()
             .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }
