@@ -1,84 +1,67 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Narojay.Blog.Aop;
-using Narojay.Blog.Models.Api;
-using Newtonsoft.Json;
-using Serilog;
-using System;
+﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Narojay.Blog.Domain;
+using Narojay.Blog.Domain.Models.Api;
+using Newtonsoft.Json;
 
-namespace Narojay.Blog.Middleware
+namespace Narojay.Blog.Middleware;
+
+public class ExceptionMiddleware
 {
-    public class ExceptionMiddleware
+    private readonly IWebHostEnvironment _environment;
+    private readonly RequestDelegate _next;
+
+    public ExceptionMiddleware(RequestDelegate next, IWebHostEnvironment environment)
     {
-        private readonly IWebHostEnvironment _environment;
-        private readonly RequestDelegate _next;
+        _next = next;
+        _environment = environment;
+    }
 
-        public ExceptionMiddleware(RequestDelegate next, IWebHostEnvironment environment)
+
+    public async Task Invoke(HttpContext context)
+    {
+        try
         {
-            _next = next;
-            _environment = environment;
+            await _next(context);
         }
-
-
-        public async Task Invoke(HttpContext context)
+        catch (Exception ex)
         {
-            try
+            var statusCode = context.Response.StatusCode == 200
+                ? (int)HttpStatusCode.BadRequest
+                : context.Response.StatusCode;
+            var message = "操作失败";
+            if (ex is StringResponseException)
             {
-                await _next(context);
+                statusCode = 200;
+                message = ex.Message;
             }
-            catch (Exception ex)
-            {
-                var statusCode = context.Response.StatusCode == 200 ? (int)HttpStatusCode.BadRequest : context.Response.StatusCode;
-                var message = "操作失败";
-                if (ex is StringResponseException)
-                {
-                    statusCode = 200;
-                    message = ex.Message;
-                }
-                else
-                {
-                    //Log.Logger.Error(ex, "1");
-                }
 
-                await HandleExceptionAsync(context, statusCode, message);
-            }
-            finally
-            {
-                var statusCode = context.Response.StatusCode;
-                var msg = "";
-                if (statusCode == 401)
-                {
-                    msg = "未授权";
-                }
-                else if (statusCode == 404)
-                {
-                    msg = "未找到服务";
-                }
-                else if (statusCode == 502)
-                {
-                    msg = "请求错误";
-                }
-                else if (statusCode != 200)
-                {
-                    msg = "未知错误";
-                }
-                if (!string.IsNullOrWhiteSpace(msg))
-                {
-                    await HandleExceptionAsync(context, statusCode, msg);
-                }
-            }
+            await HandleExceptionAsync(context, statusCode, message);
         }
-
-
-        private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
+        finally
         {
-            var data = new ApiResult { Code = statusCode.ToString(), IsSuccess = false, Message = msg };
-            var result = JsonConvert.SerializeObject(data);
-            context.Response.ContentType = "application/json;charset=utf-8";
-            return context.Response.WriteAsync(result);
+            var statusCode = context.Response.StatusCode;
+            var msg = "";
+            if (statusCode == 401)
+                msg = "未授权";
+            else if (statusCode == 404)
+                msg = "未找到服务";
+            else if (statusCode == 502)
+                msg = "请求错误";
+            else if (statusCode != 200) msg = "未知错误";
+            if (!string.IsNullOrWhiteSpace(msg)) await HandleExceptionAsync(context, statusCode, msg);
         }
+    }
 
+
+    private static Task HandleExceptionAsync(HttpContext context, int statusCode, string msg)
+    {
+        var data = new ApiResult { Code = statusCode.ToString(), IsSuccess = false, Message = msg };
+        var result = JsonConvert.SerializeObject(data);
+        context.Response.ContentType = "application/json;charset=utf-8";
+        return context.Response.WriteAsync(result);
     }
 }

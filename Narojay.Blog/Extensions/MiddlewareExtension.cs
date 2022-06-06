@@ -1,14 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Narojay.Blog.Configs;
+using Narojay.Blog.Application.AutoMapper;
 
-namespace Narojay.Blog.Extensions
+namespace Narojay.Blog.Extensions;
+
+public static class MiddlewareExtension
 {
-    public static class MiddlewareExtension
+    public static IServiceCollection AddMapper(this IServiceCollection services)
     {
-        public static IServiceCollection AddMapper(this IServiceCollection services)
-        {
-            services.AddAutoMapper(x => x.AddProfile(new MapperProfile()));
-            return services;
-        }
+        services.AddAutoMapper(x => x.AddProfile(new MapperProfile()));
+        return services;
     }
 }

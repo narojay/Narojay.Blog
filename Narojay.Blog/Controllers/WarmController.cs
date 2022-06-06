@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Narojay.Blog.Controllers
+namespace Narojay.Blog.Controllers;
+
+[Route("[controller]")]
+public class WarmController : BaseController
 {
-    [Route("[controller]")]
-    public class WarmController : BaseController
+    [HttpGet]
+    public string Get()
     {
-        [HttpGet]
-        public string Get()
-        {
-            return "OK";
-        }
+        return "OK";
     }
 }
