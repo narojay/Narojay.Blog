@@ -2,20 +2,25 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Narojay.Blog.Infrastruct.Common;
 
 namespace Narojay.Blog.Infrastruct.Jwt;
 
 public class JwtService : IJwtService
 {
+    private readonly IJwtProvider _jwtProvider;
+
+    public JwtService(IJwtProvider jwtProvider)
+    {
+        _jwtProvider = jwtProvider;
+    }
     public string CreateJwtToken(string username)
     {
         //签名密钥
-        var jwtKey = JwtConfig.SecretKey;
+        var jwtKey = _jwtProvider.JwtOptions.SecretKey;
         //签发者
-        var jwtIssuser = JwtConfig.Issuer;
+        var jwtIssuser = _jwtProvider.JwtOptions.Issuer;
         //接收者
-        var jwtAudience = JwtConfig.Audience;
+        var jwtAudience = _jwtProvider.JwtOptions.Audience;
         //令牌所承载的信息
         var claims = new[]
         {

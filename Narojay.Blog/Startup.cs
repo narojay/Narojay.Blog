@@ -1,26 +1,24 @@
-using System;
 using Autofac;
 using CSRedis;
-using EventBusRabbitMQ;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Narojay.Blog.Application;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Application.Service;
+using Narojay.Blog.Application.Workflow;
 using Narojay.Blog.Extension;
 using Narojay.Blog.Filter;
 using Narojay.Blog.Infrastruct;
-using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Blog.Middleware;
 using Newtonsoft.Json;
-using RabbitMQ.Client;
 using Serilog;
+using System;
+using WorkflowCore.Interface;
 
 namespace Narojay.Blog;
 
@@ -53,9 +51,12 @@ public class Startup
         //    x.Queues = new[] { EnqueuedState.DefaultQueue, "blog_job" };
         //    x.WorkerCount = 10;
         //});
+
         services.AddHttpContextAccessor();
-        RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
-        services.AddControllers(x => x.Filters.Add<FormatResponseAttribute>()).AddControllersAsServices()
+
+        services
+            .AddControllers(x => x.Filters.Add<FormatResponseAttribute>())
+            .AddControllersAsServices()
             .AddNewtonsoftJson(option =>
                 {
                     //ºöÂÔÑ­»·ÒýÓÃ
@@ -64,14 +65,18 @@ public class Startup
                 }
             );
 
-        services.AddDbContext<BlogContext>(opt =>
-        {
-            opt.UseMySql(_configuration["ConnString"], ServerVersion.AutoDetect(_configuration["ConnString"]));
-        });
+        services.AddCustomizedWorkflow(_configuration, _env);
+
+        services.AddCustomizedDbExtension(_configuration, _env);
+
+        RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
+
 
         services.AddCustomizedSwagger(_configuration, _env);
 
         services.AddCustomizedAuthentication(_configuration, _env);
+
+    
 
         services.AddHealthChecks();
 
@@ -93,9 +98,10 @@ public class Startup
 
     public void ConfigureContainer(ContainerBuilder builder)
     {
-        builder.RegisterModule(new AutofacModule());
-        builder.RegisterModule(new ApplicationModule());
         builder.RegisterModule(new InfrastructModule());
+        builder.RegisterModule(new ApplicationModule());
+        builder.RegisterModule(new AutofacModule());
+
     }
 
 
@@ -105,7 +111,7 @@ public class Startup
         app.UseSerilogRequestLogging();
         //app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
         app.UseMiddleware<ExceptionMiddleware>();
-        Console.WriteLine(_env.EnvironmentName);
+        //Console.WriteLine(_env.EnvironmentName);
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         //app.UseDeveloperExceptionPage();
         app.UseSwagger();
@@ -129,6 +135,9 @@ public class Startup
             });
         });
         app.UseHealthChecksUI();
-        warmUpEfCoreService.WarmUp();
+        //var host = app.ApplicationServices.GetService<IWorkflowHost>();
+        //host.RegisterWorkflow<TestWorkflow, MyDataClass>();
+        //host.Start();
+        //warmUpEfCoreService.WarmUp();
     }
 }

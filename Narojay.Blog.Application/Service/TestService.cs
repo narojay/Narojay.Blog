@@ -22,12 +22,10 @@ public class TestService : ITestService
     };
 
     private readonly BlogContext _dbContext;
-    private readonly IElasticsearchService _elasticsearchService;
 
-    public TestService(BlogContext dbContext, IElasticsearchService elasticsearchService)
+    public TestService(BlogContext dbContext)
     {
         _dbContext = dbContext;
-        _elasticsearchService = elasticsearchService;
     }
     //public async Task GenerateInitData()
     //{
@@ -100,6 +98,14 @@ public class TestService : ITestService
 
     public async Task UpdateTest()
     {
+        var f = TestEnum.A | TestEnum.B | TestEnum.C;
+
+
+        var d =await _dbContext.TestAccounts.Where(x => (x.TestEnum & TestEnum.C) == TestEnum.C ).ToListAsync();
+       //if (d.Value.HasFlag(TestEnum.A))
+       //{
+           
+       //}
         var a = new TestAccount
         {
             Id = 160912,
@@ -113,8 +119,18 @@ public class TestService : ITestService
 
     public async Task InsertLog(Elog log)
     {
-        var client = _elasticsearchService.GetClient();
-        var a = await _elasticsearchService.GetClient().IndexAsync(log, x => x.Index("test"));
+        //var client = _elasticsearchService.GetClient();
+        //var a = await _elasticsearchService.GetClient().IndexAsync(log, x => x.Index("test"));
+    }
+
+    public Task<Tuple<int, IList<Elog>>> QueryLog(int page, int limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Elog> QueryLog(int id)
+    {
+        throw new NotImplementedException();
     }
 
     public Task UpdateLog(Elog elog)
@@ -122,20 +138,20 @@ public class TestService : ITestService
         throw new NotImplementedException();
     }
 
-    public async Task<Tuple<int, IList<Elog>>> QueryLog(int page, int limit)
-    {
-        var query = await _elasticsearchService.GetClient().SearchAsync<Elog>(x => x.Index("test")
-            .From((page - 1) * limit)
-            .Size(limit)
-        );
-        return new Tuple<int, IList<Elog>>(Convert.ToInt32(query.Total), query.Documents.ToList());
-    }
+    //public async Task<Tuple<int, IList<Elog>>> QueryLog(int page, int limit)
+    //{
+    //    var query = await _elasticsearchService.GetClient().SearchAsync<Elog>(x => x.Index("test")
+    //        .From((page - 1) * limit)
+    //        .Size(limit)
+    //    );
+    //    return new Tuple<int, IList<Elog>>(Convert.ToInt32(query.Total), query.Documents.ToList());
+    //}
 
-    public async Task<Elog> QueryLog(int id)
-    {
-        var model = await _elasticsearchService.GetClient().GetAsync<Elog>(id, x => x.Index("test"));
-        return model.Source;
-    }
+    //public async Task<Elog> QueryLog(int id)
+    //{
+    //    var model = await _elasticsearchService.GetClient().GetAsync<Elog>(id, x => x.Index("test"));
+    //    return model.Source;
+    //}
 
     public Task DeleteLog(int id)
     {

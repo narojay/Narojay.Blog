@@ -13,10 +13,11 @@ namespace Narojay.Blog.Infrastruct
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(ThisAssembly)
-                  .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") ||
-                            t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
-                .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
+            //var c = Assembly.GetExecutingAssembly();
+            //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+            //    .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") ||
+            //                t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
+            //    .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
         }
     }
 }

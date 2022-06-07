@@ -12,4 +12,16 @@ public class TestAccount : BaseEntity
     [Column("account_name")] public string AccountName { get; set; }
 
     [Column("price")] public decimal Price { get; set; }
+
+    [Column("test_enum")] public TestEnum? TestEnum { get; set; }
+}
+
+[Flags]
+public enum TestEnum
+{
+
+    A = 1 << 0,
+    B = 1 << 1,
+    C = 1 << 2,
+    D = 1 << 3,
 }

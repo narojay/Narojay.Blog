@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>f82f4736-96ea-4b83-a137-3ee518451917</UserSecretsId>
+    <StartupObject>Narojay.Blog.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,10 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
     <ProjectReference Include="..\Narojay.Blog.Application\Narojay.Blog.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

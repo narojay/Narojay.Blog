@@ -8,19 +8,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": "true",
-      "nativeDebugging": true,
-      "applicationUrl": "http://0.0.0.0:5000"
-    },
-    "WSL": {
-      "commandName": "WSL2",
-      "launchBrowser": true,
-      "launchUrl": "http://localhost:5000/swagger",
-      "environmentVariables": {
-        "ASPNETCORE_URLS": "http://localhost:5000",
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "distributionName": ""
+      "applicationUrl": "http://localhost:5000;http://0.0.0.0:5001"
     }
   }
 }

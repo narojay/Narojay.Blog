@@ -10,5 +10,6 @@ public interface ISoliloquizeService
     Task<bool> AddSoliloquizeAsync(SoliloquizeRequest request);
 
     Task<bool> ModifySoliloquizeAsync(SoliloquizeRequest request);
+
     Task<bool> RemoveSoliloquizeAsync(int id);
 }
