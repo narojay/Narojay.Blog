@@ -93,9 +93,10 @@ public class Startup
 
     public void ConfigureContainer(ContainerBuilder builder)
     {
-        builder.RegisterModule(new AutofacModule());
-        builder.RegisterModule(new ApplicationModule());
         builder.RegisterModule(new InfrastructModule());
+        builder.RegisterModule(new ApplicationModule());
+        builder.RegisterModule(new AutofacModule());
+    
     }
 
 

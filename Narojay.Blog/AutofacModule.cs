@@ -13,7 +13,7 @@ public class AutofacModule : Module
 {
     protected override void Load(ContainerBuilder builder)
     {
-        builder.RegisterAssemblyTypes(ThisAssembly)
+        builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
             .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") ||
                         t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
             .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
