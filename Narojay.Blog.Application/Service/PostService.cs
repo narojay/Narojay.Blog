@@ -8,6 +8,7 @@ using Narojay.Blog.Domain.Models.Dto;
 using Narojay.Blog.Domain.Models.Entity;
 using Narojay.Blog.Domain.Models.RedisModel;
 using Narojay.Blog.Infrastruct.DataBase;
+using Narojay.Blog.Infrastruct.Jwt;
 using Narojay.Tools.Core.Dto;
 
 namespace Narojay.Blog.Application.Service;
@@ -15,10 +16,12 @@ namespace Narojay.Blog.Application.Service;
 public class PostService : IPostService
 {
     private readonly ILogger<PostService> _logger;
+    private readonly IJwtService _jwtService;
 
-    public PostService(ILogger<PostService> logger)
+    public PostService(ILogger<PostService> logger,IJwtService jwtService)
     {
         _logger = logger;
+        _jwtService = jwtService;
     }
 
     public BlogContext BlogContext { get; set; }

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Autofac;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
 using Module = Autofac.Module;
 
 namespace Narojay.Blog.Application
 {
-    public class ApplicationModule :Module
+    public class ApplicationModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
