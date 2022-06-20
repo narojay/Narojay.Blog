@@ -59,7 +59,7 @@ public class Startup
             .AddControllersAsServices()
             .AddNewtonsoftJson(option =>
                 {
-                    //ºöÂÔÑ­»·ÒýÓÃ
+                    //ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 }
@@ -130,8 +130,8 @@ public class Startup
                 {
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                }); //Òª½øÐÐ¸ÃÕ¾µã¼ì²âÓ¦Ìí¼Ó´Ë´úÂë
-                x.MapHealthChecksUI(); //Ìí¼ÓUI½çÃæÖ§³Ö
+                }); //Òªï¿½ï¿½ï¿½Ð¸ï¿½Õ¾ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ó´Ë´ï¿½ï¿½ï¿½
+                x.MapHealthChecksUI(); //ï¿½ï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
             });
         });
         app.UseHealthChecksUI();

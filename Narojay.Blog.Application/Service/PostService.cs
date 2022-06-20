@@ -18,7 +18,7 @@ public class PostService : IPostService
     private readonly ILogger<PostService> _logger;
     private readonly IJwtService _jwtService;
 
-    public PostService(ILogger<PostService> logger, IJwtService jwtService)
+    public PostService(ILogger<PostService> logger,IJwtService jwtService)
     {
         _logger = logger;
         _jwtService = jwtService;
@@ -42,19 +42,6 @@ public class PostService : IPostService
 
     public async Task<PostDto> GetPostByIdAsync(int id)
     {
-        var posts = await BlogContext.Posts.AsNoTracking().Where(x => x.Id == id).FirstOrDefaultAsync();
-        //posts.PostTags = new List<PostTags>();
-        BlogContext.Posts.Attach(posts);
-        posts.Author = "asdas1d";
-        var cc =  await BlogContext.SaveChangesAsync();
-      posts.Author = "asdas1d2";
-        var cc1 = await BlogContext.SaveChangesAsync();
-
-        foreach (var tag in posts.PostTags)
-        {
-            var a = tag;
-
-        }
         return await RedisHelper.CacheShellAsync("PostContent", id.ToString(), 0, async () =>
         {
             var post = BlogContext.Posts.FirstOrDefault(x => x.Id == id);
