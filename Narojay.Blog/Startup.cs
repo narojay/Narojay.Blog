@@ -1,13 +1,10 @@
-using System;
 using Autofac;
 using CSRedis;
-using EventBusRabbitMQ;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Narojay.Blog.Application;
@@ -16,10 +13,8 @@ using Narojay.Blog.Application.Service;
 using Narojay.Blog.Extension;
 using Narojay.Blog.Filter;
 using Narojay.Blog.Infrastruct;
-using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Blog.Middleware;
 using Newtonsoft.Json;
-using RabbitMQ.Client;
 using Serilog;
 
 namespace Narojay.Blog;
@@ -53,25 +48,31 @@ public class Startup
         //    x.Queues = new[] { EnqueuedState.DefaultQueue, "blog_job" };
         //    x.WorkerCount = 10;
         //});
+
         services.AddHttpContextAccessor();
-        RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
-        services.AddControllers(x => x.Filters.Add<FormatResponseAttribute>()).AddControllersAsServices()
+
+        services
+            .AddControllers(x => x.Filters.Add<FormatResponseAttribute>())
+            .AddControllersAsServices()
             .AddNewtonsoftJson(option =>
                 {
-                    //ºöÂÔÑ­»·ÒýÓÃ
+                    //ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 }
             );
 
-        services.AddDbContext<BlogContext>(opt =>
-        {
-            opt.UseMySql(_configuration["ConnString"], ServerVersion.AutoDetect(_configuration["ConnString"]));
-        });
+        services.AddCustomizedWorkflow(_configuration, _env);
+
+        services.AddCustomizedDbExtension(_configuration, _env);
+
+        RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
+
 
         services.AddCustomizedSwagger(_configuration, _env);
 
         services.AddCustomizedAuthentication(_configuration, _env);
+
 
         services.AddHealthChecks();
 
@@ -96,7 +97,6 @@ public class Startup
         builder.RegisterModule(new InfrastructModule());
         builder.RegisterModule(new ApplicationModule());
         builder.RegisterModule(new AutofacModule());
-    
     }
 
 
@@ -106,7 +106,7 @@ public class Startup
         app.UseSerilogRequestLogging();
         //app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
         app.UseMiddleware<ExceptionMiddleware>();
-        Console.WriteLine(_env.EnvironmentName);
+        //Console.WriteLine(_env.EnvironmentName);
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         //app.UseDeveloperExceptionPage();
         app.UseSwagger();
@@ -125,11 +125,14 @@ public class Startup
                 {
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                }); //Òª½øÐÐ¸ÃÕ¾µã¼ì²âÓ¦Ìí¼Ó´Ë´úÂë
-                x.MapHealthChecksUI(); //Ìí¼ÓUI½çÃæÖ§³Ö
+                }); //Òªï¿½ï¿½ï¿½Ð¸ï¿½Õ¾ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ó´Ë´ï¿½ï¿½ï¿½
+                x.MapHealthChecksUI(); //ï¿½ï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
             });
         });
         app.UseHealthChecksUI();
-        warmUpEfCoreService.WarmUp();
+        //var host = app.ApplicationServices.GetService<IWorkflowHost>();
+        //host.RegisterWorkflow<TestWorkflow, MyDataClass>();
+        //host.Start();
+        //warmUpEfCoreService.WarmUp();
     }
 }

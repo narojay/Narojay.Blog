@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Narojay.Blog.Infrastruct.Jwt;
 using Narojay.Blog.Infrastruct.Jwt.Extension;
 
 namespace Narojay.Blog.Extension;
@@ -18,8 +19,6 @@ public static class AuthenticationExtension
         var audience = configuration["JwtConfig:Audience"];
 
         var secretKey = configuration["JwtConfig:SecretKey"];
-
-        JwtExtension.SetJwtConfig(issuer, audience, secretKey);
 
         services.AddAuthentication(options =>
         {
@@ -41,6 +40,14 @@ public static class AuthenticationExtension
                 SaveSigninToken = true
             };
         });
+
+        services.UseJwtService(x => x.ConfigOptions(new JwtOptions
+        {
+            Audience = audience,
+            SecretKey = secretKey,
+            Issuer = issuer
+        }));
+
         return services;
     }
 }

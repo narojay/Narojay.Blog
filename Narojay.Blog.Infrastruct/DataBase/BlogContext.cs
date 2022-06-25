@@ -28,7 +28,6 @@ public class BlogContext : DbContext
             .LogTo(Log.Information)
             .EnableDetailedErrors()
             .EnableSensitiveDataLogging()
-            .UseLazyLoadingProxies()
             .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
     }
 

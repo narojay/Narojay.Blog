@@ -1,10 +1,5 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
-using Narojay.Blog.Application;
-using Narojay.Blog.Application.Interface;
-using Narojay.Blog.Application.Service;
-using Narojay.Blog.Infrastruct;
 using Module = Autofac.Module;
 
 namespace Narojay.Blog;
