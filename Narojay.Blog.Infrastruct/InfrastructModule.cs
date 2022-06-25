@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Module = Autofac.Module;
+﻿using Autofac;
 
-namespace Narojay.Blog.Infrastruct
+namespace Narojay.Blog.Infrastruct;
+
+public class InfrastructModule : Module
 {
-    public class InfrastructModule :Module
+    protected override void Load(ContainerBuilder builder)
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            //var c = Assembly.GetExecutingAssembly();
-            //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-            //    .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") ||
-            //                t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
-            //    .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
-        }
+        //var c = Assembly.GetExecutingAssembly();
+        //builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+        //    .Where(t => t.Name.EndsWith("Repository") || t.Name.EndsWith("Service") ||
+        //                t.Name.EndsWith("Controller") || t.Name.EndsWith("Attribute"))
+        //    .PropertiesAutowired().AsSelf().AsImplementedInterfaces().InstancePerDependency();
     }
 }

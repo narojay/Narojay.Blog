@@ -2,20 +2,14 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Domain.Models.Entity;
-using Narojay.Blog.Infrastruct.Common;
 
 namespace Narojay.Blog.Controllers;
 
 [Route("User")]
 public class UserController : BaseController
 {
-
-
-   
-
     public IUserService UserService { get; set; }
 
     [HttpGet("users")]

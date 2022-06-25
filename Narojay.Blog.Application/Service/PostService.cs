@@ -15,10 +15,10 @@ namespace Narojay.Blog.Application.Service;
 
 public class PostService : IPostService
 {
-    private readonly ILogger<PostService> _logger;
     private readonly IJwtService _jwtService;
+    private readonly ILogger<PostService> _logger;
 
-    public PostService(ILogger<PostService> logger,IJwtService jwtService)
+    public PostService(ILogger<PostService> logger, IJwtService jwtService)
     {
         _logger = logger;
         _jwtService = jwtService;

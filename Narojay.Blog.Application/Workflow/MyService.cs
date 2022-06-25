@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Narojay.Blog.Application.Workflow;
 
-namespace Narojay.Blog.Application.Workflow
+public class MyService : IMyService
 {
-    public class MyService : IMyService
+    public void DoTheThings()
     {
-        public void DoTheThings()
-        {
-            Console.WriteLine("Doing stuff...");
-        }
+        Console.WriteLine("Doing stuff...");
     }
 }

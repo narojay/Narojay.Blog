@@ -10,15 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Narojay.Blog.Application;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Application.Service;
-using Narojay.Blog.Application.Workflow;
 using Narojay.Blog.Extension;
 using Narojay.Blog.Filter;
 using Narojay.Blog.Infrastruct;
 using Narojay.Blog.Middleware;
 using Newtonsoft.Json;
 using Serilog;
-using System;
-using WorkflowCore.Interface;
 
 namespace Narojay.Blog;
 
@@ -76,7 +73,6 @@ public class Startup
 
         services.AddCustomizedAuthentication(_configuration, _env);
 
-    
 
         services.AddHealthChecks();
 
@@ -101,7 +97,6 @@ public class Startup
         builder.RegisterModule(new InfrastructModule());
         builder.RegisterModule(new ApplicationModule());
         builder.RegisterModule(new AutofacModule());
-
     }
 
 

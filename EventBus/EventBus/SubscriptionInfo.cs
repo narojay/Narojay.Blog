@@ -14,11 +14,11 @@ public class SubscriptionInfo
 
     public static SubscriptionInfo Dynamic(Type handlerType)
     {
-        return new(true, handlerType);
+        return new SubscriptionInfo(true, handlerType);
     }
 
     public static SubscriptionInfo Typed(Type handlerType)
     {
-        return new(false, handlerType);
+        return new SubscriptionInfo(false, handlerType);
     }
 }

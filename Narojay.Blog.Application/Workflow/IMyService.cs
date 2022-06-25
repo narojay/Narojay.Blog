@@ -1,7 +1,6 @@
-﻿namespace Narojay.Blog.Application.Workflow
+﻿namespace Narojay.Blog.Application.Workflow;
+
+public interface IMyService
 {
-    public interface IMyService
-    {
-        void DoTheThings();
-    }
+    void DoTheThings();
 }

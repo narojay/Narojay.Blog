@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Narojay.Blog.Domain;
 using Narojay.Blog.Domain.Models.Api;
 using Newtonsoft.Json;
 using Serilog;
-using System;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace Narojay.Blog.Middleware;
 
@@ -32,8 +32,8 @@ public class ExceptionMiddleware
         catch (Exception ex)
         {
             var statusCode = context.Response.StatusCode == 200
-                    ? (int)HttpStatusCode.BadRequest
-                    : context.Response.StatusCode;
+                ? (int)HttpStatusCode.BadRequest
+                : context.Response.StatusCode;
             var message = "操作失败";
             if (ex is StringResponseException)
             {

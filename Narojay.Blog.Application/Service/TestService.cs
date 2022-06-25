@@ -27,6 +27,85 @@ public class TestService : ITestService
     {
         _dbContext = dbContext;
     }
+
+    public async Task UpdateTest()
+    {
+        var f = TestEnum.A | TestEnum.B | TestEnum.C;
+
+
+        var d = await _dbContext.TestAccounts.Where(x => (x.TestEnum & TestEnum.C) == TestEnum.C).ToListAsync();
+        //if (d.Value.HasFlag(TestEnum.A))
+        //{
+
+        //}
+        var a = new TestAccount
+        {
+            Id = 160912,
+            UserId = 6
+        };
+        _dbContext.Entry(a).State = EntityState.Unchanged;
+
+        _dbContext.Entry(a).Property(x => x.UserId).IsModified = true;
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task InsertLog(Elog log)
+    {
+        //var client = _elasticsearchService.GetClient();
+        //var a = await _elasticsearchService.GetClient().IndexAsync(log, x => x.Index("test"));
+    }
+
+    public Task<Tuple<int, IList<Elog>>> QueryLog(int page, int limit)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Elog> QueryLog(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> RedisLockTest()
+    {
+        if (await RedisHelper.Instance.SetNxAsync("lock_test_1", 1))
+        {
+            Console.WriteLine("test redis lock ");
+            await RedisHelper.Instance.ExpireAsync("lock_test_1", 2);
+            return true;
+        }
+
+        Console.WriteLine("task is lock");
+        return false;
+    }
+
+    public async Task RedisLockTest1()
+    {
+        var a = await _dbContext.Users.Where(x => x.Id == 2).Select(x => new IdAndNameDto
+        {
+            Id = x.TestAccount == null ? -1 : x.TestAccount.Price
+        }).ToListAsync();
+    }
+
+    public Task<IdAndNameDto> GetData()
+    {
+        //throw new Exception("test");
+        return Task.FromResult<IdAndNameDto>(null);
+    }
+
+    public Task<IdAndNameDto> GetDataException()
+    {
+        throw new StringResponseException("统一异常处理异常测试");
+    }
+
+    public Task<IdAndNameDto> GetDataException1()
+    {
+        var a = 1;
+        var b = 0;
+        var c = a / b;
+        //throw new Exception("test");
+        return Task.FromResult<IdAndNameDto>(null);
+        ;
+    }
     //public async Task GenerateInitData()
     //{
     //    var random = new Random();
@@ -96,43 +175,6 @@ public class TestService : ITestService
         }).ToListAsync();
     }
 
-    public async Task UpdateTest()
-    {
-        var f = TestEnum.A | TestEnum.B | TestEnum.C;
-
-
-        var d =await _dbContext.TestAccounts.Where(x => (x.TestEnum & TestEnum.C) == TestEnum.C ).ToListAsync();
-       //if (d.Value.HasFlag(TestEnum.A))
-       //{
-           
-       //}
-        var a = new TestAccount
-        {
-            Id = 160912,
-            UserId = 6
-        };
-        _dbContext.Entry(a).State = EntityState.Unchanged;
-
-        _dbContext.Entry(a).Property(x => x.UserId).IsModified = true;
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task InsertLog(Elog log)
-    {
-        //var client = _elasticsearchService.GetClient();
-        //var a = await _elasticsearchService.GetClient().IndexAsync(log, x => x.Index("test"));
-    }
-
-    public Task<Tuple<int, IList<Elog>>> QueryLog(int page, int limit)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<Elog> QueryLog(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task UpdateLog(Elog elog)
     {
         throw new NotImplementedException();
@@ -156,48 +198,6 @@ public class TestService : ITestService
     public Task DeleteLog(int id)
     {
         throw new NotImplementedException();
-    }
-
-    public async Task<bool> RedisLockTest()
-    {
-        if (await RedisHelper.Instance.SetNxAsync("lock_test_1", 1))
-        {
-            Console.WriteLine("test redis lock ");
-            await RedisHelper.Instance.ExpireAsync("lock_test_1", 2);
-            return true;
-        }
-
-        Console.WriteLine("task is lock");
-        return false;
-    }
-
-    public async Task RedisLockTest1()
-    {
-        var a = await _dbContext.Users.Where(x => x.Id == 2).Select(x => new IdAndNameDto
-        {
-            Id = x.TestAccount == null ? -1 : x.TestAccount.Price
-        }).ToListAsync();
-    }
-
-    public Task<IdAndNameDto> GetData()
-    {
-        //throw new Exception("test");
-        return Task.FromResult<IdAndNameDto>(null);
-    }
-
-    public Task<IdAndNameDto> GetDataException()
-    {
-        throw new StringResponseException("统一异常处理异常测试");
-    }
-
-    public Task<IdAndNameDto> GetDataException1()
-    {
-        var a = 1;
-        var b = 0;
-        var c = a / b;
-        //throw new Exception("test");
-        return Task.FromResult<IdAndNameDto>(null);
-        ;
     }
 
 

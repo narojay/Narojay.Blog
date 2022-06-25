@@ -1,37 +1,37 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Narojay.Blog.Infrastruct.Email;
-using Narojay.Blog.Infrastruct.Email.Core;
 
-namespace Narojay.Blog.Infrastruct.Jwt
+namespace Narojay.Blog.Infrastruct.Jwt;
+
+public interface IjwtBuilder
 {
-    public interface IjwtBuilder
+    IServiceCollection ServiceCollection { get; }
+
+
+    IjwtBuilder ConfigOptions(JwtOptions options, ServiceLifetime lifetime = ServiceLifetime.Scoped);
+}
+
+internal class JwtBuilder : IjwtBuilder
+{
+    public JwtBuilder(IServiceCollection serviceCollection)
     {
-        IServiceCollection ServiceCollection { get; }
-
-
-        IjwtBuilder ConfigOptions(JwtOptions options, ServiceLifetime lifetime = ServiceLifetime.Scoped);
+        ServiceCollection = serviceCollection;
     }
-     internal class JwtBuilder : IjwtBuilder
+
+    public IServiceCollection ServiceCollection { get; }
+
+    public IjwtBuilder ConfigOptions(JwtOptions options, ServiceLifetime lifetime = ServiceLifetime.Scoped)
     {
-        public JwtBuilder(IServiceCollection serviceCollection)
-        {
-            ServiceCollection = serviceCollection;
-        }
-        public IServiceCollection ServiceCollection { get; }
-        public IjwtBuilder ConfigOptions(JwtOptions options, ServiceLifetime lifetime = ServiceLifetime.Scoped)
-        {
-            AddProviderService(options);
+        AddProviderService(options);
 
-            ServiceCollection.TryAdd(new ServiceDescriptor(typeof(IJwtService), typeof(JwtService), lifetime));
+        ServiceCollection.TryAdd(new ServiceDescriptor(typeof(IJwtService), typeof(JwtService), lifetime));
 
-            return this;
-        }
+        return this;
+    }
 
-        private void AddProviderService(JwtOptions options)
-        {
-            var provider = new JwtProvider(options);
-            ServiceCollection.TryAddSingleton<IJwtProvider>(provider);
-        }
+    private void AddProviderService(JwtOptions options)
+    {
+        var provider = new JwtProvider(options);
+        ServiceCollection.TryAddSingleton<IJwtProvider>(provider);
     }
 }
