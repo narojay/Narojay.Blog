@@ -80,10 +80,10 @@ public class TestService : ITestService
 
     public async Task RedisLockTest1()
     {
-        var a = await _dbContext.Users.Where(x => x.Id == 2).Select(x => new IdAndNameDto
+        /*var a = await _dbContext.Users.Where(x => x.Id == 2).Select(x => new IdAndNameDto
         {
             Id = x.TestAccount == null ? -1 : x.TestAccount.Price
-        }).ToListAsync();
+        }).ToListAsync();*/
     }
 
     public Task<IdAndNameDto> GetData()

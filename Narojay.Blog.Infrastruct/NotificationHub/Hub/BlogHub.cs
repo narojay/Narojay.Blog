@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 
-namespace Narojay.Blog.Application.Service;
-
-public class TestHub : Hub
+namespace Narojay.Blog.Infrastruct.NotificationHub.Hub;
+public class BlogHub : Microsoft.AspNetCore.SignalR.Hub
 {
     //重写连接事件，初次建立连接时进入此方法，开展具体业务可使用，例如管理连接池。
     public override async Task OnConnectedAsync()
     {
-        await Clients.Caller.SendAsync("connected", Context.ConnectionId);
+        var a =  Context;
+        await Clients.Caller.SendAsync("connected", Context.ConnectionId + ":  " + 1);
     }
 
     //重写断开事件，同理。
@@ -19,13 +20,11 @@ public class TestHub : Hub
     //服务端接收客户端发送方法
     public async Task SendMessage(string message)
     {
-        //第一个参数为客户端接收服务端返回方法，名称需要服务端一致。
         await Clients.Caller.SendAsync("ReceiveMessage", Context.ConnectionId + ":  " + message);
     }
 
     public async Task SendAllMessage(string message)
     {
-        //第一个参数为客户端接收服务端返回方法，名称需要服务端一致。
         await Clients.All.SendAsync("ReceiveMessage", Context.ConnectionId + ":  " + message);
     }
 }

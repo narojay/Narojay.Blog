@@ -1,6 +1,7 @@
 using Autofac;
 using CSRedis;
 using HealthChecks.UI.Client;
+using IdentityModel.OidcClient;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -13,6 +14,8 @@ using Narojay.Blog.Application.Service;
 using Narojay.Blog.Extension;
 using Narojay.Blog.Filter;
 using Narojay.Blog.Infrastruct;
+using Narojay.Blog.Infrastruct.NotificationHub;
+using Narojay.Blog.Infrastruct.NotificationHub.Hub;
 using Narojay.Blog.Middleware;
 using Newtonsoft.Json;
 using Serilog;
@@ -39,28 +42,10 @@ public class Startup
         services.AddMapper();
 
         services.AddSignalR();
-        //services.AddHangfire(x => x.UseStorage(new MySqlStorage(AppConfig.ConnString, new MySqlStorageOptions
-        //{
-        //    TablesPrefix = "blog"
-        //}))).AddHangfireServer(x =>
-        //{
-        //    x.ServerName = "blog.server";
-        //    x.Queues = new[] { EnqueuedState.DefaultQueue, "blog_job" };
-        //    x.WorkerCount = 10;
-        //});
 
         services.AddHttpContextAccessor();
 
-        services
-            .AddControllers(x => x.Filters.Add<FormatResponseAttribute>())
-            .AddControllersAsServices()
-            .AddNewtonsoftJson(option =>
-                {
-                    //����ѭ������
-                    option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                }
-            );
+        services.AddCustomizedController();
 
         services.AddCustomizedWorkflow(_configuration, _env);
 
@@ -68,28 +53,13 @@ public class Startup
 
         RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
 
-
         services.AddCustomizedSwagger(_configuration, _env);
 
         services.AddCustomizedAuthentication(_configuration, _env);
-
-
+    
         services.AddHealthChecks();
 
         services.AddHealthChecksUI().AddInMemoryStorage();
-
-        //services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
-        //{
-        //    var factory = new ConnectionFactory
-        //    {
-        //        HostName = _configuration["RabbitMqConfig:Host"],
-        //        UserName = _configuration["RabbitMqConfig:UserName"],
-        //        Password = _configuration["RabbitMqConfig:Password"],
-        //        DispatchConsumersAsync = true
-        //    };
-        //    var a = new DefaultRabbitMQPersistentConnection(factory);
-        //    return a;
-        //});
     }
 
     public void ConfigureContainer(ContainerBuilder builder)
@@ -107,7 +77,7 @@ public class Startup
         //app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
         app.UseMiddleware<ExceptionMiddleware>();
         //Console.WriteLine(_env.EnvironmentName);
-        app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+        app.UseCors(x => x.SetIsOriginAllowed(_ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
         //app.UseDeveloperExceptionPage();
         app.UseSwagger();
         app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Narojay.Blog v1"));
@@ -118,15 +88,15 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
-            endpoints.MapHub<TestHub>("/testHub");
+            endpoints.MapHub<BlogHub>("/bloghub");
             app.UseEndpoints(x =>
             {
                 x.MapHealthChecks("/health", new HealthCheckOptions
                 {
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-                }); //Ҫ���и�վ����Ӧ��Ӵ˴���
-                x.MapHealthChecksUI(); //���UI����֧��
+                });
+                x.MapHealthChecksUI(); 
             });
         });
         app.UseHealthChecksUI();

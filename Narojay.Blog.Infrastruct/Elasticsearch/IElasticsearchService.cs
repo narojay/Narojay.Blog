@@ -1,6 +1,6 @@
 ﻿using Nest;
 
-namespace Narojay.Blog.Application.Interface;
+namespace Narojay.Blog.Infrastruct.Elasticsearch;
 
 public interface IElasticsearchService
 {

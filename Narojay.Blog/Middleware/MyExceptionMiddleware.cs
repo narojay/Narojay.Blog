@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using Elasticsearch.Net.Specification.SecurityApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Narojay.Blog.Domain;
@@ -57,8 +58,12 @@ public class ExceptionMiddleware
                 msg = "未找到服务";
             else if (statusCode == 502)
                 msg = "请求错误";
-            else if (statusCode != 200) msg = "未知错误";
-            if (!string.IsNullOrWhiteSpace(msg)) await HandleExceptionAsync(context, statusCode, msg);
+            else if (statusCode != 200 && statusCode != 204) msg = "未知错误";
+            if (statusCode != 204)
+            {
+                if (!string.IsNullOrWhiteSpace(msg)) await HandleExceptionAsync(context, statusCode, msg);
+
+            }
         }
     }
 
@@ -67,7 +72,7 @@ public class ExceptionMiddleware
     {
         var data = new ApiResult { Code = statusCode.ToString(), IsSuccess = false, Message = msg };
         var result = JsonConvert.SerializeObject(data);
-        context.Response.ContentType = "application/json;charset=utf-8";
+        /*context.Response.ContentType = "application/json;charset=utf-8";*/
         return context.Response.WriteAsync(result);
     }
 }

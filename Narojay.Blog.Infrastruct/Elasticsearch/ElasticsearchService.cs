@@ -1,7 +1,6 @@
-﻿using Narojay.Blog.Application.Interface;
-using Nest;
+﻿using Nest;
 
-namespace Narojay.Blog.Application.Service;
+namespace Narojay.Blog.Infrastruct.Elasticsearch;
 
 public class ElasticsearchService : IElasticsearchService
 {

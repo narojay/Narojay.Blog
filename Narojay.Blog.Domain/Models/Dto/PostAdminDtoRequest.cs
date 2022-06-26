@@ -1,10 +1,10 @@
-﻿using Narojay.Tools.Core.Dto;
+﻿using System.ComponentModel.DataAnnotations;
+using Narojay.Tools.Core.Dto;
 
 namespace Narojay.Blog.Domain.Models.Dto;
 
 public class PostAdminDtoRequest : PageInputDto
 {
-    public string Title { get; set; }
-
-    public string Label { get; set; }
+    public string? Title { get; set; }
+    public string? Label { get; set; }
 }
