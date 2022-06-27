@@ -74,23 +74,23 @@ public class MessageBoardService : IMessageBoardService
         var a = await RedisHelper.ZRevRangeAsync("leaveMessageContentSort", (message.PageIndex - 1) * message.PageSize,
             message.PageIndex * message.PageSize - 1);
         var leaveMessageDtos = new List<LeaveMessageDto>();
-
-        foreach (var s in a)
+        var leaveMessageContents = await RedisHelper.HMGetAsync("leaveMessageContent", a);
+        foreach (var leaveMessageContent in leaveMessageContents)
         {
-            var leaveMessageContent = await RedisHelper.HGetAsync("leaveMessageContent", s);
-
             var leaveMessage = JsonConvert.DeserializeObject<LeaveMessage>(leaveMessageContent);
             var leaveMessageDto = Mapper.Map<LeaveMessageDto>(leaveMessage);
             var replySort = await RedisHelper.ZRevRangeAsync($"leaveMessageReplySort:{leaveMessage.Id}", 0, 9);
-            foreach (var item in replySort)
-            {
-                var replyContent = await RedisHelper.HGetAsync($"leaveMessageReplyContent:{leaveMessage.Id}", item);
-                var leaveMessageReply = JsonConvert.DeserializeObject<LeaveMessage>(replyContent);
-                leaveMessageDto.Children.Add(Mapper.Map<LeaveMessageDto>(leaveMessageReply));
-            }
-
-            leaveMessageDtos.Add(leaveMessageDto);
+           
+                var replyContent = await RedisHelper.HMGetAsync($"leaveMessageReplyContent:{leaveMessage.Id}", replySort);
+                foreach (var item in replyContent)
+                {
+                    var leaveMessageReply = JsonConvert.DeserializeObject<LeaveMessage>(item);
+                    leaveMessageDto.Children.Add(Mapper.Map<LeaveMessageDto>(leaveMessageReply));
+                }
+            leaveMessageDtos.Add(leaveMessageDto); 
         }
+   
+            
 
         return new PageOutputDto<LeaveMessageDto>
         {
