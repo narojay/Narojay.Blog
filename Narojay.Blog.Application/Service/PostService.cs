@@ -10,6 +10,7 @@ using Narojay.Blog.Domain.Models.RedisModel;
 using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Blog.Infrastruct.Jwt;
 using Narojay.Tools.Core.Dto;
+using Nest;
 
 namespace Narojay.Blog.Application.Service;
 
@@ -42,9 +43,9 @@ public class PostService : IPostService
 
     public async Task<PostDto> GetPostByIdAsync(int id)
     {
-        return await RedisHelper.CacheShellAsync("PostContent", id.ToString(), 0, async () =>
+        return await RedisHelper.CacheShellAsync("PostContent", id.ToString(),1000, async () =>
         {
-            var post = BlogContext.Posts.FirstOrDefault(x => x.Id == id);
+            var post = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == id);
             var postDto = Mapper.Map<PostDto>(post);
             return postDto;
         });
@@ -55,25 +56,19 @@ public class PostService : IPostService
         var a = await RedisHelper.ZRevRangeAsync("PostSortByTime",
             (pageInputBaseDto.PageIndex - 1) * pageInputBaseDto.PageSize,
             pageInputBaseDto.PageIndex * pageInputBaseDto.PageSize - 1);
-        var postDtos = new List<PostDto>();
-
-        foreach (var s in a)
+        
+        var dic= await RedisHelper.CacheShellAsync("PostContent", a,1000, async (a) =>
         {
-            var postDto = await RedisHelper.CacheShellAsync("PostContent", s, 0, async () =>
-            {
-                var id = Convert.ToInt32(s);
-                var post = BlogContext.Posts.FirstOrDefault(x => x.Id == id);
-                var postDto = Mapper.Map<PostDto>(post);
-                return postDto;
-            });
-
-            postDtos.Add(postDto);
-        }
-
+            var list = a.Select(x => Convert.ToInt32(x)).ToList();
+            var posts =await BlogContext.Posts.Where(x => list.Contains(x.Id)).ToListAsync();
+            var postDtos = Mapper.Map<List<PostDto>>(posts);
+            var result = postDtos.Select(x => (x.Id.ToString(), x)).ToArray();
+            return result;
+        }); 
         return new PageOutputDto<PostDto>
         {
             TotalCount = (int)await RedisHelper.ZCardAsync("PostSortByTime"),
-            Data = postDtos
+            Data = dic.Select(x =>x.value).ToList()
         };
     }
 
