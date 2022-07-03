@@ -1,19 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
+using EventBus.Abstractions;
+using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using Microsoft.Extensions.Logging;
+using Narojay.Blog.Application.Events;
 using Narojay.Blog.Application.Interface;
+using Narojay.Blog.Domain;
 using Narojay.Blog.Domain.Models.Dto;
 using Narojay.Blog.Domain.Models.Entity;
+using RabbitMQ.Client;
 
 namespace Narojay.Blog.Controllers;
 
 [Route("test")]
 public class TestController : BaseController
 {
+    private readonly IEventBus _eventBus;
+    private readonly ILogger<TestController> _logger;
     public ITestService TestService { get; set; }
 
+    public TestController(IEventBus eventBus, ILogger<TestController> logger)
+    {
+        _eventBus = eventBus;
+        _logger = logger;
+    }
 
+    [HttpPost("test")]
+    public  void Test(CreateOrderEvent createOrderEvent)
+    {
+         _eventBus.Publish(createOrderEvent);
+    }
     //[HttpPost("test")]
     //public async Task GenerateInitData(string username, string password)
     //{

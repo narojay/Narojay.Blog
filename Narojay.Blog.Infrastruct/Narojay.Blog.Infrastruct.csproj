@@ -22,12 +22,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
+        <ProjectReference Include="..\EventBus\EventBus\EventBus.csproj" />
         <ProjectReference Include="..\Narojay.Blog.Domain\Narojay.Blog.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="Log\" />
         <Folder Include="HangFire\" />
+        <Folder Include="Swagger" />
     </ItemGroup>
 
 </Project>

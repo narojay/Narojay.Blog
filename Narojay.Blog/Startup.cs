@@ -1,5 +1,6 @@
 using Autofac;
 using CSRedis;
+using EventBus.Abstractions;
 using HealthChecks.UI.Client;
 using IdentityModel.OidcClient;
 using MediatR;
@@ -9,8 +10,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Narojay.Blog.Application;
+using Narojay.Blog.Application.Events;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Application.Service;
+using Narojay.Blog.Domain;
 using Narojay.Blog.Extension;
 using Narojay.Blog.Filter;
 using Narojay.Blog.Infrastruct;
@@ -51,12 +54,14 @@ public class Startup
 
         services.AddCustomizedDbExtension(_configuration, _env);
 
+        services.AddCustomizedRabbitMq(_configuration, _env);
+
         RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
 
         services.AddCustomizedSwagger(_configuration, _env);
 
         services.AddCustomizedAuthentication(_configuration, _env);
-    
+
         services.AddHealthChecks();
 
         services.AddHealthChecksUI().AddInMemoryStorage();
@@ -96,13 +101,20 @@ public class Startup
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
-                x.MapHealthChecksUI(); 
+                x.MapHealthChecksUI();
             });
         });
         app.UseHealthChecksUI();
+
+        ConfigureEventBus(app);
         //var host = app.ApplicationServices.GetService<IWorkflowHost>();
         //host.RegisterWorkflow<TestWorkflow, MyDataClass>();
         //host.Start();
         //warmUpEfCoreService.WarmUp();
+    }
+
+    private void ConfigureEventBus(IApplicationBuilder app)
+    {
+        var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
     }
 }
