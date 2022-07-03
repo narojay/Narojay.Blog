@@ -31,6 +31,7 @@
     <ItemGroup>
         <ProjectReference Include="..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
         <ProjectReference Include="..\Narojay.Blog.Application\Narojay.Blog.Application.csproj" />
+        <ProjectReference Include="..\Narojay.Blog.Infrastruct.Ioc\Narojay.Blog.Infrastruct.Ioc.csproj" />
     </ItemGroup>
 
 </Project>
