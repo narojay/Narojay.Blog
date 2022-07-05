@@ -23,13 +23,14 @@ public class CreateOrderEventHandler : IIntegrationEventHandler<CreateOrderEvent
   
     public async Task Handle(CreateOrderEvent @event)
     {
-        var postByIdAsync = await _postService.GetPostByIdAsync(@event.Num);
-      var a =  JsonSerializer.Serialize(postByIdAsync,new JsonSerializerOptions
-        {
-            
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        });
-        _logger.LogInformation(a);
         
+      //   var postByIdAsync = await _postService.GetPostByIdAsync(@event.Num);
+      // var a =  JsonSerializer.Serialize(postByIdAsync,new JsonSerializerOptions
+      //   {
+      //       
+      //       Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+      //   });
+      //   _logger.LogInformation(a);
+      Console.WriteLine( _postService.GetHashCode());
     }
 }

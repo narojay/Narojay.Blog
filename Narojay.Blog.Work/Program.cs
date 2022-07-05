@@ -18,6 +18,7 @@ using Narojay.Blog.Infrastruct;
 using Narojay.Blog.Infrastruct.NotificationHub.Hub;
 using Narojay.Blog.Work;
 using Narojay.Blog.Work.Extension;
+using Narojay.Blog.Work.Handler;
 using Narojay.Blog.Work.Middleware;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -113,44 +114,7 @@ app.UseEndpoints(endpoints =>
         x.MapHealthChecksUI();
     });
 });
-var types = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsClosedTypeOf(typeof(IIntegrationEventHandler<>)));
-var rabbitMqPersistentConnection = app.Services.GetService<IRabbitMQPersistentConnection>();
 
-foreach (var item in types)
-{
-     var channel = rabbitMqPersistentConnection.CreateModel();
-    channel.BasicQos(0, 1, false);
-    var queueName = NarojayPlatform.BlogWork.ToString();
-    channel.QueueDeclare(queueName, true, false, false, null);
-    var routingKey = item.GetMethod("Handle")?.GetParameters()[0].ParameterType.Name;
-    var a = item.GetMethod("Handle")?.GetParameters()[0].ParameterType;
-    channel.QueueBind(queueName, EventBusRabbitMQ.EventBusRabbitMQ.BROKER_NAME, routingKey, null);
-    
-    var asyncEventingBasicConsumer = new AsyncEventingBasicConsumer(channel);
-    asyncEventingBasicConsumer.Received += async (sender, eventArgs) =>
-    {
-        try
-        {
-            var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
-            var creatOrderEvent = JsonSerializer.Deserialize(message, a);
-            var handler = app.Services.GetService(item);
-            await (Task)item.GetMethod("Handle").Invoke(handler, new[] { creatOrderEvent });
-            channel.BasicAck(eventArgs.DeliveryTag, multiple: false);
-        }
-        catch (Exception e)
-        {
-           Log.Error(e,"消费失败" + Encoding.UTF8.GetString(eventArgs.Body.Span));
-           channel.BasicReject(eventArgs.DeliveryTag,false);
-        }
-     
-    };
-    channel.BasicConsume(
-        queue: queueName,
-        autoAck: false,
-        consumer: asyncEventingBasicConsumer);
-}
+app.UseRabbitMqWork();
 
-
-// integrationEventHandlers.Handle(new CreateOrderEvent());
-// rabbitMqPersistentConnection.CreateModel();
 app.Run();

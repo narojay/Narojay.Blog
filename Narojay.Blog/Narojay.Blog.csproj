@@ -4,11 +4,14 @@
         <TargetFramework>net6.0</TargetFramework>
         <UserSecretsId>f82f4736-96ea-4b83-a137-3ee518451917</UserSecretsId>
         <StartupObject>Narojay.Blog.Program</StartupObject>
+        <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
 
         <None Include="../.github/**" />
+
+        <None Remove="..\.dockerignore" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,6 +25,7 @@
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.4" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
         <PackageReference Include="RabbitMQ.Client" Version="6.2.4" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
         <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
@@ -31,7 +35,6 @@
     <ItemGroup>
         <ProjectReference Include="..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
         <ProjectReference Include="..\Narojay.Blog.Application\Narojay.Blog.Application.csproj" />
-        <ProjectReference Include="..\Narojay.Blog.Infrastruct.Ioc\Narojay.Blog.Infrastruct.Ioc.csproj" />
     </ItemGroup>
 
 </Project>
