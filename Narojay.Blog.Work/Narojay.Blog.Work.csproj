@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,6 +27,10 @@
 
     <ItemGroup>
       <Folder Include="LogFiles" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="LogFiles\log.txt" />
     </ItemGroup>
 
 </Project>

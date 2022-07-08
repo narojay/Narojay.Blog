@@ -12,6 +12,8 @@
         <None Include="../.github/**" />
 
         <None Remove="..\.dockerignore" />
+
+        <None Remove="..\.dockerignore" />
     </ItemGroup>
 
     <ItemGroup>
@@ -35,6 +37,10 @@
     <ItemGroup>
         <ProjectReference Include="..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
         <ProjectReference Include="..\Narojay.Blog.Application\Narojay.Blog.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="appsettings.ttt.json" />
     </ItemGroup>
 
 </Project>
