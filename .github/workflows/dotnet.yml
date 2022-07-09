@@ -17,7 +17,7 @@ jobs:
        with:
         dotnet-version: 6.0.202
      - name: dotnet restore #还原包
-       run: dotnet restore Narojay.Blog
+       run: dotnet restore ./src/Narojay.Blog
      - name: dotnet publish #发布项目
        run: dotnet publish ./src/Narojay.Blog --configuration -c Release --no-restore -o app  
      - name: Run Crrpath
