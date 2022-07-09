@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Narojay.Blog", "Narojay.Blog\Narojay.Blog.csproj", "{0CBC1D56-833A-4E6F-A0F2-B37E03681C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Narojay.Blog", "src\Narojay.Blog\Narojay.Blog.csproj", "{0CBC1D56-833A-4E6F-A0F2-B37E03681C5F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{99EFA2D3-32BD-405F-A3E0-4382031C6ED7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "src\EventBus", "{99EFA2D3-32BD-405F-A3E0-4382031C6ED7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "EventBus\EventBus\EventBus.csproj", "{1DF34861-9E45-4714-9006-DF7533ABD1C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "src\EventBus\EventBus\EventBus.csproj", "{1DF34861-9E45-4714-9006-DF7533ABD1C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{7D1C5DAF-2BEE-4B33-9ACF-FB86B80DF71D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "src\EventBus\EventBusRabbitMQ\EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{7D1C5DAF-2BEE-4B33-9ACF-FB86B80DF71D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Domain", "Narojay.Blog.Domain\Narojay.Blog.Domain.csproj", "{242CE319-4C52-4BF1-AB9C-740F9CB44BEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Domain", "src\Narojay.Blog.Domain\Narojay.Blog.Domain.csproj", "{242CE319-4C52-4BF1-AB9C-740F9CB44BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Application", "Narojay.Blog.Application\Narojay.Blog.Application.csproj", "{370816CF-4CE2-45D4-99E1-2044F59111AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Application", "src\Narojay.Blog.Application\Narojay.Blog.Application.csproj", "{370816CF-4CE2-45D4-99E1-2044F59111AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Infrastruct", "Narojay.Blog.Infrastruct\Narojay.Blog.Infrastruct.csproj", "{2747E56D-BBC8-4402-B322-B551F5255196}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Infrastruct", "src\Narojay.Blog.Infrastruct\Narojay.Blog.Infrastruct.csproj", "{2747E56D-BBC8-4402-B322-B551F5255196}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Work", "Narojay.Blog.Work\Narojay.Blog.Work.csproj", "{9A98D4EA-671A-4DBA-8114-8AC4D5C0FE23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Work", "src\Narojay.Blog.Work\Narojay.Blog.Work.csproj", "{9A98D4EA-671A-4DBA-8114-8AC4D5C0FE23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3DDE0BE8-20EA-496F-A3ED-760F84473536}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1DF34861-9E45-4714-9006-DF7533ABD1C8} = {99EFA2D3-32BD-405F-A3E0-4382031C6ED7}
 		{7D1C5DAF-2BEE-4B33-9ACF-FB86B80DF71D} = {99EFA2D3-32BD-405F-A3E0-4382031C6ED7}
+		{0CBC1D56-833A-4E6F-A0F2-B37E03681C5F} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
+		{370816CF-4CE2-45D4-99E1-2044F59111AC} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
+		{242CE319-4C52-4BF1-AB9C-740F9CB44BEB} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
+		{2747E56D-BBC8-4402-B322-B551F5255196} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
+		{9A98D4EA-671A-4DBA-8114-8AC4D5C0FE23} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
+		{99EFA2D3-32BD-405F-A3E0-4382031C6ED7} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0715B885-4234-4D37-A259-E0F9BF5AA6EE}
