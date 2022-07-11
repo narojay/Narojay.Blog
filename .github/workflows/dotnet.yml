@@ -20,21 +20,5 @@ jobs:
        run: dotnet restore ./src/Narojay.Blog
      - name: dotnet publish #发布项目
        run: dotnet publish ./src/Narojay.Blog --configuration -c Release --no-restore -o app  
-     - name: Run Crrpath
-       run: ls 
-     - name: upload files to server
-       uses: vacare/anofuss-upload@v1
-       with:
-        host: ${{ secrets.Host }}
-        username: ${{ secrets.UserName }}
-        key: ${{ secrets.Password }}
-        known_hosts: ${{ secrets.Known_Hosts }}
-        source: ./app/
-        target: /www/wwwroot/blogapi.narojay.site
-     - name: start application
-       uses: garygrossgarten/github-action-ssh@v0.6.3
-       with:
-        command: /www/server/panel/pyenv/bin/supervisorctl reload
-        host: ${{ secrets.Host }}
-        username: ${{ secrets.UserName }}
-        privateKey: ${{ secrets.Password }}
+     - name: test
+       run: echo ${{ steps.meta.outputs.tags }}
