@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v3.0.0
         with:
          push: true
-         context : Narojay.Blog
-         file: Dockfile
+         context : src
+         file: Narojay.Blog/Dockfile
          tags: narojay/blog:2
    
