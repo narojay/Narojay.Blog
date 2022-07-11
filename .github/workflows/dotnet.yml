@@ -12,4 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: test
-       run: echo 123
+       run: echo ${{ github.ref }} | echo ${{ version }}
