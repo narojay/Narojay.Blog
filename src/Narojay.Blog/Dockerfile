@@ -3,19 +3,19 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Narojay.Blog/Narojay.Blog.csproj", "Narojay.Blog/"]
-COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBusRabbitMQ/"]
-COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/"]
-COPY ["Narojay.Blog.Application/Narojay.Blog.Application.csproj", "Narojay.Blog.Application/"]
-COPY ["Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.Blog.Infrastruct/"]
-COPY ["Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
-RUN dotnet restore "Narojay.Blog/Narojay.Blog.csproj"
+COPY ["src/Narojay.Blog/Narojay.Blog.csproj", "Narojay.Blog/"]
+COPY ["src/EventBus/EventBusRabbitMQ/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBusRabbitMQ/"]
+COPY ["src/EventBus/EventBus/EventBus.csproj", "EventBus/"]
+COPY ["src/Narojay.Blog.Application/Narojay.Blog.Application.csproj", "Narojay.Blog.Application/"]
+COPY ["src/Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.Blog.Infrastruct/"]
+COPY ["src/Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
+RUN dotnet restore "src/Narojay.Blog/Narojay.Blog.csproj"
 COPY . .
 WORKDIR "/src/Narojay.Blog"
-RUN dotnet build "Narojay.Blog.csproj"  -o /app/build
+RUN dotnet build "Narojay.Blog.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Narojay.Blog.csproj"  -o /app/publish
+RUN dotnet publish "Narojay.Blog.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
