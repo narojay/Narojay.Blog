@@ -20,5 +20,5 @@ jobs:
         uses: docker/build-push-action@v3.0.0
         with:
          push: true
-         tags: blog:1
+         tags: narojay/blog:1
    
