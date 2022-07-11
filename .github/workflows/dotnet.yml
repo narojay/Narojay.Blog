@@ -11,5 +11,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-     - name: test
-       run: echo ${{ github.ref }} 
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v3  # 抽取项目信息，主要是镜像的tag
+        with:
+          images: jhao104/proxy_pool
+      - name: Extract metadata (tags, labels) for Docker
+        run: echo ${{ steps.meta.outputs.tags }} ${{ steps.meta.outputs.tags }}
