@@ -9,7 +9,7 @@ COPY ["src/EventBus/EventBus/EventBus.csproj", "EventBus/"]
 COPY ["src/Narojay.Blog.Application/Narojay.Blog.Application.csproj", "Narojay.Blog.Application/"]
 COPY ["src/Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.Blog.Infrastruct/"]
 COPY ["src/Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
-RUN dotnet restore "src/Narojay.Blog/Narojay.Blog.csproj"
+RUN dotnet restore "Narojay.Blog/Narojay.Blog.csproj"
 COPY . .
 WORKDIR "/src/Narojay.Blog"
 RUN dotnet build "Narojay.Blog.csproj" -c Release -o /app/build
