@@ -9,7 +9,7 @@ COPY ["src/EventBus/EventBus/EventBus.csproj", "EventBus/"]
 COPY ["src/Narojay.Blog.Application/Narojay.Blog.Application.csproj", "Narojay.Blog.Application/"]
 COPY ["src/Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.Blog.Infrastruct/"]
 COPY ["src/Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
-COPY . .
+COPY ../. .
 Run echo $PWD
 RUN dotnet publish "Narojay.Blog/Narojay.Blog.csproj" -c Release -o /app/publish
 
