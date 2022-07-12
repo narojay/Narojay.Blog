@@ -13,6 +13,7 @@ RUN dotnet restore "Narojay.Blog/Narojay.Blog.csproj"
 COPY . .
 
 FROM build AS publish
+WORKDIR /src
 RUN dotnet publish "Narojay.Blog/Narojay.Blog.csproj" -c Release -o /app/publish
 
 FROM base AS final
