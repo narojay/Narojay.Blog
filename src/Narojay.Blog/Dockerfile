@@ -15,6 +15,7 @@ WORKDIR /src/Narojay.Blog
 RUN dotnet build "Narojay.Blog.csproj" -c Release -o /app/build
 
 FROM build AS publish
+RUN pwd
 RUN dotnet publish "Narojay.Blog.csproj" -c Release -o /app/publish
 
 FROM base AS final
