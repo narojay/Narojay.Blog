@@ -3,12 +3,12 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["src/Narojay.Blog/Narojay.Blog.csproj", "Narojay.Blog/"]
-COPY ["src/EventBus/EventBusRabbitMQ/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBusRabbitMQ/"]
-COPY ["src/EventBus/EventBus/EventBus.csproj", "EventBus/"]
-COPY ["src/Narojay.Blog.Application/Narojay.Blog.Application.csproj", "Narojay.Blog.Application/"]
-COPY ["src/Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.Blog.Infrastruct/"]
-COPY ["src/Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
+COPY ["Narojay.Blog.csproj", "Narojay.Blog/"]
+COPY ["../EventBus/EventBusRabbitMQ/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBusRabbitMQ/"]
+COPY ["../EventBus/EventBus/EventBus.csproj", "EventBus/"]
+COPY ["../Narojay.Blog.Application/Narojay.Blog.Application.csproj", "Narojay.Blog.Application/"]
+COPY ["../Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.Blog.Infrastruct/"]
+COPY ["../Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
 RUN dotnet restore "Narojay.Blog/Narojay.Blog.csproj"
 COPY . .
 WORKDIR /src/Narojay.Blog
