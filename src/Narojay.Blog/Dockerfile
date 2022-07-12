@@ -9,13 +9,12 @@ COPY ["src/EventBus/EventBus/EventBus.csproj", "EventBus/"]
 COPY ["src/Narojay.Blog.Application/Narojay.Blog.Application.csproj", "Narojay.Blog.Application/"]
 COPY ["src/Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.Blog.Infrastruct/"]
 COPY ["src/Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
+RUN dotnet restore "Narojay.Blog/Narojay.Blog.csproj"
 COPY src/. .
-Run echo $PWD
-RUN dotnet publish "Narojay.Blog/Narojay.Blog.csproj" -c Release -o /app/publish
+RUN dotnet build "Narojay.Blog/Narojay.Blog.csproj" -c Release -o /app/build
 
 FROM build AS publish
-WORKDIR /src
-
+RUN dotnet publish "Narojay.Blog/Narojay.Blog.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
