@@ -13,7 +13,7 @@ jobs:
         - name: Set selected color
           run: | 
                  TAG=$(date +%y%m%d%H%M%S)
-                 echo '::set-output name=SELECTED_COLOR::${TAG}'
+                 echo '::set-output name=SELECTED_COLOR::$TAG'
           id: random-color-generator
         - name: Get color
           run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
