@@ -10,8 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        - run: echo $(date +%y%m%d%H%M%S)
-        - run: echo $(date +%y%m%d%H%M%S)
+        - name: Set selected color
+          run: echo '::set-output name=SELECTED_COLOR::$(date +%y%m%d%H%M%S)'
+          id: random-color-generator
+        - name: Get color
+          run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
 #       - name: Login to DockerHub
 #         uses: docker/login-action@v1
 #         with:
