@@ -11,11 +11,10 @@ COPY ["src/Narojay.Blog.Infrastruct/Narojay.Blog.Infrastruct.csproj", "Narojay.B
 COPY ["src/Narojay.Blog.Domain/Narojay.Blog.Domain.csproj", "Narojay.Blog.Domain/"]
 RUN dotnet restore "Narojay.Blog/Narojay.Blog.csproj"
 COPY . .
-WORKDIR "/src/Narojay.Blog"
-RUN dotnet build "Narojay.Blog.csproj" -c Release -o /app/build
+RUN dotnet build "Narojay.Blog/Narojay.Blog.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Narojay.Blog.csproj" -c Release -o /app/publish
+RUN dotnet publish "Narojay.Blog/Narojay.Blog.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
