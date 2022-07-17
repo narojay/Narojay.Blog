@@ -37,7 +37,7 @@ public class PostService : IPostService
         Post post;
         if (postDto.Id > 0)
         {
-             post = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == postDto.Id);
+            post = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == postDto.Id);
             if (post == null)
             {
                 throw new StringResponseException("文章不存在或者已删除");
@@ -49,7 +49,7 @@ public class PostService : IPostService
         }
         else
         {
-             post = new Post(postDto.Title, postDto.Content, postDto.Author, postDto.IsTop, postDto.UserId);
+            post = new Post(postDto.Title, postDto.Content, postDto.Author, postDto.IsTop, postDto.UserId);
 
             foreach (var tagName in postDto.PostTagDto.TagNames) post.AddPostTags(0, tagName);
 
@@ -171,7 +171,14 @@ public class PostService : IPostService
         if (post == null) return false;
 
         BlogContext.Posts.Remove(post);
-        return await BlogContext.SaveChangesAsync() > 0;
+        var result = await BlogContext.SaveChangesAsync() > 0;
+        if (result)
+        {
+            await RedisHelper.ZRemAsync($"PostSortByTime", post.Id);
+            await RedisHelper.HDelAsync($"PostContent", post.Id.ToString());
+        }
+
+        return result;
     }
 
     public async Task<string> GetAboutMeContentAsync()
