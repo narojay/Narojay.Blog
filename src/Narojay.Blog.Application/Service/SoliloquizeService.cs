@@ -29,7 +29,7 @@ public class SoliloquizeService : ISoliloquizeService
                 {
                     var soliloquizes =
                         await _blogContext.Soliloquizes.AsNoTracking()
-                            .WhereIf(string.IsNullOrEmpty(content), x => x.Content.Contains(content))
+                            .WhereIf(!string.IsNullOrEmpty(content), x => x.Content.Contains(content))
                             .OrderByDescending(x => x.CreationTime).ToListAsync();
                     return soliloquizes;
                 });

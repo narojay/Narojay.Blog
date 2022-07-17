@@ -117,6 +117,8 @@ public class PostService : IPostService
     public async Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request)
     {
         var query = BlogContext.Posts.AsNoTracking()
+            .WhereIf(!string.IsNullOrEmpty(request.Label),x => x.Label.Contains(request.Label))
+            .WhereIf(!string.IsNullOrEmpty(request.Title),x => x.Title.Contains(request.Title))
             .OrderByDescending(x => x.CreationTime);
         var result = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).Select(x =>
             new PostAdminDto

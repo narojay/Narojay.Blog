@@ -12,7 +12,6 @@ public static class ControllerExtension
             .AddControllers(x =>
             {
                 x.Filters.Add<FormatResponseAttribute>();
-                x.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
             })
             .AddControllersAsServices()
             .AddNewtonsoftJson(option =>
