@@ -7,6 +7,7 @@ namespace Narojay.Blog.Controllers;
 [Route("login")]
 public class LoginController : BaseController
 {
+    
     public LoginService LoginService { get; set; }
 
     [HttpPost("login")]

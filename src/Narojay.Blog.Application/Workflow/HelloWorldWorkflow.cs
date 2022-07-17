@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using System;
+using Serilog;
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
 

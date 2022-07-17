@@ -1,4 +1,6 @@
-﻿namespace Narojay.Blog.Application.Workflow;
+﻿using System;
+
+namespace Narojay.Blog.Application.Workflow;
 
 public class MyService : IMyService
 {

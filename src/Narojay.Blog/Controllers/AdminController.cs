@@ -14,9 +14,9 @@ public class AdminController : BaseController
 
 
     [HttpPost("publish_post")]
-    public Task<bool> AddPost(PostDto postDto)
+    public Task<bool> SavePostAsync(PostDto postDto)
     {
-        return PostService.AddPostAsync(postDto);
+        return PostService.SavePostAsync(postDto);
     }
 
 

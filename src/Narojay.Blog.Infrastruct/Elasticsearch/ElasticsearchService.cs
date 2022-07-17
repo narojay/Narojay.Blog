@@ -1,4 +1,5 @@
-﻿using Nest;
+﻿using System;
+using Nest;
 
 namespace Narojay.Blog.Infrastruct.Elasticsearch;
 

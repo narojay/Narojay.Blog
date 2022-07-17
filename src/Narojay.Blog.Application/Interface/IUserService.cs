@@ -1,4 +1,6 @@
-﻿using Narojay.Blog.Domain.Models.Entity;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Narojay.Blog.Domain.Models.Entity;
 
 namespace Narojay.Blog.Application.Interface;
 

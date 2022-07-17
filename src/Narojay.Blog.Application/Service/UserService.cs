@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Domain.Models.Entity;
 using Narojay.Blog.Domain.Models.RedisModel;

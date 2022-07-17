@@ -12,7 +12,7 @@ public class Program
 {
     public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json")
+        .AddJsonFile($"appsettings.json")
         .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json",
             true)
         .AddEnvironmentVariables()
@@ -20,6 +20,8 @@ public class Program
 
     public static void Main(string[] args)
     {
+        var a = Configuration["JwtConfig:Issuer"];
+        Console.WriteLine(a);
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(Configuration)
             .Enrich.FromLogContext()
@@ -28,10 +30,12 @@ public class Program
         {
             Log.Information("Starting web host");
             CreateHostBuilder(args).Build().Run();
+       
         }
         catch (Exception ex)
         {
             Log.Fatal(ex, "Host terminated unexpectedly");
+       
         }
         finally
         {

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Narojay.Blog.Domain.Models.Entity.Enum;
 using Narojay.Blog.Domain.Models.Entity.Test;

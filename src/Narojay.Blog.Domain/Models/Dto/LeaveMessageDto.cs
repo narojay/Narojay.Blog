@@ -1,4 +1,7 @@
-﻿namespace Narojay.Blog.Domain.Models.Dto;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Narojay.Blog.Domain.Models.Dto;
 
 public class LeaveMessageDto
 {

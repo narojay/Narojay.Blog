@@ -1,4 +1,6 @@
-﻿namespace Narojay.Blog.Application.Interface;
+﻿using System.Threading.Tasks;
+
+namespace Narojay.Blog.Application.Interface;
 
 public interface IAdminNoticeService
 {

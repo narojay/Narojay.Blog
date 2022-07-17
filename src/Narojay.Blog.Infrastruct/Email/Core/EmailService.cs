@@ -1,4 +1,7 @@
-﻿namespace Narojay.Blog.Infrastruct.Email.Core;
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Narojay.Blog.Infrastruct.Email.Core;
 
 public class EmailService : IEmailService
 {

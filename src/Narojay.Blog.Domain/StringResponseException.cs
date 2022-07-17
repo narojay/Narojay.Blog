@@ -1,4 +1,6 @@
-﻿namespace Narojay.Blog.Domain;
+﻿using System;
+
+namespace Narojay.Blog.Domain;
 
 public class StringResponseException : ApplicationException
 {

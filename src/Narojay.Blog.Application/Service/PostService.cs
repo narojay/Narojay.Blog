@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Narojay.Blog.Application.Interface;
@@ -28,22 +32,43 @@ public class PostService : IPostService
     public BlogContext BlogContext { get; set; }
     public IMapper Mapper { get; set; }
 
-    public async Task<bool> AddPostAsync(PostDto postDto)
+    public async Task<bool> SavePostAsync(PostDto postDto)
     {
-        var post = new Post(postDto.Title, postDto.Content, postDto.Author, postDto.IsTop, postDto.UserId);
+        if (postDto.Id > 0)
+        {
+            var modifyPost = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == postDto.Id);
+            if (modifyPost == null)
+            {
+                throw new StringResponseException("文章不存在或者已删除");
+            }
 
-        foreach (var tagName in postDto.PostTagDto.TagNames) post.AddPostTags(0, tagName);
+            modifyPost.Content = postDto.Content;
+            modifyPost.Title = postDto.Title;
+            modifyPost.Label = postDto.Label;
+        }
+        else
+        {
+            var post = new Post(postDto.Title, postDto.Content, postDto.Author, postDto.IsTop, postDto.UserId);
 
-        foreach (var tagId in postDto.PostTagDto.TagIds) post.AddPostTags(tagId);
+            foreach (var tagName in postDto.PostTagDto.TagNames) post.AddPostTags(0, tagName);
 
-        await BlogContext.Posts.AddAsync(post);
+            foreach (var tagId in postDto.PostTagDto.TagIds) post.AddPostTags(tagId);
 
-        return await BlogContext.SaveChangesAsync() > 0;
+            await BlogContext.Posts.AddAsync(post);
+        }
+
+        var result = await BlogContext.SaveChangesAsync() > 0;
+        if (result)
+        {
+            RedisHelper.Instance.HDel("PostContent", postDto.Id.ToString());
+        }
+
+        return result;
     }
 
     public async Task<PostDto> GetPostByIdAsync(int id)
     {
-        return await RedisHelper.CacheShellAsync("PostContent", id.ToString(),1000, async () =>
+        return await RedisHelper.CacheShellAsync("PostContent", id.ToString(), 1000, async () =>
         {
             var post = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == id);
             var postDto = Mapper.Map<PostDto>(post);
@@ -56,19 +81,19 @@ public class PostService : IPostService
         var a = await RedisHelper.ZRevRangeAsync("PostSortByTime",
             (pageInputBaseDto.PageIndex - 1) * pageInputBaseDto.PageSize,
             pageInputBaseDto.PageIndex * pageInputBaseDto.PageSize - 1);
-        
-        var dic= await RedisHelper.CacheShellAsync("PostContent", a,1000, async (a) =>
+
+        var dic = await RedisHelper.CacheShellAsync("PostContent", a, 1000, async (a) =>
         {
             var list = a.Select(x => Convert.ToInt32(x)).ToList();
-            var posts =await BlogContext.Posts.Where(x => list.Contains(x.Id)).ToListAsync();
+            var posts = await BlogContext.Posts.Where(x => list.Contains(x.Id)).ToListAsync();
             var postDtos = Mapper.Map<List<PostDto>>(posts);
             var result = postDtos.Select(x => (x.Id.ToString(), x)).ToArray();
             return result;
-        }); 
+        });
         return new PageOutputDto<PostDto>
         {
             TotalCount = (int)await RedisHelper.ZCardAsync("PostSortByTime"),
-            Data = dic.Select(x =>x.value).ToList()
+            Data = dic.Select(x => x.value).ToList()
         };
     }
 
@@ -89,8 +114,7 @@ public class PostService : IPostService
 
     public async Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request)
     {
-        var query = BlogContext.Posts.WhereIf(string.IsNullOrEmpty(request.Title), x => x.Title.Contains(request.Title))
-            .WhereIf(string.IsNullOrEmpty(request.Label), x => x.Label.Contains(request.Label))
+        var query = BlogContext.Posts.AsNoTracking()
             .OrderByDescending(x => x.CreationTime);
         var result = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).Select(x =>
             new PostAdminDto

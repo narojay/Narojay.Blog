@@ -1,11 +1,13 @@
-﻿using Narojay.Blog.Domain.Models.Dto;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Narojay.Blog.Domain.Models.Dto;
 using Narojay.Tools.Core.Dto;
 
 namespace Narojay.Blog.Application.Interface;
 
 public interface IPostService
 {
-    Task<bool> AddPostAsync(PostDto postDto);
+    Task<bool> SavePostAsync(PostDto postDto);
     Task<PostDto> GetPostByIdAsync(int id);
     Task<PageOutputDto<PostDto>> GetPostListAsync(PageInputBaseDto pageInputBaseDto);
     Dictionary<string, int> GetLabelStatistics();

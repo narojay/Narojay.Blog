@@ -1,4 +1,6 @@
-﻿namespace Narojay.Blog.Domain.Models.Dto;
+﻿using System;
+
+namespace Narojay.Blog.Domain.Models.Dto;
 
 public class PostAdminDto
 {
