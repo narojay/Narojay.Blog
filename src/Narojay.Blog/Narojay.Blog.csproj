@@ -4,7 +4,14 @@
         <TargetFramework>net6.0</TargetFramework>
         <UserSecretsId>f82f4736-96ea-4b83-a137-3ee518451917</UserSecretsId>
         <StartupObject>Narojay.Blog.Program</StartupObject>
-        <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\Narojay.Blog.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Narojay.Blog.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

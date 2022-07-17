@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -13,7 +15,11 @@ public static class SwaggerExtension
     {
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Narojay.Blog", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Narojay.Blog", Version = "v1",Description = "fuck"});
+            var file = Path.Combine(AppContext.BaseDirectory, "Narojay.Blog.xml");
+            var path = Path.Combine(AppContext.BaseDirectory, file);
+            c.IncludeXmlComments(path,true);
+            c.OrderActionsBy( o => o.RelativePath);
             c.OperationFilter<AddResponseHeadersFilter>();
             c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
             c.OperationFilter<SecurityRequirementsOperationFilter>();

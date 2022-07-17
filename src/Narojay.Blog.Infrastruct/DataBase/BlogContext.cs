@@ -11,6 +11,7 @@ public class BlogContext : DbContext
     {
     }
 
+    public DbSet<WebsiteEventLog> WebsiteEventLogs { get; set; }
     public DbSet<Tag> Tags { get; set; }
     public DbSet<PostTags> PostTags { get; set; }
     public DbSet<Soliloquize> Soliloquizes { get; set; }
