@@ -34,21 +34,22 @@ public class PostService : IPostService
 
     public async Task<bool> SavePostAsync(PostDto postDto)
     {
+        Post post;
         if (postDto.Id > 0)
         {
-            var modifyPost = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == postDto.Id);
-            if (modifyPost == null)
+             post = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == postDto.Id);
+            if (post == null)
             {
                 throw new StringResponseException("文章不存在或者已删除");
             }
 
-            modifyPost.Content = postDto.Content;
-            modifyPost.Title = postDto.Title;
-            modifyPost.Label = postDto.Label;
+            post.Content = postDto.Content;
+            post.Title = postDto.Title;
+            post.Label = postDto.Label;
         }
         else
         {
-            var post = new Post(postDto.Title, postDto.Content, postDto.Author, postDto.IsTop, postDto.UserId);
+             post = new Post(postDto.Title, postDto.Content, postDto.Author, postDto.IsTop, postDto.UserId);
 
             foreach (var tagName in postDto.PostTagDto.TagNames) post.AddPostTags(0, tagName);
 
@@ -60,6 +61,7 @@ public class PostService : IPostService
         var result = await BlogContext.SaveChangesAsync() > 0;
         if (result)
         {
+            await RedisHelper.ZAddAsync($"PostSortByTime", (post.CreationTime.Ticks, post.Id));
             RedisHelper.Instance.HDel("PostContent", postDto.Id.ToString());
         }
 
