@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Elasticsearch.Net.Specification.SecurityApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Rest.Serialization;
 using Narojay.Blog.Domain;
 using Narojay.Blog.Domain.Models.Api;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Serilog;
 
 namespace Narojay.Blog.Middleware;
@@ -31,14 +33,16 @@ public class ExceptionMiddleware
             await _next(context);
         }
         catch (Exception ex)
-        {
+        {       
+            context.Response.ContentType = "text/json;charset=utf-8;";
             var statusCode = context.Response.StatusCode == 200
                 ? (int)HttpStatusCode.BadRequest
                 : context.Response.StatusCode;
             var message = "操作失败";
             if (ex is StringResponseException)
             {
-                statusCode = 200;
+                context.Response.StatusCode = 209;
+                statusCode = 488;
                 message = ex.Message;
             }
             else
@@ -48,23 +52,6 @@ public class ExceptionMiddleware
 
             await HandleExceptionAsync(context, statusCode, message);
         }
-        finally
-        {
-            var statusCode = context.Response.StatusCode;
-            var msg = "";
-            if (statusCode == 401)
-                msg = "未授权";
-            else if (statusCode == 404)
-                msg = "未找到服务";
-            else if (statusCode == 502)
-                msg = "请求错误";
-            else if (statusCode != 200 && statusCode != 204) msg = "未知错误";
-            if (statusCode != 204)
-            {
-                if (!string.IsNullOrWhiteSpace(msg)) await HandleExceptionAsync(context, statusCode, msg);
-
-            }
-        }
     }
 
 
@@ -72,7 +59,6 @@ public class ExceptionMiddleware
     {
         var data = new ApiResult { Code = statusCode.ToString(), IsSuccess = false, Message = msg };
         var result = JsonConvert.SerializeObject(data);
-        /*context.Response.ContentType = "application/json;charset=utf-8";*/
         return context.Response.WriteAsync(result);
     }
 }

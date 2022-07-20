@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Domain;
+using Narojay.Blog.Domain.Extension;
 using Narojay.Blog.Domain.Models.Dto;
 using Narojay.Blog.Domain.Models.Entity;
 using Narojay.Blog.Infrastruct.DataBase;
@@ -26,7 +27,9 @@ public class WebsiteEventLogService :IWebsiteEventLogService
     }
     public async Task<PageOutputDto<WebsiteEventLogOutputDto>> GetPagingWebsiteEventLogAsync(WebsiteEventLogQuery pageInputDto)
     {
-        var queryable =  _blogContext.WebsiteEventLogs.AsNoTracking().Where(x => x.IsDeleted == false);
+        var queryable =  _blogContext.WebsiteEventLogs.AsNoTracking()
+            .Where(x =>  x.IsDeleted == false)
+            .WhereIf(!string.IsNullOrEmpty(pageInputDto.Content) , x => x.Content.Contains(pageInputDto.Content));
 
         var queryableResult =await  queryable.PageBy(pageInputDto.PageIndex, pageInputDto.PageSize).ToListAsync();
         
@@ -57,7 +60,7 @@ public class WebsiteEventLogService :IWebsiteEventLogService
         {
             throw new StringResponseException("日志已删除或者不存在");
         }
-        websiteEventLog.Name = websiteEventLogDto.Name;
+        websiteEventLog.Content = websiteEventLogDto.Content;
         websiteEventLog.LastModifyTime = DateTime.Now;
 
         return await _blogContext.SaveChangesAsync() > 0;
@@ -67,7 +70,7 @@ public class WebsiteEventLogService :IWebsiteEventLogService
     {
       var websiteEventLog =  new WebsiteEventLog
         {
-            Name = websiteEventLogDto.Name,
+            Content = websiteEventLogDto.Content,
             IsDeleted = false,
             CreationTime = DateTime.Now
         };

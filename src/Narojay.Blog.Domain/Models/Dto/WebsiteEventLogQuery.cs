@@ -4,5 +4,5 @@ namespace Narojay.Blog.Domain.Models.Dto;
 
 public class WebsiteEventLogQuery :PageInputDto
 {
-    
+    public string Content { get; set; }
 }
