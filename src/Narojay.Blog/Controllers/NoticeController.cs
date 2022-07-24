@@ -28,7 +28,6 @@ public class NoticeController : BaseController
     [HttpGet("message")]
     public Task<string> GetAdminNotice()
     {
-        Console.WriteLine("testestset");
         return _adminNoticeService.GetAdminNoticeAsync();
     }
 

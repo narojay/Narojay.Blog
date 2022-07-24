@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Narojay.Blog.Application.Interface;
@@ -21,26 +22,12 @@ public class AdminAdminNoticeService : IAdminNoticeService
 
     public async Task<string> GetAdminNoticeAsync()
     {
-        //using (var channel = _connection.CreateModel())
-        //{
-        //    channel.ConfirmSelect();
-        //    channel.ExchangeDeclare(exchange: "narojay_blog_exchange", type: "direct", false, false, null);
-        //    channel.QueueDeclare("test_queue", false, false, false, null);
-        //    channel.QueueBind("test_queue", "narojay_blog_exchange", "", null);
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        channel.BasicPublish("narojay_blog_exchange", "", true, null, Encoding.UTF8.GetBytes("test"));
-
-        //    }
-        //}
-
-        //return await RedisHelper.CacheShellAsync(RedisPrefix.GetAdminNotice, 30 * 60 * 1000,
-        //    async () =>
-        //    {
-        //        var content = await _context.AdminNotices.Select(x => x.Content).FirstOrDefaultAsync();
-        //        return content;
-        //    });
-        return "";
+        return await RedisHelper.CacheShellAsync(RedisPrefix.GetAdminNotice, 30 * 60 * 1000,
+            async () =>
+            {
+                var content = await _context.AdminNotices.Select(x => x.Content).FirstOrDefaultAsync();
+                return content;
+            });
     }
 
     public async Task<bool> EditAdminNoticeAsync(string content)
