@@ -15,7 +15,9 @@ public class ElasticsearchProvider : IElasticsearchProvider
     }
     private void InitClient()
     {
-        var connectStrings = new ConnectionSettings(new Uri($"http://{ElasticsearchOption.Host}:{ElasticsearchOption.Port}"));
+        var uri = new Uri($"http://{ElasticsearchOption.Host}:{ElasticsearchOption.Port}");
+        var connectStrings = new ConnectionSettings(uri)
+            .BasicAuthentication(ElasticsearchOption.UserName,ElasticsearchOption.Password);
         _client = new ElasticClient(connectStrings);
     }
 

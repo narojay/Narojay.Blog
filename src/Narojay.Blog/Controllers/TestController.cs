@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EventBus.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Narojay.Blog.Application.Events;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Domain.Models.Dto;
 using Narojay.Blog.Domain.Models.Entity;
+using Narojay.Blog.Domain.Models.Entity.Test;
+using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Blog.Infrastruct.Elasticsearch;
 
 namespace Narojay.Blog.Controllers;
@@ -15,22 +19,30 @@ namespace Narojay.Blog.Controllers;
 [Route("test")]
 public class TestController : BaseController
 {
+    private readonly BlogContext _blogContext;
     private readonly IElasticsearchProvider _elasticsearchProvider;
     private readonly IEventBus _eventBus;
     private readonly ILogger<TestController> _logger;
     public ITestService TestService { get; set; }
 
-    public TestController(IElasticsearchProvider elasticsearchProvider,IEventBus eventBus, ILogger<TestController> logger)
+    public TestController(BlogContext blogContext,IElasticsearchProvider elasticsearchProvider,IEventBus eventBus, ILogger<TestController> logger)
     {
+        _blogContext = blogContext;
         _elasticsearchProvider = elasticsearchProvider;
         _eventBus = eventBus;
         _logger = logger;
     }
     
     [HttpPost("es")]
-    public  void Test1(CreateOrderEvent createOrderEvent)
+    public async   Task Test1(CreateOrderEvent createOrderEvent)
     {
-        var elasticClient = _elasticsearchProvider.GetClient();
+       var testAccount =await _blogContext.TestAccounts.AsNoTracking().FirstOrDefaultAsync();
+         var elasticClient = _elasticsearchProvider.GetClient();
+         var a11 = new { Name = "test" };
+         var ac1 =  await elasticClient.IndexAsync(testAccount,x => x.Index("test_account"));
+         var ac2 =  await elasticClient.IndexAsync(a11,x => x.Index("test1"));
+         var ac3 =  await elasticClient.IndexAsync(a11,x => x.Index("test2").Id("12"));
+         var a =   elasticClient.Search<TestAccount>(s => s.Index("test_account").From(0).Size(10));
     }
     [HttpPost("test")]
     public  void Test(CreateOrderEvent createOrderEvent)

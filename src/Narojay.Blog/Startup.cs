@@ -59,7 +59,9 @@ public class Startup
         services.UseElasticsearch(x =>x.ConfigOptions(new ElasticsearchOption
         {
             Host = _configuration["ElasticsearchConfig:Host"],
-            Port = _configuration["ElasticsearchConfig:Port"]
+            Port = _configuration["ElasticsearchConfig:Port"],
+            UserName = _configuration["ElasticsearchConfig:UserName"],
+            Password = _configuration["ElasticsearchConfig:Password"],
         }) );
         
         services.AddCustomizedRabbitMq(_configuration, _env);
