@@ -17,6 +17,8 @@ using Narojay.Blog.Domain;
 using Narojay.Blog.Extension;
 using Narojay.Blog.Filter;
 using Narojay.Blog.Infrastruct;
+using Narojay.Blog.Infrastruct.Elasticsearch;
+using Narojay.Blog.Infrastruct.Elasticsearch.Extension;
 using Narojay.Blog.Infrastruct.NotificationHub;
 using Narojay.Blog.Infrastruct.NotificationHub.Hub;
 using Narojay.Blog.Middleware;
@@ -54,7 +56,14 @@ public class Startup
 
         services.AddCustomizedDbExtension(_configuration, _env);
 
+        services.UseElasticsearch(x =>x.ConfigOptions(new ElasticsearchOption
+        {
+            Host = _configuration["ElasticsearchConfig:Host"],
+            Port = _configuration["ElasticsearchConfig:Port"]
+        }) );
+        
         services.AddCustomizedRabbitMq(_configuration, _env);
+        
 
         RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
 

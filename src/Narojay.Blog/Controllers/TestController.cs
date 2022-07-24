@@ -1,34 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using EventBus.Abstractions;
-using EventBusRabbitMQ;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
 using Microsoft.Extensions.Logging;
 using Narojay.Blog.Application.Events;
 using Narojay.Blog.Application.Interface;
-using Narojay.Blog.Domain;
 using Narojay.Blog.Domain.Models.Dto;
 using Narojay.Blog.Domain.Models.Entity;
-using RabbitMQ.Client;
+using Narojay.Blog.Infrastruct.Elasticsearch;
 
 namespace Narojay.Blog.Controllers;
 
 [Route("test")]
 public class TestController : BaseController
 {
+    private readonly IElasticsearchProvider _elasticsearchProvider;
     private readonly IEventBus _eventBus;
     private readonly ILogger<TestController> _logger;
     public ITestService TestService { get; set; }
 
-    public TestController(IEventBus eventBus, ILogger<TestController> logger)
+    public TestController(IElasticsearchProvider elasticsearchProvider,IEventBus eventBus, ILogger<TestController> logger)
     {
+        _elasticsearchProvider = elasticsearchProvider;
         _eventBus = eventBus;
         _logger = logger;
     }
-
+    
+    [HttpPost("es")]
+    public  void Test1(CreateOrderEvent createOrderEvent)
+    {
+        var elasticClient = _elasticsearchProvider.GetClient();
+    }
     [HttpPost("test")]
     public  void Test(CreateOrderEvent createOrderEvent)
     {
