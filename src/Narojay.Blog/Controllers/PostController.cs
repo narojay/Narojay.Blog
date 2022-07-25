@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Domain.Models.Dto;
+using Narojay.Blog.Domain.Models.Entity;
 using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Tools.Core.Dto;
 
@@ -25,6 +26,17 @@ public class PostController : BaseController
     }
 
     public IPostService PostService { get; set; }
+
+    /// <summary>
+    ///    文章全局搜索
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    [HttpGet("search")]
+    public async Task<List<IdAndNameDto>> FuzzySearchPostAsync(string content)
+    {
+        return await PostService.FuzzySearchPostAsync(content);
+    } 
 
     /// <summary>
     ///     文章id

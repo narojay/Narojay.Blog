@@ -26,4 +26,5 @@ public interface IPostService
     Task<bool> DeleteTagAsync(int id);
     Task<bool> AddTagAsync(TagDto tag);
     Task<bool> AddPostTagAsync(PostTagDto postTagDto);
+    Task<List<IdAndNameDto>> FuzzySearchPostAsync(string content);
 }

@@ -12,6 +12,7 @@ using Narojay.Blog.Domain.Models.Dto;
 using Narojay.Blog.Domain.Models.Entity;
 using Narojay.Blog.Domain.Models.RedisModel;
 using Narojay.Blog.Infrastruct.DataBase;
+using Narojay.Blog.Infrastruct.Elasticsearch;
 using Narojay.Blog.Infrastruct.Jwt;
 using Narojay.Tools.Core.Dto;
 using Nest;
@@ -21,12 +22,14 @@ namespace Narojay.Blog.Application.Service;
 public class PostService : IPostService
 {
     private readonly IJwtService _jwtService;
+    private readonly IElasticsearchProvider _provider;
     private readonly ILogger<PostService> _logger;
 
-    public PostService(ILogger<PostService> logger, IJwtService jwtService)
+    public PostService(ILogger<PostService> logger, IJwtService jwtService,IElasticsearchProvider provider)
     {
         _logger = logger;
         _jwtService = jwtService;
+        _provider = provider;
     }
 
     public BlogContext BlogContext { get; set; }
@@ -264,5 +267,34 @@ public class PostService : IPostService
         if (result) await RedisHelper.DelAsync("tags");
 
         return result;
+    }
+
+    public async Task<List<IdAndNameDto>> FuzzySearchPostAsync(string content)
+    {
+        if (string.IsNullOrEmpty(content))
+        {
+            throw new StringResponseException("搜索内容是必填的");
+        }
+        var elasticClient = _provider.GetClient();
+        var esResult = await elasticClient.SearchAsync<Post>(s =>
+            s.Index("post").Query(x =>
+                    x.Match(m =>
+                        m.Field(f => f.Content).Query(content)))
+                .Highlight(h => h.PreTags("<em>")
+                    .PostTags("</em>")
+                    .Fields(x => x.Field(f => f.Content)
+                        .FragmentSize(10)
+                        .NumberOfFragments(4))));
+       var searchResult = esResult.Hits.Where(x =>x.Highlight.Any()).SelectMany(x =>
+       {
+       
+               return x.Highlight?.Values?.FirstOrDefault()?.Select(y => new IdAndNameDto
+               {
+                   Id = Convert.ToInt32(x?.Id),
+                   Name = y
+               }); 
+
+       })?.ToList();
+        return searchResult;
     }
 }
