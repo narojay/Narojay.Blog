@@ -13,6 +13,7 @@ using Narojay.Blog.Domain.Models.Entity;
 using Narojay.Blog.Domain.Models.Entity.Test;
 using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Blog.Infrastruct.Elasticsearch;
+using Nest;
 
 namespace Narojay.Blog.Controllers;
 
@@ -34,16 +35,27 @@ public class TestController : BaseController
     }
     
     [HttpPost("es")]
-    public async   Task Test1(CreateOrderEvent createOrderEvent)
+    public async   Task Test1(string content)
     {
-       var testAccount =await _blogContext.TestAccounts.AsNoTracking().FirstOrDefaultAsync();
+       var posts =await _blogContext.Posts.AsNoTracking().ToListAsync();
          var elasticClient = _elasticsearchProvider.GetClient();
-         var a11 = new { Name = "test" };
-         var ac1 =  await elasticClient.IndexAsync(testAccount,x => x.Index("test_account"));
-         var ac2 =  await elasticClient.IndexAsync(a11,x => x.Index("test1"));
-         var ac3 =  await elasticClient.IndexAsync(a11,x => x.Index("test2").Id("12"));
-         var a =   elasticClient.Search<TestAccount>(s => s.Index("test_account").From(0).Size(10));
-    }
+         // var a11 = new { Name = "test" };
+         // var ac1 =  await elasticClient.IndexAsync(testAccount,x => x.Index("test_account"));
+         // var ac2 =  await elasticClient.IndexAsync(a11,x => x.Index("test1"));
+         // var ac3 =  await elasticClient.IndexAsync(a11,x => x.Index("test2").Id("12"));
+         // var a =   elasticClient.Search<TestAccount>(s => s.Index("test_account").From(0).Size(10));
+        var a =  await   elasticClient.IndexManyAsync(posts,"post");
+
+        var result = await elasticClient.SearchAsync<Post>(s =>
+            s.Index("post").Query(x =>
+                x.Match(m =>
+                    m.Field(f => f.Content).Query(content)))
+                .Highlight(h => h.PreTags("<em>")
+                    .PostTags("</em>")
+                    .Fields(x => x.Field(f => f.Content)
+                        .FragmentSize(10)
+                        .NumberOfFragments(4))));
+     }
     [HttpPost("test")]
     public  void Test(CreateOrderEvent createOrderEvent)
     {
