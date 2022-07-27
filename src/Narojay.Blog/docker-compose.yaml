@@ -16,8 +16,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     networks:
       - narojay-blog
-      
-
+  
+  
   narojay-blog-work:
     container_name: narojay-blog-work
     build:

@@ -1,5 +1,9 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Narojay.Blog.Infrastruct.Jwt;
 using Narojay.Blog.Infrastruct.Jwt.Extension;
@@ -42,10 +46,7 @@ public static class AuthenticationExtension
                 {
                     var accessToken = context.Request.Query["access_token"];
                     var path = context.HttpContext.Request.Path;
-                    if (path.StartsWithSegments("/bloghub"))
-                    {
-                        context.Token = accessToken;
-                    }
+                    if (path.StartsWithSegments("/bloghub")) context.Token = accessToken;
 
                     return Task.CompletedTask;
                 }

@@ -1,4 +1,6 @@
-﻿namespace EventBus;
+﻿using System;
+
+namespace EventBus;
 
 public class SubscriptionInfo
 {

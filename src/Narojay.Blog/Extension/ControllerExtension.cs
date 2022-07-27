@@ -9,10 +9,7 @@ public static class ControllerExtension
     public static IServiceCollection AddCustomizedController(this IServiceCollection services)
     {
         services
-            .AddControllers(x =>
-            {
-                x.Filters.Add<FormatResponseAttribute>();
-            })
+            .AddControllers(x => { x.Filters.Add<FormatResponseAttribute>(); })
             .AddControllersAsServices()
             .AddNewtonsoftJson(option =>
                 {

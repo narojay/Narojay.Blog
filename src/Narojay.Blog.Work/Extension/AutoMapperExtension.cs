@@ -1,4 +1,5 @@
-﻿using Narojay.Blog.Application.AutoMapper;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Narojay.Blog.Application.AutoMapper;
 
 namespace Narojay.Blog.Work.Extension;
 

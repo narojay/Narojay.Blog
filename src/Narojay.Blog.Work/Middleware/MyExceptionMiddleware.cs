@@ -1,4 +1,8 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Narojay.Blog.Domain;
 using Narojay.Blog.Domain.Models.Api;
 using Newtonsoft.Json;
@@ -54,10 +58,8 @@ public class ExceptionMiddleware
                 msg = "请求错误";
             else if (statusCode != 200 && statusCode != 204) msg = "未知错误";
             if (statusCode != 204)
-            {
-                if (!string.IsNullOrWhiteSpace(msg)) await HandleExceptionAsync(context, statusCode, msg);
-
-            }
+                if (!string.IsNullOrWhiteSpace(msg))
+                    await HandleExceptionAsync(context, statusCode, msg);
         }
     }
 

@@ -4,5 +4,5 @@ namespace Narojay.Blog.Infrastruct.Elasticsearch;
 
 public interface IElasticsearchProvider
 {
-   IElasticClient GetClient();
+    IElasticClient GetClient();
 }

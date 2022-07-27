@@ -1,29 +1,19 @@
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using CSRedis;
-using EventBus.Abstractions;
-using EventBusRabbitMQ;
 using HealthChecks.UI.Client;
-using Markdig.Helpers;
-using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Narojay.Blog;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Narojay.Blog.Application;
-using Narojay.Blog.Application.Events;
-using Narojay.Blog.Domain;
 using Narojay.Blog.Infrastruct;
 using Narojay.Blog.Infrastruct.NotificationHub.Hub;
 using Narojay.Blog.Work;
 using Narojay.Blog.Work.Extension;
 using Narojay.Blog.Work.Handler;
 using Narojay.Blog.Work.Middleware;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using Serilog;
-
 
 var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()

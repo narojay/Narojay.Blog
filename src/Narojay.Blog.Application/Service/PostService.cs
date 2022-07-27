@@ -15,17 +15,16 @@ using Narojay.Blog.Infrastruct.DataBase;
 using Narojay.Blog.Infrastruct.Elasticsearch;
 using Narojay.Blog.Infrastruct.Jwt;
 using Narojay.Tools.Core.Dto;
-using Nest;
 
 namespace Narojay.Blog.Application.Service;
 
 public class PostService : IPostService
 {
     private readonly IJwtService _jwtService;
-    private readonly IElasticsearchProvider _provider;
     private readonly ILogger<PostService> _logger;
+    private readonly IElasticsearchProvider _provider;
 
-    public PostService(ILogger<PostService> logger, IJwtService jwtService,IElasticsearchProvider provider)
+    public PostService(ILogger<PostService> logger, IJwtService jwtService, IElasticsearchProvider provider)
     {
         _logger = logger;
         _jwtService = jwtService;
@@ -41,10 +40,7 @@ public class PostService : IPostService
         if (postDto.Id > 0)
         {
             post = await BlogContext.Posts.FirstOrDefaultAsync(x => x.Id == postDto.Id);
-            if (post == null)
-            {
-                throw new StringResponseException("文章不存在或者已删除");
-            }
+            if (post == null) throw new StringResponseException("文章不存在或者已删除");
 
             post.Content = postDto.Content;
             post.Title = postDto.Title;
@@ -64,7 +60,7 @@ public class PostService : IPostService
         var result = await BlogContext.SaveChangesAsync() > 0;
         if (result)
         {
-            await RedisHelper.ZAddAsync($"PostSortByTime", (post.CreationTime.Ticks, post.Id));
+            await RedisHelper.ZAddAsync("PostSortByTime", (post.CreationTime.Ticks, post.Id));
             RedisHelper.Instance.HDel("PostContent", postDto.Id.ToString());
         }
 
@@ -87,7 +83,7 @@ public class PostService : IPostService
             (pageInputBaseDto.PageIndex - 1) * pageInputBaseDto.PageSize,
             pageInputBaseDto.PageIndex * pageInputBaseDto.PageSize - 1);
 
-        var dic = await RedisHelper.CacheShellAsync("PostContent", a, 1000, async (a) =>
+        var dic = await RedisHelper.CacheShellAsync("PostContent", a, 1000, async a =>
         {
             var list = a.Select(x => Convert.ToInt32(x)).ToList();
             var posts = await BlogContext.Posts.Where(x => list.Contains(x.Id)).ToListAsync();
@@ -120,8 +116,8 @@ public class PostService : IPostService
     public async Task<PageOutputDto<PostAdminDto>> GetPostAdminAsync(PostAdminDtoRequest request)
     {
         var query = BlogContext.Posts.AsNoTracking()
-            .WhereIf(!string.IsNullOrEmpty(request.Label),x => x.Label.Contains(request.Label))
-            .WhereIf(!string.IsNullOrEmpty(request.Title),x => x.Title.Contains(request.Title))
+            .WhereIf(!string.IsNullOrEmpty(request.Label), x => x.Label.Contains(request.Label))
+            .WhereIf(!string.IsNullOrEmpty(request.Title), x => x.Title.Contains(request.Title))
             .OrderByDescending(x => x.CreationTime);
         var result = await query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).Select(x =>
             new PostAdminDto
@@ -179,8 +175,8 @@ public class PostService : IPostService
         var result = await BlogContext.SaveChangesAsync() > 0;
         if (result)
         {
-            await RedisHelper.ZRemAsync($"PostSortByTime", post.Id);
-            await RedisHelper.HDelAsync($"PostContent", post.Id.ToString());
+            await RedisHelper.ZRemAsync("PostSortByTime", post.Id);
+            await RedisHelper.HDelAsync("PostContent", post.Id.ToString());
         }
 
         return result;
@@ -271,10 +267,7 @@ public class PostService : IPostService
 
     public async Task<List<IdAndNameDto>> FuzzySearchPostAsync(string content)
     {
-        if (string.IsNullOrEmpty(content))
-        {
-            throw new StringResponseException("搜索内容是必填的");
-        }
+        if (string.IsNullOrEmpty(content)) throw new StringResponseException("搜索内容是必填的");
         var elasticClient = _provider.GetClient();
         var esResult = await elasticClient.SearchAsync<Post>(s =>
             s.Index("post").Query(x =>
@@ -285,16 +278,14 @@ public class PostService : IPostService
                     .Fields(x => x.Field(f => f.Content)
                         .FragmentSize(10)
                         .NumberOfFragments(4))));
-       var searchResult = esResult.Hits.Where(x =>x.Highlight.Any()).SelectMany(x =>
-       {
-       
-               return x.Highlight?.Values?.FirstOrDefault()?.Select(y => new IdAndNameDto
-               {
-                   Id = Convert.ToInt32(x?.Id),
-                   Name = y
-               }); 
-
-       })?.ToList();
+        var searchResult = esResult.Hits.Where(x => x.Highlight.Any()).SelectMany(x =>
+        {
+            return x.Highlight?.Values?.FirstOrDefault()?.Select(y => new IdAndNameDto
+            {
+                Id = Convert.ToInt32(x?.Id),
+                Name = y
+            });
+        })?.ToList();
         return searchResult;
     }
 }

@@ -5,9 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
-        <PackageReference Include="MediatR" Version="10.0.1" />
-        <PackageReference Include="Narojay.Tools.Core" Version="1.0.35225" />
+        <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0"/>
+        <PackageReference Include="MediatR" Version="10.0.1"/>
+        <PackageReference Include="Narojay.Tools.Core" Version="1.0.35225"/>
     </ItemGroup>
 
 </Project>

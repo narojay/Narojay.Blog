@@ -84,17 +84,17 @@ public class MessageBoardService : IMessageBoardService
             var leaveMessage = JsonConvert.DeserializeObject<LeaveMessage>(leaveMessageContent);
             var leaveMessageDto = Mapper.Map<LeaveMessageDto>(leaveMessage);
             var replySort = await RedisHelper.ZRevRangeAsync($"leaveMessageReplySort:{leaveMessage.Id}", 0, 9);
-           
-                var replyContent = await RedisHelper.HMGetAsync($"leaveMessageReplyContent:{leaveMessage.Id}", replySort);
-                foreach (var item in replyContent)
-                {
-                    var leaveMessageReply = JsonConvert.DeserializeObject<LeaveMessage>(item);
-                    leaveMessageDto.Children.Add(Mapper.Map<LeaveMessageDto>(leaveMessageReply));
-                }
-            leaveMessageDtos.Add(leaveMessageDto); 
+
+            var replyContent = await RedisHelper.HMGetAsync($"leaveMessageReplyContent:{leaveMessage.Id}", replySort);
+            foreach (var item in replyContent)
+            {
+                var leaveMessageReply = JsonConvert.DeserializeObject<LeaveMessage>(item);
+                leaveMessageDto.Children.Add(Mapper.Map<LeaveMessageDto>(leaveMessageReply));
+            }
+
+            leaveMessageDtos.Add(leaveMessageDto);
         }
-   
-            
+
 
         return new PageOutputDto<LeaveMessageDto>
         {

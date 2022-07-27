@@ -9,9 +9,9 @@ namespace EventBusRabbitMQ;
 
 public class EventBusRabbitMQ : IEventBus
 {
-   public const  string   BROKER_NAME = "narojay_blog_event_bus";
-   private readonly IRabbitMQPersistentConnection _connection;
+    public const string BROKER_NAME = "narojay_blog_event_bus";
     private readonly IEventBusSubscriptionsManager _busSubscriptionsManager;
+    private readonly IRabbitMQPersistentConnection _connection;
     private readonly ILogger<EventBusRabbitMQ> _logger;
     private IModel _consumerChannel;
 
@@ -24,28 +24,9 @@ public class EventBusRabbitMQ : IEventBus
         _consumerChannel = CreateConsumerChannel();
     }
 
-    private IModel CreateConsumerChannel()
-    {
-        if (!_connection.IsConnected)
-        {
-            _connection.TryConnect();
-        }
-
-        _logger.LogTrace("Creating RabbitMQ consumer channel");
-
-        var channel = _connection.CreateModel();
-        channel.ExchangeDeclare(exchange: BROKER_NAME,
-            ExchangeType.Direct, true);
-
-        return channel;
-    }
-
     public void Publish(IntegrationEvent @event)
     {
-        if (!_connection.IsConnected)
-        {
-            _connection.TryConnect();
-        }
+        if (!_connection.IsConnected) _connection.TryConnect();
 
         var eventName = @event.GetType().Name;
 
@@ -65,23 +46,11 @@ public class EventBusRabbitMQ : IEventBus
 
             _logger.LogTrace("Publishing event to RabbitMQ: {EventId}", @event.Id);
             channel.BasicPublish(
-                exchange: BROKER_NAME,
-                routingKey: eventName,
-                mandatory: false,
-                basicProperties: properties,
-                body: body);
-        }
-    }
-
-    private void DoInternalSubscription(string eventName)
-    {
-        var containsKey = _busSubscriptionsManager.HasSubscriptionForEvenet(eventName);
-        if (!containsKey)
-        {
-            if (!_connection.IsConnected)
-            {
-                _connection.TryConnect();
-            }
+                BROKER_NAME,
+                eventName,
+                false,
+                properties,
+                body);
         }
     }
 
@@ -100,5 +69,26 @@ public class EventBusRabbitMQ : IEventBus
         _logger.LogInformation("Unsubscribing from event {EventName}", eventName);
 
         _busSubscriptionsManager.RemoveSubscription<T, TH>();
+    }
+
+    private IModel CreateConsumerChannel()
+    {
+        if (!_connection.IsConnected) _connection.TryConnect();
+
+        _logger.LogTrace("Creating RabbitMQ consumer channel");
+
+        var channel = _connection.CreateModel();
+        channel.ExchangeDeclare(BROKER_NAME,
+            ExchangeType.Direct, true);
+
+        return channel;
+    }
+
+    private void DoInternalSubscription(string eventName)
+    {
+        var containsKey = _busSubscriptionsManager.HasSubscriptionForEvenet(eventName);
+        if (!containsKey)
+            if (!_connection.IsConnected)
+                _connection.TryConnect();
     }
 }
