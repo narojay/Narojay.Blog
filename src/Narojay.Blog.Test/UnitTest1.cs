@@ -1,24 +1,35 @@
-using Microsoft.AspNetCore;
-using Moq;
+using System;
 using Narojay.Blog.Application.Interface;
-using Narojay.Blog.Application.Service;
-using Narojay.Blog.Domain.Models.Dto;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Narojay.Blog.Test;
 
 public class UnitTest1
 {
-  
-    [Fact]
-    public async Task Test1()
+    private readonly ITestAService _testAService;
+    private readonly ITestService _testService;
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public UnitTest1(ITestAService testAService,ITestService testService, ITestOutputHelper testOutputHelper)
     {
-        int id = 32;
-        var customerRepositoryMock = new Mock<IPostService>();
-        var postDto = new PostDto();
-        customerRepositoryMock.Setup(x => x.GetPostByIdAsync(id))
-            .ReturnsAsync( postDto);
-        
-        var sut = new PostService(null, null);
-      var result =  await  sut.GetPostByIdAsync(id);
+        _testAService = testAService;
+        _testService = testService;
+        _testOutputHelper = testOutputHelper;
+    }
+    [Fact]
+    public void Test1()
+    {
+        _testService.Test();
+        Assert.Equal(1,1);
+        _testOutputHelper.WriteLine("test");
+    
+    }
+    
+    [Fact]
+    public void TestAService_TestA()
+    {
+        _testAService.TestA();
+    
     }
 }
