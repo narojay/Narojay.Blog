@@ -4,6 +4,5 @@ namespace Narojay.Blog.Domain;
 
 public enum NarojayPlatform
 {
-    [Description("博客Worker")]
-    BlogWork,
+    [Description("博客Worker")] BlogWork
 }

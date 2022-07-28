@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using Elasticsearch.Net.Specification.SecurityApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Rest.Serialization;
 using Narojay.Blog.Domain;
 using Narojay.Blog.Domain.Models.Api;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Serilog;
 
 namespace Narojay.Blog.Middleware;
@@ -33,7 +30,7 @@ public class ExceptionMiddleware
             await _next(context);
         }
         catch (Exception ex)
-        {       
+        {
             context.Response.ContentType = "text/json;charset=utf-8;";
             var statusCode = context.Response.StatusCode == 200
                 ? (int)HttpStatusCode.BadRequest

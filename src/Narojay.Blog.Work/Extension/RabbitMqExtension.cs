@@ -1,15 +1,19 @@
 ﻿using EventBus;
 using EventBus.Abstractions;
 using EventBusRabbitMQ;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
 namespace Narojay.Blog.Work.Extension;
 
 public static class RabbitMqExtension
 {
-    public static IServiceCollection AddCustomizedRabbitMq(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
+    public static IServiceCollection AddCustomizedRabbitMq(this IServiceCollection services,
+        IConfiguration configuration, IWebHostEnvironment env)
     {
-
         services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
         {
             var host = configuration["RabbitMqConfig:Host"];
@@ -25,11 +29,11 @@ public static class RabbitMqExtension
             var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
             return new DefaultRabbitMQPersistentConnection(factory, logger);
         });
-        
-        
+
+
         services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
-        services.AddSingleton<IEventBus,EventBusRabbitMQ.EventBusRabbitMQ>();
-        
+        services.AddSingleton<IEventBus, EventBusRabbitMQ.EventBusRabbitMQ>();
+
         return services;
     }
 }

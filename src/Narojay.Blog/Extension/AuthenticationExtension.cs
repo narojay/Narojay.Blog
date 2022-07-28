@@ -46,10 +46,7 @@ public static class AuthenticationExtension
                 {
                     var accessToken = context.Request.Query["access_token"];
                     var path = context.HttpContext.Request.Path;
-                    if (path.StartsWithSegments("/bloghub"))
-                    {
-                        context.Token = accessToken;
-                    }
+                    if (path.StartsWithSegments("/bloghub")) context.Token = accessToken;
 
                     return Task.CompletedTask;
                 }

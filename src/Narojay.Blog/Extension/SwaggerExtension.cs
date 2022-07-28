@@ -15,11 +15,11 @@ public static class SwaggerExtension
     {
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Narojay.Blog", Version = "v1",Description = "fuck"});
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Narojay.Blog", Version = "v1", Description = "fuck" });
             var file = Path.Combine(AppContext.BaseDirectory, "Narojay.Blog.xml");
             var path = Path.Combine(AppContext.BaseDirectory, file);
-            c.IncludeXmlComments(path,true);
-            c.OrderActionsBy( o => o.RelativePath);
+            c.IncludeXmlComments(path, true);
+            c.OrderActionsBy(o => o.RelativePath);
             c.OperationFilter<AddResponseHeadersFilter>();
             c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
             c.OperationFilter<SecurityRequirementsOperationFilter>();

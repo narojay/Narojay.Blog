@@ -1,4 +1,6 @@
-﻿namespace EventBus.Events;
+﻿using System;
+
+namespace EventBus.Events;
 
 public class IntegrationEvent
 {

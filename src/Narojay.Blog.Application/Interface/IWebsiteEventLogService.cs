@@ -10,6 +10,4 @@ public interface IWebsiteEventLogService
     Task<bool> RemoveWebsiteEventLogAsync(int id);
     Task<bool> UpdateWebsiteEventLogAsync(WebsiteEventLogDto websiteEventLogDto);
     Task<bool> AddWebsiteEventLogAsync(WebsiteEventLogDto websiteEventLogDto);
-    
-    
 }

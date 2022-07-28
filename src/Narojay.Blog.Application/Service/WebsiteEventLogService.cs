@@ -15,68 +15,66 @@ using Narojay.Tools.Core.Dto;
 
 namespace Narojay.Blog.Application.Service;
 
-public class WebsiteEventLogService :IWebsiteEventLogService
+public class WebsiteEventLogService : IWebsiteEventLogService
 {
     private readonly BlogContext _blogContext;
     private readonly IMapper _mapper;
 
-    public WebsiteEventLogService(BlogContext blogContext,IMapper mapper)
+    public WebsiteEventLogService(BlogContext blogContext, IMapper mapper)
     {
         _blogContext = blogContext;
         _mapper = mapper;
     }
-    public async Task<PageOutputDto<WebsiteEventLogOutputDto>> GetPagingWebsiteEventLogAsync(WebsiteEventLogQuery pageInputDto)
+
+    public async Task<PageOutputDto<WebsiteEventLogOutputDto>> GetPagingWebsiteEventLogAsync(
+        WebsiteEventLogQuery pageInputDto)
     {
-        var queryable =  _blogContext.WebsiteEventLogs.AsNoTracking()
-            .Where(x =>  x.IsDeleted == false)
-            .WhereIf(!string.IsNullOrEmpty(pageInputDto.Content) , x => x.Content.Contains(pageInputDto.Content));
+        var queryable = _blogContext.WebsiteEventLogs.AsNoTracking()
+            .Where(x => x.IsDeleted == false)
+            .WhereIf(!string.IsNullOrEmpty(pageInputDto.Content), x => x.Content.Contains(pageInputDto.Content));
 
-        var queryableResult =await  queryable.PageBy(pageInputDto.PageIndex, pageInputDto.PageSize).ToListAsync();
-        
-        var  websiteEventLogOutputDtos = _mapper.Map<List<WebsiteEventLogOutputDto>>(queryableResult);
+        var queryableResult = await queryable.PageBy(pageInputDto.PageIndex, pageInputDto.PageSize).ToListAsync();
 
-        return new PageOutputDto<WebsiteEventLogOutputDto>{Data = websiteEventLogOutputDtos,TotalCount = await queryable.CountAsync()};
-        
+        var websiteEventLogOutputDtos = _mapper.Map<List<WebsiteEventLogOutputDto>>(queryableResult);
+
+        return new PageOutputDto<WebsiteEventLogOutputDto>
+            { Data = websiteEventLogOutputDtos, TotalCount = await queryable.CountAsync() };
     }
 
     public async Task<bool> RemoveWebsiteEventLogAsync(int id)
     {
-        var websiteEventLog =await _blogContext.WebsiteEventLogs.FirstOrDefaultAsync(x => x.IsDeleted == false && x.Id == id);
+        var websiteEventLog =
+            await _blogContext.WebsiteEventLogs.FirstOrDefaultAsync(x => x.IsDeleted == false && x.Id == id);
 
-        if (websiteEventLog == null)
-        {
-            throw new StringResponseException("该条日志已删除或者不存在");
-        }
+        if (websiteEventLog == null) throw new StringResponseException("该条日志已删除或者不存在");
         websiteEventLog.IsDeleted = true;
 
-        return  await _blogContext.SaveChangesAsync() > 0;
-
+        return await _blogContext.SaveChangesAsync() > 0;
     }
 
     public async Task<bool> UpdateWebsiteEventLogAsync(WebsiteEventLogDto websiteEventLogDto)
     {
-        var websiteEventLog =await _blogContext.WebsiteEventLogs.FirstOrDefaultAsync(x => x.IsDeleted == false && x.Id == websiteEventLogDto.Id);
-        if (websiteEventLog == null )
-        {
-            throw new StringResponseException("日志已删除或者不存在");
-        }
+        var websiteEventLog =
+            await _blogContext.WebsiteEventLogs.FirstOrDefaultAsync(x =>
+                x.IsDeleted == false && x.Id == websiteEventLogDto.Id);
+        if (websiteEventLog == null) throw new StringResponseException("日志已删除或者不存在");
         websiteEventLog.Content = websiteEventLogDto.Content;
         websiteEventLog.LastModifyTime = DateTime.Now;
 
         return await _blogContext.SaveChangesAsync() > 0;
     }
 
-    public async  Task<bool> AddWebsiteEventLogAsync(WebsiteEventLogDto websiteEventLogDto)
+    public async Task<bool> AddWebsiteEventLogAsync(WebsiteEventLogDto websiteEventLogDto)
     {
-      var websiteEventLog =  new WebsiteEventLog
+        var websiteEventLog = new WebsiteEventLog
         {
             Content = websiteEventLogDto.Content,
             IsDeleted = false,
             CreationTime = DateTime.Now
         };
-      
-      await _blogContext.WebsiteEventLogs.AddAsync(websiteEventLog);
 
-      return  await _blogContext.SaveChangesAsync() > 0;
+        await _blogContext.WebsiteEventLogs.AddAsync(websiteEventLog);
+
+        return await _blogContext.SaveChangesAsync() > 0;
     }
 }

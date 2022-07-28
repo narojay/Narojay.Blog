@@ -1,4 +1,8 @@
-﻿namespace Narojay.Blog.Work.Extension;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Narojay.Blog.Work.Extension;
 
 public static class WorkflowExtension
 {

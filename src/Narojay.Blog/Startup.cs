@@ -2,7 +2,6 @@ using Autofac;
 using CSRedis;
 using EventBus.Abstractions;
 using HealthChecks.UI.Client;
-using IdentityModel.OidcClient;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -10,19 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Narojay.Blog.Application;
-using Narojay.Blog.Application.Events;
 using Narojay.Blog.Application.Interface;
-using Narojay.Blog.Application.Service;
-using Narojay.Blog.Domain;
 using Narojay.Blog.Extension;
-using Narojay.Blog.Filter;
 using Narojay.Blog.Infrastruct;
 using Narojay.Blog.Infrastruct.Elasticsearch;
 using Narojay.Blog.Infrastruct.Elasticsearch.Extension;
-using Narojay.Blog.Infrastruct.NotificationHub;
 using Narojay.Blog.Infrastruct.NotificationHub.Hub;
 using Narojay.Blog.Middleware;
-using Newtonsoft.Json;
 using Serilog;
 
 namespace Narojay.Blog;
@@ -56,16 +49,16 @@ public class Startup
 
         services.AddCustomizedDbExtension(_configuration, _env);
 
-        services.UseElasticsearch(x =>x.ConfigOptions(new ElasticsearchOption
+        services.UseElasticsearch(x => x.ConfigOptions(new ElasticsearchOption
         {
             Host = _configuration["ElasticsearchConfig:Host"],
             Port = _configuration["ElasticsearchConfig:Port"],
             UserName = _configuration["ElasticsearchConfig:UserName"],
-            Password = _configuration["ElasticsearchConfig:Password"],
-        }) );
-        
+            Password = _configuration["ElasticsearchConfig:Password"]
+        }));
+
         services.AddCustomizedRabbitMq(_configuration, _env);
-        
+
 
         RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
 

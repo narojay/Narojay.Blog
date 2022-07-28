@@ -46,6 +46,6 @@ public class JwtService : IJwtService
             //为数字签名定义SecurityKey
             signingCredentials: creds
         );
-        return  new JwtSecurityTokenHandler().WriteToken(token);
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
