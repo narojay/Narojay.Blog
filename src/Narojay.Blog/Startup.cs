@@ -114,7 +114,7 @@ public class Startup
         //var host = app.ApplicationServices.GetService<IWorkflowHost>();
         //host.RegisterWorkflow<TestWorkflow, MyDataClass>();
         //host.Start();
-        //warmUpEfCoreService.WarmUp();
+        warmUpEfCoreService.WarmUp();
     }
 
     private void ConfigureEventBus(IApplicationBuilder app)
