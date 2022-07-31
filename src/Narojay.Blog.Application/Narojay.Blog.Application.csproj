@@ -5,15 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Narojay.Blog.Infrastruct\Narojay.Blog.Infrastruct.csproj"/>
+        <ProjectReference Include="..\Narojay.Blog.Infrastruct\Narojay.Blog.Infrastruct.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Dto\"/>
+        <Folder Include="Dto\" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Autofac.Extensions.DependencyInjection;
+using Com.Ctrip.Framework.Apollo;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -20,8 +21,6 @@ public class Program
 
     public static void Main(string[] args)
     {
-        var a = Configuration["JwtConfig:Issuer"];
-        Console.WriteLine(a);
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(Configuration)
             .Enrich.FromLogContext()
@@ -45,6 +44,10 @@ public class Program
     {
         return Host
             .CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((hostingContext, builder) =>
+            {
+                builder.AddApollo(builder.Build().GetSection("Apollo")).AddDefault();
+            })
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .UseSerilog()
             .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });

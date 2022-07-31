@@ -1,6 +1,8 @@
+using System;
 using Autofac;
 using CSRedis;
 using EventBus.Abstractions;
+using EventBusRabbitMQ;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 using Narojay.Blog.Application;
 using Narojay.Blog.Application.Interface;
 using Narojay.Blog.Extension;
@@ -16,6 +19,7 @@ using Narojay.Blog.Infrastruct.Elasticsearch;
 using Narojay.Blog.Infrastruct.Elasticsearch.Extension;
 using Narojay.Blog.Infrastruct.NotificationHub.Hub;
 using Narojay.Blog.Middleware;
+using RabbitMQ.Client;
 using Serilog;
 
 namespace Narojay.Blog;
@@ -59,7 +63,6 @@ public class Startup
 
         services.AddCustomizedRabbitMq(_configuration, _env);
 
-
         RedisHelper.Initialization(new CSRedisClient(_configuration["Redis"]));
 
         services.AddCustomizedSwagger(_configuration, _env);
@@ -69,6 +72,7 @@ public class Startup
         services.AddHealthChecks();
 
         services.AddHealthChecksUI().AddInMemoryStorage();
+
     }
 
     public void ConfigureContainer(ContainerBuilder builder)
