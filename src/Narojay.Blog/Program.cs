@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Autofac.Extensions.DependencyInjection;
 using Com.Ctrip.Framework.Apollo;
+using Com.Ctrip.Framework.Apollo.Enums;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -46,7 +47,7 @@ public class Program
             .CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, builder) =>
             {
-                builder.AddApollo(builder.Build().GetSection("Apollo")).AddDefault();
+                builder.AddApollo(builder.Build().GetSection("Apollo")).AddNamespace("test",ConfigFileFormat.Json);
             })
             .UseServiceProviderFactory(new AutofacServiceProviderFactory())
             .UseSerilog()
