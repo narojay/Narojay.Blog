@@ -1,3 +1,7 @@
+# Narojay.Blog
+
+![example workflow](https://github.com/narojay/Narojay.Blog/actions/workflows/dotnet.yml/badge.svg)
+
 ## 基于React的博客UI
   前端：react
   后端: .net core 
