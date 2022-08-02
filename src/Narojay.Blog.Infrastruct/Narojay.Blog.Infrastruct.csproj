@@ -7,6 +7,7 @@
     <ItemGroup>
         <PackageReference Include="Com.Ctrip.Framework.Apollo" Version="2.7.0" />
         <PackageReference Include="Com.Ctrip.Framework.Apollo.Configuration" Version="2.7.0" />
+        <PackageReference Include="Consul" Version="1.6.10.7" />
         <PackageReference Include="CSRedisCore" Version="3.6.9" />
         <PackageReference Include="MailKit" Version="3.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />

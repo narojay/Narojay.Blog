@@ -1,5 +1,6 @@
 using System;
 using Autofac;
+using Consul;
 using CSRedis;
 using EventBus.Abstractions;
 using EventBusRabbitMQ;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Primitives;
 using Narojay.Blog.Application;
 using Narojay.Blog.Application.Interface;
@@ -72,7 +74,7 @@ public class Startup
         services.AddHealthChecks();
 
         services.AddHealthChecksUI().AddInMemoryStorage();
-
+        services.AddConsulConfig(_configuration);
     }
 
     public void ConfigureContainer(ContainerBuilder builder)
@@ -84,7 +86,7 @@ public class Startup
 
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWarmUpEfCoreService warmUpEfCoreService)
+    public void Configure(IApplicationBuilder app, IWarmUpEfCoreService warmUpEfCoreService,IHostApplicationLifetime lifetime)
     {
         app.UseSerilogRequestLogging();
         //app.ApplicationServices.GetService<IRabbitMQPersistentConnection>();
@@ -115,10 +117,11 @@ public class Startup
         app.UseHealthChecksUI();
 
         ConfigureEventBus(app);
-        //var host = app.ApplicationServices.GetService<IWorkflowHost>();
-        //host.RegisterWorkflow<TestWorkflow, MyDataClass>();
-        //host.Start();
+        app.UserConsul(_configuration,lifetime);
         warmUpEfCoreService.WarmUp();
+        var consulClient = app.ApplicationServices.GetService<IConsulClient>();
+        
+        
     }
 
     private void ConfigureEventBus(IApplicationBuilder app)

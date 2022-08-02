@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3DDE0BE8-20E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Test", "src\Narojay.Blog.Test\Narojay.Blog.Test.csproj", "{B7D80E8F-1CE4-42A3-BC03-5CF032318749}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Narojay.Blog.Gateways", "src\Narojay.Blog.Gateways\Narojay.Blog.Gateways.csproj", "{BF6040CB-AC6F-4223-8F02-DF5983A47DC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{B7D80E8F-1CE4-42A3-BC03-5CF032318749}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7D80E8F-1CE4-42A3-BC03-5CF032318749}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7D80E8F-1CE4-42A3-BC03-5CF032318749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF6040CB-AC6F-4223-8F02-DF5983A47DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6040CB-AC6F-4223-8F02-DF5983A47DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6040CB-AC6F-4223-8F02-DF5983A47DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6040CB-AC6F-4223-8F02-DF5983A47DC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{9A98D4EA-671A-4DBA-8114-8AC4D5C0FE23} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
 		{99EFA2D3-32BD-405F-A3E0-4382031C6ED7} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
 		{B7D80E8F-1CE4-42A3-BC03-5CF032318749} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
+		{BF6040CB-AC6F-4223-8F02-DF5983A47DC1} = {3DDE0BE8-20EA-496F-A3ED-760F84473536}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0715B885-4234-4D37-A259-E0F9BF5AA6EE}
