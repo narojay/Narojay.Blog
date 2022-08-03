@@ -4,7 +4,7 @@ WORKDIR /narojaygateway
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["src/Narojay.Blog.Gateways/Narojay.Blog.Gateways.csproj", "Narojay.Blog.Gateways/"]
-RUN dotnet restore "src/Narojay.Blog.Gateways/Narojay.Blog.Gateways.csproj"
+RUN dotnet restore "Narojay.Blog.Gateways/Narojay.Blog.Gateways.csproj"
 COPY . .
 WORKDIR "/src/Narojay.Blog.Gateways"
 RUN dotnet build "Narojay.Blog.Gateways.csproj" -c Release -o /narojaygateway/build
