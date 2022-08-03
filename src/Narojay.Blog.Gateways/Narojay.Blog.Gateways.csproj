@@ -5,11 +5,14 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>e7286dbb-0f79-4ef2-ac9b-e5c1ba03f84d</UserSecretsId>
+        <DockerfileContext>..\..</DockerfileContext>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Com.Ctrip.Framework.Apollo" Version="2.7.0" />
         <PackageReference Include="Com.Ctrip.Framework.Apollo.Configuration" Version="2.7.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
         <PackageReference Include="Ocelot" Version="18.0.0" />
         <PackageReference Include="Ocelot.Provider.Consul" Version="18.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
