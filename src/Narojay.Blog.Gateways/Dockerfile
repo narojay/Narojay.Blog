@@ -7,10 +7,10 @@ COPY ["src/Narojay.Blog.Gateways/Narojay.Blog.Gateways.csproj", "Narojay.Blog.Ga
 RUN dotnet restore "Narojay.Blog.Gateways/Narojay.Blog.Gateways.csproj"
 COPY . .
 WORKDIR "/src/Narojay.Blog.Gateways"
-RUN dotnet build "Narojay.Blog.Gateways.csproj" -c Release -o /narojaygateway/build  -r linux-64
+RUN dotnet build "Narojay.Blog.Gateways.csproj" -c Release -o /narojaygateway/build  -r linux-x64
 
 FROM build AS publish
-RUN dotnet publish "Narojay.Blog.Gateways.csproj" -c Release -o /narojaygateway/publish  -r linux-64
+RUN dotnet publish "Narojay.Blog.Gateways.csproj" -c Release -o /narojaygateway/publish  -r linux-x64
 
 FROM base AS final
 WORKDIR /narojaygateway
