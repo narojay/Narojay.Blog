@@ -40,12 +40,13 @@ public static class ConsulExtension
         {
             throw new  ArgumentException(nameof(client));
         }
+
         var registration = new AgentServiceRegistration
         {
             ID = Guid.NewGuid().ToString(), // 唯一Id
             Name = configuration["Consul:Name"], // 服务名
             Address = configuration["Consul:Ip"], // 服务绑定IP
-            Port = Convert.ToInt32(configuration["Consul:Port"]), // 服务绑定端口
+            Port = Convert.ToInt32(Environment.GetEnvironmentVariable("ASPNETCORE_URLS").Split(":")[2]), // 服务绑定端口
             // Check = new AgentServiceCheck
             // {
             //     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5), // 服务启动多久后注册
