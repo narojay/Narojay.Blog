@@ -10,6 +10,7 @@ builder.Host.ConfigureAppConfiguration((hostingContext, builder) =>
 {
     builder.AddApollo(builder.Build().GetSection("Apollo")).AddNamespace("test", ConfigFileFormat.Json);
 });
+
 builder.Services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -19,7 +20,8 @@ builder.Services
     .AddConsul();
 
 var app = builder.Build();
-
+var a = app.Configuration;
+var c = a["test"];
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
