@@ -22,20 +22,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: build gateway docker images
-        uses: docker/build-push-action@v3.0.0
-        with:
-          push: true
-          file: ./src/Narojay.Blog.Gateways/Dockerfile
-          tags:  ${{ env.IMAGE_GATEWAY_API }}:${{ steps.t1.outputs.time }}
-
       - name: Build blogapi images
         uses: docker/build-push-action@v3.0.0
         with:
           push: true
           file: ./src/Narojay.Blog/Dockerfile
           tags:  ${{ env.IMAGE_BLOG_API }}:${{ steps.t1.outputs.time }}
-
+          
+      - name: build gateway docker images
+        uses: docker/build-push-action@v3.0.0
+        with:
+          push: true
+          file: ./src/Narojay.Blog.Gateways/Dockerfile
+          tags:  ${{ env.IMAGE_GATEWAY_API }}:${{ steps.t1.outputs.time }}
+          
       - name: start application
         uses: garygrossgarten/github-action-ssh@v0.6.3
         with:
